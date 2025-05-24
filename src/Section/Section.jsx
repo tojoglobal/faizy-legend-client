@@ -2,6 +2,9 @@ import { forwardRef, useRef, useState } from "react";
 import "./Section.css";
 import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
+import AboutContent from "./Content/About/AboutContent";
+import ModelingGallery from "./Content/Modeling/Modeling";
+import FilmingGallery from "./Content/Filming/FilmingGallery";
 
 const sectionBackgrounds = {
   about:
@@ -20,94 +23,15 @@ const sectionBackgrounds = {
 const sectionContents = {
   about: {
     title: "Introduction",
-    text: (
-      <>
-        <p>
-          Meet Faizy Legend, a dynamic social media influencer and advocate who
-          has captured the hearts of over 300,000 followers worldwide. Born with
-          deafness and vitiligo, Faizy has turned what many might see as
-          challenges into a platform for inspiration, proving that our
-          differences are what make us truly extraordinary. His journey is a
-          testament to resilience, self-love, and the power of kindness.
-        </p>
-        <p>
-          Faizy’s vibrant content is a mix of heartfelt storytelling, empowering
-          messages, and creative visuals that encourages his audience to embrace
-          their unique identities. By sharing his personal experiences,
-          navigating life with hearing loss and celebrating the beauty of his
-          vitiligo, Faizy has fostered understanding, broken down stereotypes,
-          and inspired countless individuals to embrace their authentic selves.
-        </p>
-        <p>
-          What sets Faizy apart is his unwavering positivity and his commitment
-          to spreading love and compassion. His advocacy goes beyond inspiring
-          individuals; he has built a community where everyone feels seen,
-          heard, and valued. Faizy’s message is simple yet powerful: challenges
-          are not obstacles but opportunities to grow stronger and shine
-          brighter.
-        </p>
-        <p>
-          As a champion for self-acceptance and inclusivity, Faizy now sets his
-          sights on a new dream, pursuing a career in acting and modeling. But
-          his goal isn’t fame or fortune. Faizy wants to step into those
-          industries to show the world that anything is possible, regardless of
-          the challenges one might face. By entering the world of entertainment,
-          he aims to inspire others to break free from limitations, believe in
-          their potential, and chase their dreams with courage and
-          determination.
-        </p>
-        <p>
-          When you follow Faizy Legend, you’re not just scrolling through
-          content; you’re joining a movement of empowerment, hope, and
-          unconditional love. Whether through heartfelt captions, engaging
-          videos, or creative projects, Faizy proves that kindness, courage, and
-          authenticity have the power to change lives.
-        </p>
-      </>
-    ),
+    text: <AboutContent />,
   },
   modeling: {
-    title: "Modeling Experience",
-    text: (
-      <div className="modeling-gallery">
-        <div className="gallery-card">
-          <img src="/gallery/mountain-vibes.webp" alt="Mountain Vibes" />
-          <div className="gallery-caption">
-            <div className="gallery-title">MOUNTAIN VIBES</div>
-            <div className="gallery-meta">
-              Phoenix, Arizona | @ellvieritchphoto
-            </div>
-          </div>
-        </div>
-        <div className="gallery-card">
-          <img src="/gallery/leopard-style.webp" alt="Leopard In Style" />
-          <div className="gallery-caption">
-            <div className="gallery-title">LEOPARD IN STYLE</div>
-            <div className="gallery-meta">Houston, Texas | @valentinoui</div>
-          </div>
-        </div>
-        <div className="gallery-card">
-          <img src="/gallery/shadowed-silence.webp" alt="Shadowed Silence" />
-          <div className="gallery-caption">
-            <div className="gallery-title">SHADOWED SILENCE</div>
-            <div className="gallery-meta">Katy, Texas | @pdl_photography</div>
-          </div>
-        </div>
-        <div className="gallery-card">
-          <img src="/gallery/suited-savage.webp" alt="Suited But Savage" />
-          <div className="gallery-caption">
-            <div className="gallery-title">SUITED BUT SAVAGE</div>
-            <div className="gallery-meta">
-              Houston, Texas | @skinmintclinent
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
+    title: "",
+    text: <ModelingGallery />,
   },
   filming: {
     title: "Filming",
-    text: "Faizy has featured in various film and video projects, demonstrating a flair for storytelling and on-screen performance.",
+    text: <FilmingGallery />,
   },
   ugc: {
     title: "User Generated Content",
@@ -225,9 +149,13 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
         <div className="scroll_minus_btn" onClick={handleMinusClick}>
           <FiMinusCircle />
         </div>
-        <div className="content-inner max-w-9/12">
-          <h2 className="content-title">{content?.title}</h2>
-          <p className="content-text">{content?.text}</p>
+        <div className="content-inner max-w-10/12">
+          <h2 className={`content-title ${section?.id}_content_title`}>
+            {content?.title}
+          </h2>
+          <div className={`content-text ${section?.id}_content_text`}>
+            {content?.text}
+          </div>
         </div>
       </div>{" "}
     </section>

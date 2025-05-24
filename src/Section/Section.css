@@ -150,6 +150,7 @@
   transition: all 0.45s cubic-bezier(0.62, 0.28, 0.23, 0.99);
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.22);
   padding-top: 9rem;
+  padding-bottom: 3rem;
   display: none;
   overflow-y: auto;
 }
