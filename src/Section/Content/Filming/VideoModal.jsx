@@ -4,14 +4,11 @@ import { FiX } from "react-icons/fi";
 const VideoModal = ({ open, onClose, youtubeId, title, avatarUrl }) => {
   useEffect(() => {
     if (open) {
-      // Disable scrolling when modal opens
       document.body.style.overflow = "hidden";
     } else {
-      // Re-enable scrolling when modal closes
       document.body.style.overflow = "auto";
     }
 
-    // Cleanup function to re-enable scrolling when component unmounts
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -19,8 +16,19 @@ const VideoModal = ({ open, onClose, youtubeId, title, avatarUrl }) => {
 
   if (!open) return null;
 
+  const handleBackdropClick = (e) => {
+    // Close modal if clicked directly on the backdrop
+    if (e.target.id === "video-backdrop") {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-[2147483647] bg-black/90 flex items-center justify-center">
+    <div
+      id="video-backdrop"
+      onClick={handleBackdropClick}
+      className="fixed inset-0 z-[2147483647] bg-black/90 flex items-center justify-center"
+    >
       {/* Close Button */}
       <button
         onClick={onClose}
@@ -30,7 +38,10 @@ const VideoModal = ({ open, onClose, youtubeId, title, avatarUrl }) => {
       </button>
 
       {/* Video Container */}
-      <div className="relative w-full max-w-4xl aspect-video mx-4">
+      <div
+        className="relative w-full max-w-4xl aspect-video mx-4"
+        onClick={(e) => e.stopPropagation()} // Prevents modal close on click inside video
+      >
         <iframe
           src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
           title={title}
