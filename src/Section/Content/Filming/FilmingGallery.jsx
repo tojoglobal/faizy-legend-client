@@ -41,9 +41,9 @@ export default function FilmingGallery() {
         avatarUrl={selectedCard?.img}
       />
 
-      {cards.map((card) => (
+      {cards.map((card, i) => (
         <FilmingCard
-          key={card.title + card.youtubeId}
+          key={i + card.youtubeId}
           img={card.img}
           title={card.title}
           onPlay={() => setOpenVideo(card.youtubeId)}

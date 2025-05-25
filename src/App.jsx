@@ -34,7 +34,7 @@ function App() {
   return (
     <AppProvider>
       <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <div className="relative">
+        <div className="">
           <AppLayout />
         </div>
       </Router>

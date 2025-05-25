@@ -5,6 +5,9 @@ import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import AboutContent from "./Content/About/AboutContent";
 import ModelingGallery from "./Content/Modeling/Modeling";
 import FilmingGallery from "./Content/Filming/FilmingGallery";
+import Ugc from "./Content/UGC/Ugc";
+import ArticleGrid from "./Content/ArticleGrid/ArticleGrid";
+import BookForm from "./Content/BookForm/BookForm";
 
 const sectionBackgrounds = {
   about:
@@ -34,16 +37,16 @@ const sectionContents = {
     text: <FilmingGallery />,
   },
   ugc: {
-    title: "User Generated Content",
-    text: "Faizy actively collaborates with brands and fans, co-creating engaging and authentic content for digital platforms.",
+    title: "",
+    text: <Ugc />,
   },
   articles: {
-    title: "Articles",
-    text: "Explore articles and press features about Faizy's career, achievements, and creative philosophy.",
+    title: "",
+    text: <ArticleGrid />,
   },
   book: {
-    title: "Book",
-    text: "For bookings and professional inquiries, connect with Faizy for collaborations in modeling, acting, or brand partnerships.",
+    title: "",
+    text: <BookForm />,
   },
   shop: {
     title: "Shop",

@@ -1,0 +1,22 @@
+/* Tailwind does not provide these, so add custom styles or use daisyUI for these classes */
+.mockup-phone {
+  border-radius: 2rem;
+  box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  background: #111;
+}
+.mockup-phone-camera {
+  /* If using daisyUI, this is handled. Otherwise: */
+  width: 2rem;
+  height: 0.5rem;
+  background: #222;
+  border-radius: 0 0 1rem 1rem;
+  margin: 0.5rem auto 0.5rem auto;
+}
+.mockup-phone-display {
+  border-radius: 1.5rem;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
