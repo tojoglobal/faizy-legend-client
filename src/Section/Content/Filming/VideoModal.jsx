@@ -1,51 +1,43 @@
-import React from "react";
-import { FaYoutube } from "react-icons/fa";
+import { useEffect } from "react";
+import { FiX } from "react-icons/fi";
 
 const VideoModal = ({ open, onClose, youtubeId, title, avatarUrl }) => {
+  useEffect(() => {
+    if (open) {
+      // Disable scrolling when modal opens
+      document.body.style.overflow = "hidden";
+    } else {
+      // Re-enable scrolling when modal closes
+      document.body.style.overflow = "auto";
+    }
+
+    // Cleanup function to re-enable scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [open]);
+
   if (!open) return null;
-  const videoUrl = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-95">
-      {/* Close button */}
+    <div className="fixed inset-0 z-[2147483647] bg-black/90 flex items-center justify-center">
+      {/* Close Button */}
       <button
         onClick={onClose}
-        className="absolute top-5 right-8 z-30 text-white text-4xl font-bold bg-black/50 rounded-full px-3 py-1 hover:bg-black/80 transition"
-        aria-label="Close video"
+        className="fixed top-4 right-4 z-[2147483648] p-2 bg-black/50 rounded-full text-white hover:bg-black/70 transition-colors"
       >
-        ×
+        <FiX size={24} />
       </button>
-      {/* Video */}
-      <div className="w-full h-full shadow-2xl flex items-center justify-center cursor-pointer">
+
+      {/* Video Container */}
+      <div className="relative w-full max-w-4xl aspect-video mx-4">
         <iframe
-          width="85%"
-          height="90%"
-          src={videoUrl}
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
           title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="rounded-lg shadow-2xl bg-black"
-          style={{
-            minHeight: 400,
-            minWidth: 600,
-            maxHeight: "80vh",
-            maxWidth: "90vw",
-          }}
-        ></iframe>
-      </div>
-      {/* Bottom "Watch on YouTube" bar */}
-      <div className="absolute left-42 right-0 bottom-10 flex items-center  p-3 z-20">
-        <a
-          href={videoUrl.replace("/embed/", "/watch?v=")}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex gap-3 items-center text-white text-base"
-        >
-          <span className="text-base">Watch on </span>
-          <span className="flex justify-center gap-1">
-            <FaYoutube className="text-2xl" />
-            YouTube
-          </span>
-        </a>
+          className="w-full h-full"
+        />
       </div>
     </div>
   );
