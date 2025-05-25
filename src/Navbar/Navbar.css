@@ -11,10 +11,12 @@
   align-items: center;
   justify-content: center;
 }
+
 .logo {
   margin-right: 5rem;
   user-select: none;
 }
+
 .nav-list {
   list-style: none;
   display: flex;
@@ -22,6 +24,7 @@
   margin: 0;
   padding: 0;
 }
+
 .nav-item {
   cursor: pointer;
   font-size: 18px;
@@ -53,14 +56,17 @@
 .nav-item:hover {
   color: #e5e5e5;
 }
+
 .nav-item.active::after,
 .nav-item:hover::after {
   width: 80%;
 }
+
 @media (max-width: 900px) {
   .nav-list {
     gap: 1.25rem;
   }
+
   .navbar {
     height: 56px;
   }

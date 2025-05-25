@@ -112,46 +112,48 @@ const ModelingGallery = () => {
       {/* Image Preview Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-200/20 z-[9999] flex items-center justify-center"
+          className="fixed inset-0 z-50 hero-overlay bg-opacity-0 flex items-center justify-center"
           onClick={handleClose}
         >
-          {/* This container stops propagation to prevent closing when clicking inside */}
-          <div
-            className="relative max-w-[90vw] max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
+          <div>
+            {/* This container stops propagation to prevent closing when clicking inside */}
+            <div
+              className="relative max-w-[90vw]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              {/* <button
               onClick={handleClose}
-              className="fixed top-4 right-4 w-12 h-12 text-white hover:text-gray-300 z-[10000] rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
+              className="fixed top-4 cursor-pointer right-4 w-12 h-12 text-white hover:text-gray-300 z-50 rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
               aria-label="Close preview"
             >
               <FiX size={24} />
-            </button>
+            </button> */}
 
-            {/* Navigation Buttons */}
-            <button
-              onClick={handlePrevious}
-              className="fixed left-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white hover:text-gray-300 z-[10000] rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
-              aria-label="Previous image"
-            >
-              <IoIosArrowBack size={24} />
-            </button>
+              {/* Navigation Buttons */}
+              <button
+                onClick={handlePrevious}
+                className="fixed left-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white hover:text-gray-300 z-50 cursor-pointer rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
+                aria-label="Previous image"
+              >
+                <IoIosArrowBack size={24} />
+              </button>
 
-            <button
-              onClick={handleNext}
-              className="fixed right-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white hover:text-gray-300 z-[10000] rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
-              aria-label="Next image"
-            >
-              <IoIosArrowForward size={24} />
-            </button>
+              <button
+                onClick={handleNext}
+                className="fixed right-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white hover:text-gray-300 z-50 cursor-pointer rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
+                aria-label="Next image"
+              >
+                <IoIosArrowForward size={24} />
+              </button>
 
-            {/* Image */}
-            <img
-              src={selectedImage.img}
-              alt={selectedImage.title}
-              className="max-w-md h-full object-contain"
-            />
+              {/* Image */}
+              <img
+                src={selectedImage.img}
+                alt={selectedImage.title}
+                className="max-w-md h-full object-contain"
+              />
+            </div>
           </div>
         </div>
       )}
