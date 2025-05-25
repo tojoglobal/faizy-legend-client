@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./modeling.css";
 import ModelingCard from "./ModelingCard";
 import { useState, useEffect, useCallback } from "react";
@@ -120,14 +121,6 @@ const ModelingGallery = () => {
               className="relative max-w-[90vw]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
-              {/* <button
-            onClick={handleClose}
-            className="fixed top-4 cursor-pointer right-4 w-12 h-12 text-white hover:text-gray-300 z-50 rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
-            aria-label="Close preview"
-          >
-            <FiX size={24} />
-          </button> */}
               {/* Navigation Buttons */}
               <button
                 onClick={handlePrevious}
@@ -145,11 +138,11 @@ const ModelingGallery = () => {
                 <IoIosArrowForward size={24} />
               </button>
 
-              {/* Image */}
+              {/* Image with 30px top and bottom gap */}
               <img
                 src={selectedImage.img}
                 alt={selectedImage.title}
-                className="h-screen max-w-full object-contain"
+                className="w-full max-h-[calc(100vh-130px)] my-[30px] object-contain"
               />
             </div>
           </div>
