@@ -1,6 +1,6 @@
 const ModelingCard = ({ img, title, meta }) => {
   return (
-    <div className="relative w-full max-w-[320px] mx-auto group ">
+    <div className="relative w-full max-w-[320px] mx-auto group">
       {/* Main Card Container */}
       <div className="relative bg-[#232323] rounded-[15px] shadow-none transition-transform duration-500  group-hover:scale-[1.03]">
         {/* Gray right overlay UNDER the image */}
