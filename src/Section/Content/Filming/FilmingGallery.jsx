@@ -27,23 +27,20 @@ const cards = [
 
 export default function FilmingGallery() {
   const [openVideo, setOpenVideo] = useState(null);
-
-  // Find the card that matches the openVideo youtubeId
   const selectedCard = cards.find((card) => card.youtubeId === openVideo);
 
   return (
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-4">
       <VideoModal
         open={!!openVideo}
         onClose={() => setOpenVideo(null)}
         youtubeId={selectedCard?.youtubeId}
         title={selectedCard?.title}
-        avatarUrl={selectedCard?.img}
       />
 
       {cards.map((card) => (
         <FilmingCard
-          key={card.title + card.youtubeId}
+          key={card.youtubeId}
           img={card.img}
           title={card.title}
           onPlay={() => setOpenVideo(card.youtubeId)}
