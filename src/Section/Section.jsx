@@ -5,6 +5,7 @@ import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import AboutContent from "./Content/About/AboutContent";
 import ModelingGallery from "./Content/Modeling/Modeling";
 import FilmingGallery from "./Content/Filming/FilmingGallery";
+import Shopping from "./Content/Shop/Shopping";
 
 const sectionBackgrounds = {
   about:
@@ -47,7 +48,7 @@ const sectionContents = {
   },
   shop: {
     title: "Shop",
-    text: "Check out exclusive merchandise, curated by Faizy, reflecting personal style and creativity.",
+    text: <Shopping />,
   },
 };
 
