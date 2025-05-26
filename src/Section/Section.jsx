@@ -8,6 +8,7 @@ import FilmingGallery from "./Content/Filming/FilmingGallery";
 import Ugc from "./Content/UGC/Ugc";
 import ArticleGrid from "./Content/ArticleGrid/ArticleGrid";
 import BookForm from "./Content/BookForm/BookForm";
+import Shopping from "./Content/Shop/Shopping";
 
 const sectionBackgrounds = {
   about:
@@ -50,7 +51,7 @@ const sectionContents = {
   },
   shop: {
     title: "Shop",
-    text: "Check out exclusive merchandise, curated by Faizy, reflecting personal style and creativity.",
+    text: <Shopping />,
   },
 };
 

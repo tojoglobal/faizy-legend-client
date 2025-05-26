@@ -12,6 +12,13 @@ body {
   background: #1a202c;
   overflow-x: hidden;
 }
+
+/* body.video-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+} */
+
 :root {
   --font-oswald: "Oswald", sans-serif;
   --font-propins: "Poppins", sans-serif;
