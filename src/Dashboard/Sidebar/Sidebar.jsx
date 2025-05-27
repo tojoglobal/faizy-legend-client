@@ -106,9 +106,9 @@ const menuItems = [
   //   to: "/dashboard/promocodemanager",
   // },
   {
-    label: "Subscriber",
+    label: "Filming Gallery",
     icon: <Tags size={20} />,
-    to: "/dashboard/subscriber",
+    to: "/dashboard/filming-gallery",
   },
   {
     label: "Add Brands",

@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import ErrorPage from "./Err/Error";
 import Gallery from "./Section/Content/Modeling/gallery/Gallery";
 import { ScrollProvider } from "./context/ScrollContext";
+import AdminUpdateFilmingGallery from "./AdminUpdate/AdminUpdateFilmingGallery";
 
 const AppLayout = () => {
   return (
@@ -25,6 +26,7 @@ const AppLayout = () => {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="filming-gallery" element={<AdminUpdateFilmingGallery />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>

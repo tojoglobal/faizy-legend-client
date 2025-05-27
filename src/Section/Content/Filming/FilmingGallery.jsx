@@ -1,50 +1,52 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import VideoModal from "./VideoModal";
 import FilmingCard from "./FilmingCard";
-
-const cards = [
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/IMG_4755.jpg",
-    title: "SILENT DRAGON FORCE",
-    youtubeId: "ZaCr1rsmW1Q",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/02/Screen-Shot-2025-02-05-at-4.36.58-PM-2048x934.png",
-    title: "HUMAN AND DEMON REALM",
-    youtubeId: "YOUTUBE_ID2",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/IMG_4755.jpg",
-    title: "SILENT DRAGON FORCE",
-    youtubeId: "YOUTUBE_ID1",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/02/Screen-Shot-2025-02-05-at-4.36.58-PM-2048x934.png",
-    title: "HUMAN AND DEMON REALM",
-    youtubeId: "YOUTUBE_ID2",
-  },
-];
+import axios from "axios";
 
 export default function FilmingGallery() {
   const [openVideo, setOpenVideo] = useState(null);
-  const selectedCard = cards.find((card) => card.youtubeId === openVideo);
+  const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFilmingVideos = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/api/filming");
+        setCards(response.data);
+      } catch (err) {
+        setError(err.message || "Failed to fetch filming videos");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilmingVideos();
+  }, []);
+
+  const selectedCard = cards.find((card) => card.youtube_id === openVideo);
+
+  if (loading) return <div className="text-center py-8">Loading videos...</div>;
+  if (error) {
+    console.log(error);
+    return <div className="text-center py-8 text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-4">
       <VideoModal
         open={!!openVideo}
         onClose={() => setOpenVideo(null)}
-        youtubeId={selectedCard?.youtubeId}
+        youtubeId={selectedCard?.youtube_id}
         title={selectedCard?.title}
       />
 
-      {cards.map((card, i) => (
+      {cards.map((card) => (
         <FilmingCard
-          key={i + card.youtubeId}
-          // key={card.youtubeId}
-          img={card.img}
+          key={card.id}
+          img={card.image_url}
           title={card.title}
-          onPlay={() => setOpenVideo(card.youtubeId)}
+          onPlay={() => setOpenVideo(card.youtube_id)}
         />
       ))}
     </div>
