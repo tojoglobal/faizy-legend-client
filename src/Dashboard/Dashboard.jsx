@@ -70,7 +70,7 @@ export default function Dashboard() {
     <div className="min-h-[75vh] flex flex-col md:flex-row items-stretch gap-8 p-6 bg-gradient-to-br from-slate-900 to-slate-800">
       {/* Left: Menu */}
       <div className="w-full md:w-1/3 xl:w-1/4 flex-shrink-0 flex flex-col gap-6">
-        <div className="bg-slate-900/80 rounded-xl shadow-md p-6">
+        <div className="rounded-xl shadow-md p-6">
           <h2 className="text-2xl font-extrabold tracking-tight mb-6 text-indigo-300">
             Admin Shortcuts
           </h2>
