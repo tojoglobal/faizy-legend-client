@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import Section from "../Section/Section";
+import { useScroll } from "../context/ScrollContext";
 
 const sections = [
   { id: "hero", label: "" },
@@ -16,6 +17,18 @@ const sections = [
 function Home() {
   const sectionRefs = useRef([]);
   const [activeSection, setActiveSection] = useState(sections[0].id);
+  const { scrollToSection, setScrollToSection } = useScroll();
+
+  // Scroll to target section after navigation from Gallery
+  useEffect(() => {
+    if (scrollToSection) {
+      const idx = sections.findIndex((s) => s.id === scrollToSection);
+      if (sectionRefs.current[idx]) {
+        sectionRefs.current[idx].scrollIntoView({ behavior: "smooth" });
+      }
+      setScrollToSection(null); // Reset so it doesn't happen again
+    }
+  }, [scrollToSection, setScrollToSection]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +48,7 @@ function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id) => {
+  const scrollToSectionHandler = (id) => {
     const idx = sections.findIndex((s) => s.id === id);
     sectionRefs.current[idx]?.scrollIntoView({ behavior: "smooth" });
   };
@@ -45,14 +58,14 @@ function Home() {
       <Navbar
         sections={sections}
         activeSection={activeSection}
-        onNavClick={(id) => scrollToSection(id)}
+        onNavClick={scrollToSectionHandler}
       />
       {sections.map((section, idx) => (
         <Section
           key={section.id}
           section={section}
           ref={(el) => (sectionRefs.current[idx] = el)}
-          scrollToSection={scrollToSection}
+          scrollToSection={scrollToSectionHandler}
         />
       ))}
     </div>

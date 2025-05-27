@@ -8,6 +8,7 @@ import DashboardLayout from "./Dashboard/Layout/Layout";
 import Dashboard from "./Dashboard/Dashboard";
 import ErrorPage from "./Err/Error";
 import Gallery from "./Section/Content/Modeling/gallery/Gallery";
+import { ScrollProvider } from "./context/ScrollContext";
 
 const AppLayout = () => {
   return (
@@ -33,11 +34,15 @@ const AppLayout = () => {
 function App() {
   return (
     <AppProvider>
-      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <div className="">
-          <AppLayout />
-        </div>
-      </Router>
+      <ScrollProvider>
+        <Router
+          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+        >
+          <div className="">
+            <AppLayout />
+          </div>
+        </Router>
+      </ScrollProvider>
     </AppProvider>
   );
 }

@@ -1,13 +1,12 @@
-/* eslint-disable no-unused-vars */
-import { useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import ModelingCard from "../ModelingCard";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FiX } from "react-icons/fi";
-import { modelingCards } from "../ModelingGallery";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "../../../../Navbar/Navbar";
+import ModelingCard from "../ModelingCard";
+import { modelingCards } from "../ModelingGallery";
+import { FiX } from "react-icons/fi";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useScroll } from "../../../../context/ScrollContext";
 
-// Define the same sections as in Home component
 const sections = [
   { id: "hero", label: "" },
   { id: "about", label: "ABOUT" },
@@ -21,21 +20,16 @@ const sections = [
 
 const Gallery = () => {
   const { title } = useParams();
-  const [activeSection, setActiveSection] = useState("modeling");
+  const [activeSection] = useState("modeling");
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const galleryRef = useRef(null);
+  const navigate = useNavigate();
+  const { setScrollToSection } = useScroll();
 
-  // Find all images with matching type or title (case-insensitive)
   const images = modelingCards.filter(
     (img) =>
       img.type?.toLowerCase() === title?.toLowerCase() ||
       img.title?.toLowerCase().replace(/\s+/g, "-") === title?.toLowerCase()
   );
-
-  // Scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const openModal = (idx) => {
     setSelectedIndex(idx);
@@ -57,28 +51,21 @@ const Gallery = () => {
     setSelectedIndex((prev) => (prev + 1) % images.length);
   };
 
-  // Scroll to section in home page when nav item is clicked
+  // Handle Navbar navigation
   const handleNavClick = (id) => {
-    if (id === "modeling") {
-      // If clicking the modeling nav item, scroll to top of gallery
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      // Navigate to home page and scroll to section
-      window.location.href = `/#${id}`;
-    }
+    setScrollToSection(id);
+    navigate("/");
   };
 
   return (
-    <div className="body-part-setup" ref={galleryRef}>
-      {/* Add Navbar at the top */}
+    <div className="body-part-setup bg-[#191919]">
       <Navbar
         sections={sections}
         activeSection={activeSection}
         onNavClick={handleNavClick}
       />
-
-      <div className="w-full min-h-screen bg-[#191919] pt-4 pb-10 px-4">
-        <h1 className="text-3xl font-bold text-white mb-8 uppercase pt-16">
+      <div className="max-w-5xl mx-auto min-h-screen py-10 px-4">
+        <h1 className="text-2xl text-center font-bold text-white mb-8 uppercase pt-16">
           {title.replace(/-/g, " ")}
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -94,7 +81,7 @@ const Gallery = () => {
         </div>
         {selectedIndex !== null && (
           <div
-            className="fixed inset-0 z-[9999] bg-black bg-opacity-80 flex items-center justify-center"
+            className="fixed inset-0 z-[9999] hero-overlay bg-opacity-0 flex items-center justify-center"
             onClick={closeModal}
           >
             <div
