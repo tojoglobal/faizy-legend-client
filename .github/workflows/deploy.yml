@@ -23,13 +23,7 @@ jobs:
         run: |
           echo "VITE_OPEN_APIURL=${{ secrets.VITE_OPEN_APIURL }}" >> .env
           echo "VITE_TINY_APIKEY=${{ secrets.VITE_TINY_APIKEY }}" >> .env
-          echo "VITE_CAPTCH_KEY=${{ secrets.VITE_CAPTCH_KEY }}" >> .env
           echo "VITE_apiKey=${{ secrets.VITE_apiKey }}" >> .env
-          echo "VITE_authDomain=${{ secrets.VITE_authDomain }}" >> .env
-          echo "VITE_projectId=${{ secrets.VITE_projectId }}" >> .env
-          echo "VITE_storageBucket=${{ secrets.VITE_storageBucket }}" >> .env
-          echo "VITE_messagingSenderId=${{ secrets.VITE_messagingSenderId }}" >> .env
-          echo "VITE_appId=${{ secrets.VITE_appId }}" >> .env
 
       - name: Build project
         run: npm run build
