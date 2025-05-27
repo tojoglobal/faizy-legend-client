@@ -38,29 +38,16 @@ const ModelingGallery = () => {
   return (
     <div className="w-full pt-4 pb-8 px-2 md:px-8 relative">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
-        {selectedImage && (
-  <div
-    className="fixed inset-0 z-[9999] bg-black bg-opacity-80 flex items-center justify-center"
-    onClick={handleClose}
-  >
-    <div
-      className="relative w-full h-full flex items-center justify-center"
-      onClick={e => e.stopPropagation()}
-    >
-      <img
-        src={selectedImage.img}
-        alt=""
-        className="object-contain"
-        style={{
-          width: "100vw",
-          height: "calc(100vh - 40px)",
-          marginTop: "20px",
-          marginBottom: "20px"
-        }}
-      />
-    </div>
-  </div>
-)}
+        {modelingCards.map((card, index) => (
+          <Link
+            key={card.title + index}
+            to={`/gallery/${encodeURIComponent(card.type)}`}
+            className="cursor-pointer"
+            style={{ textDecoration: "none" }}
+          >
+            <ModelingCard img={card.img} title={card.title} meta={card.meta} />
+          </Link>
+        ))}
       </div>
     </div>
   );
