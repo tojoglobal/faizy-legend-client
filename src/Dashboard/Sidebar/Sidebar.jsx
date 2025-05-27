@@ -13,26 +13,26 @@ import {
   Users,
   Layers,
   Drum,
-  MonitorCogIcon,
-  PackageCheck,
-  MessageSquareText,
-  Repeat,
-  LifeBuoy,
-  BookUser,
-  BookmarkCheck,
+  // MonitorCogIcon,
+  // PackageCheck,
+  // MessageSquareText,
+  // Repeat,
+  // LifeBuoy,
+  // BookUser,
+  // BookmarkCheck,
   Tags,
 } from "lucide-react";
 import SidebarProfileDropdown from "./SidebarProfileDropdown/SidebarProfileDropdown";
 
 import {
   MdArticle,
-  MdCategory,
-  MdLocalOffer,
-  MdOutlineShoppingCart,
-  MdPercent,
+  // MdCategory,
+  // MdLocalOffer,
+  // MdOutlineShoppingCart,
+  // MdPercent,
   MdWebStories,
 } from "react-icons/md";
-import { BsQuestionCircle } from "react-icons/bs";
+// import { BsQuestionCircle } from "react-icons/bs";
 
 const logo =
   "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
@@ -111,9 +111,9 @@ const menuItems = [
     to: "/dashboard/filming-gallery",
   },
   {
-    label: "Add Brands",
+    label: "Shopping",
     icon: <Drum size={20} />,
-    to: "/dashboard/add-brands",
+    to: "/dashboard/shopping",
   },
   {
     label: "Blog Controll",
