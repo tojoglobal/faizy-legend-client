@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEye } from "react-icons/fa";
 
 const API = import.meta.env.VITE_OPEN_APIURL;
 
@@ -33,8 +33,24 @@ const AdminBookData = () => {
     fetchData();
     Swal.fire("Deleted!", "", "success");
   };
+
+  const showMessage = (name, message) => {
+    Swal.fire({
+      title: `Message from ${name}`,
+      html: `<div style="max-height:40vh;overflow-y:auto;text-align:left;word-break:break-word;">${message
+        .replace(/\n/g, "<br>")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")}</div>`,
+      width: 600,
+      confirmButtonText: "Close",
+      customClass: {
+        htmlContainer: "swal2-message-html",
+      },
+    });
+  };
+
   return (
-    <div className="p-4">
+    <div className="p-3">
       <h1 className="text-2xl font-bold mb-6">Book Form Submissions</h1>
       <div className="overflow-x-auto bg-gray-900 rounded shadow">
         <table className="min-w-full table-auto border border-gray-700">
@@ -55,7 +71,16 @@ const AdminBookData = () => {
                 <td className="p-2">{f.name}</td>
                 <td className="p-2">{f.last_name}</td>
                 <td className="p-2">{f.email}</td>
-                <td className="p-2 max-w-[200px] break-words">{f.message}</td>
+                <td className="p-2 max-w-[120px] whitespace-nowrap overflow-hidden text-ellipsis">
+                  <button
+                    className="flex cursor-pointer items-center gap-1 text-blue-400 hover:underline"
+                    title="View message"
+                    onClick={() => showMessage(f.name, f.message)}
+                  >
+                    <FaEye />
+                    View
+                  </button>
+                </td>
                 <td className="p-2">
                   {f.image_url ? (
                     <a

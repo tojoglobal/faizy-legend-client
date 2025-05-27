@@ -4,7 +4,6 @@ import {
   Menu,
   X,
   LayoutDashboard,
-  Mail,
   Calendar,
   ChevronDown,
   ChevronUp,
@@ -24,14 +23,14 @@ import {
 } from "lucide-react";
 import SidebarProfileDropdown from "./SidebarProfileDropdown/SidebarProfileDropdown";
 
-import {
-  MdArticle,
+// import {
+//   MdArticle,
   // MdCategory,
   // MdLocalOffer,
   // MdOutlineShoppingCart,
   // MdPercent,
-  MdWebStories,
-} from "react-icons/md";
+  // MdWebStories,
+// } from "react-icons/md";
 // import { BsQuestionCircle } from "react-icons/bs";
 
 const logo =
@@ -120,35 +119,35 @@ const menuItems = [
     icon: <Drum size={20} />,
     to: "/dashboard/booking-data",
   },
-  {
-    label: "Blog Controll",
-    icon: <MdArticle size={20} />,
-    submenu: [
-      { label: "TS Blog", to: "/dashboard/ts-blog" },
-      { label: "Author", to: "/dashboard/author" },
-      { label: "Blog Type", to: "/dashboard/blog-type" },
-    ],
-  },
-  {
-    label: "Website Controll",
-    icon: <MdWebStories size={20} />,
-    submenu: [
-      { label: "Home Page", to: "/dashboard/home-page" },
-      { label: "Hire", to: "/dashboard/hire" },
-      { label: "Service", to: "/dashboard/service" },
-      { label: "About Us", to: "/dashboard/about-us" },
-      { label: "Contact Us", to: "/dashboard/contact-us" },
-      { label: "Certificate Tracking", to: "/dashboard/cc" },
-    ],
-  },
-  {
-    label: "Email",
-    icon: <Mail size={20} />,
-    submenu: [
-      { label: "Inbox", to: "/dashboard/email/inbox" },
-      { label: "Sent", to: "/dashboard/email/sent" },
-    ],
-  },
+  // {
+  //   label: "Blog Controll",
+  //   icon: <MdArticle size={20} />,
+  //   submenu: [
+  //     { label: "TS Blog", to: "/dashboard/ts-blog" },
+  //     { label: "Author", to: "/dashboard/author" },
+  //     { label: "Blog Type", to: "/dashboard/blog-type" },
+  //   ],
+  // },
+  // {
+  //   label: "Website Controll",
+  //   icon: <MdWebStories size={20} />,
+  //   submenu: [
+  //     { label: "Home Page", to: "/dashboard/home-page" },
+  //     { label: "Hire", to: "/dashboard/hire" },
+  //     { label: "Service", to: "/dashboard/service" },
+  //     { label: "About Us", to: "/dashboard/about-us" },
+  //     { label: "Contact Us", to: "/dashboard/contact-us" },
+  //     { label: "Certificate Tracking", to: "/dashboard/cc" },
+  //   ],
+  // },
+  // {
+  //   label: "Email",
+  //   icon: <Mail size={20} />,
+  //   submenu: [
+  //     { label: "Inbox", to: "/dashboard/email/inbox" },
+  //     { label: "Sent", to: "/dashboard/email/sent" },
+  //   ],
+  // },
   {
     label: "Calendar",
     icon: <Calendar size={20} />,
