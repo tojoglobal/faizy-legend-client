@@ -77,7 +77,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
           />
         </video>
         <div className="section-content">
-          <h1 className="big-title pt-[50vh]">FAIZY LEGEND</h1>
+          <h1 className="big-title pt-[45vh]">FAIZY LEGEND</h1>
           <div className="hero_subtitle mt-[4rem]">
             MODEL | ACTOR | INFLUENCER
           </div>
