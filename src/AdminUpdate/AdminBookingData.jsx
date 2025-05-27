@@ -55,7 +55,7 @@ const AdminBookData = () => {
       <div className="overflow-x-auto bg-gray-900 rounded shadow">
         <table className="min-w-full table-auto border border-gray-700">
           <thead>
-            <tr className="bg-gray-800 text-white">
+            <tr className="bg-gray-800 text-left text-white">
               <th className="p-2">Name</th>
               <th className="p-2">Last Name</th>
               <th className="p-2">Email</th>
@@ -91,7 +91,7 @@ const AdminBookData = () => {
                       <img
                         src={getImageUrl(f.image_url)}
                         alt="attachment"
-                        className="w-16 h-16 object-cover rounded"
+                        className="w-16 h-12 object-cover rounded-sm"
                       />
                     </a>
                   ) : (

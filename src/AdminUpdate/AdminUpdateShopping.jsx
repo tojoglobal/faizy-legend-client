@@ -179,13 +179,13 @@ const AdminUpdateShopping = () => {
                   onChange={(e) => setEditingCatName(e.target.value)}
                 />
                 <button
-                  className="bg-green-600 cursor-pointer text-white px-2 rounded"
+                  className="bg-green-600 cursor-pointer text-white px-2 py-[2px] rounded"
                   onClick={() => saveEditCategory(cat)}
                 >
                   <FaSave />
                 </button>
                 <button
-                  className="bg-gray-600 cursor-pointer text-white px-2 rounded"
+                  className="bg-gray-600 cursor-pointer text-white px-2 py-[2px] rounded"
                   onClick={() => setEditingCatId(null)}
                 >
                   <FaTimes />
@@ -303,16 +303,16 @@ const AdminUpdateShopping = () => {
                   </td>
                   <td className="p-2 flex gap-2 justify-center">
                     <button
-                      className="bg-green-600 cursor-pointer text-white px-2 py-[2px] rounded"
+                      className="bg-green-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={addProduct}
                     >
-                      <FaSave />
+                      <FaSave /> Save
                     </button>
                     <button
-                      className="bg-gray-600 cursor-pointer text-white px-2 py-[2px] rounded"
+                      className="bg-gray-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={() => setAddRow(false)}
                     >
-                      <FaTimes />
+                      <FaTimes /> Cancel
                     </button>
                   </td>
                 </tr>
@@ -383,16 +383,16 @@ const AdminUpdateShopping = () => {
                     </td>
                     <td className="p-2 flex gap-2 justify-center">
                       <button
-                        className="bg-green-600 cursor-pointer text-white px-2 py-[2px] rounded"
+                        className="bg-green-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                         onClick={saveEditProduct}
                       >
-                        <FaSave />
+                        <FaSave /> Save
                       </button>
                       <button
-                        className="bg-gray-600 cursor-pointer text-white px-2 py-[2px] rounded"
+                        className="bg-gray-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                         onClick={() => setEditingId(null)}
                       >
-                        <FaTimes />
+                        <FaTimes /> Cancel
                       </button>
                     </td>
                   </tr>

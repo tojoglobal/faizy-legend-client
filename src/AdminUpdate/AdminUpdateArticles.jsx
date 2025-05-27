@@ -94,11 +94,11 @@ const AdminUpdateArticles = () => {
 
   return (
     <div className="p-3">
-      <h1 className="text-2xl font-bold mb-6">Manage Articles</h1>
+      <h1 className="text-2xl font-bold mb-4">Manage Articles</h1>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Articles</h2>
         <button
-          className="bg-green-700 text-white px-3 py-1 rounded"
+          className="bg-teal-700 cursor-pointer flex items-center gap-1 text-white px-3 py-1 rounded"
           onClick={() => setAddRow(true)}
         >
           <FaPlus /> Add Article
@@ -153,16 +153,18 @@ const AdminUpdateArticles = () => {
                 </td>
                 <td className="p-2 flex gap-2">
                   <button
-                    className="bg-green-600 text-white px-2 rounded"
+                    className="bg-green-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                     onClick={addArticle}
                   >
                     <FaSave />
+                    Save
                   </button>
                   <button
-                    className="bg-gray-600 text-white px-2 rounded"
+                    className="bg-gray-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                     onClick={() => setAddRow(false)}
                   >
                     <FaTimes />
+                    Cancel
                   </button>
                 </td>
               </tr>
@@ -212,16 +214,17 @@ const AdminUpdateArticles = () => {
                   </td>
                   <td className="p-2 flex gap-2">
                     <button
-                      className="bg-green-600 text-white px-2 rounded"
+                      className="bg-green-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={saveEditArticle}
                     >
-                      <FaSave />
+                      <FaSave /> Save
                     </button>
                     <button
-                      className="bg-gray-600 text-white px-2 rounded"
+                      className="bg-gray-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={() => setEditingId(null)}
                     >
                       <FaTimes />
+                      Cancel
                     </button>
                   </td>
                 </tr>
@@ -249,13 +252,13 @@ const AdminUpdateArticles = () => {
                   </td>
                   <td className="p-2 flex gap-2">
                     <button
-                      className="bg-yellow-600 text-white px-2 rounded"
+                      className="bg-yellow-600 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={() => startEditArticle(article)}
                     >
                       <FaEdit />
                     </button>
                     <button
-                      className="bg-red-600 text-white px-2 rounded"
+                      className="bg-red-600 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={() => deleteArticle(article.id)}
                     >
                       <FaTrash />

@@ -30,9 +30,9 @@ const menuItems = [
     to: "/dashboard/filming-gallery",
   },
   {
-    label: "Shopping",
-    icon: <ShoppingCart size={20} />,
-    to: "/dashboard/shopping",
+    label: "Articles",
+    icon: <Newspaper size={20} />,
+    to: "/dashboard/articles",
   },
   {
     label: "Booking Data",
@@ -40,9 +40,9 @@ const menuItems = [
     to: "/dashboard/booking-data",
   },
   {
-    label: "Articles",
-    icon: <Newspaper size={20} />,
-    to: "/dashboard/articles",
+    label: "Shopping",
+    icon: <ShoppingCart size={20} />,
+    to: "/dashboard/shopping",
   },
 ];
 
