@@ -29,15 +29,15 @@ const VideoModal = ({ open, onClose, youtubeId, title }) => {
       className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-5xl mx-auto">
+      <div className="relative w-full max-w-6xl mx-auto h-[86vh]">
         <button
           onClick={onClose}
-          className="absolute top-1 right-0 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-colors"
+          className="fixed top-4 right-4 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-colors"
           aria-label="Close video"
         >
           <FiX size={24} />
         </button>
-        <div className="w-full aspect-video rounded-lg overflow-hidden shadow-xl bg-black">
+        <div className="w-full h-full rounded-lg overflow-hidden shadow-xl bg-black">
           <iframe
             src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
             title={title}

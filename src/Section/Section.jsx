@@ -34,7 +34,7 @@ const sectionContents = {
     text: <ModelingGallery />,
   },
   filming: {
-    title: "Filming",
+    title: "",
     text: <FilmingGallery />,
   },
   ugc: {

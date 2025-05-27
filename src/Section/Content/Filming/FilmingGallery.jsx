@@ -14,7 +14,9 @@ export default function FilmingGallery() {
     error,
   } = useQuery({
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5001/api/filming");
+      const res = await axios.get(
+        `${import.meta.env.VITE_OPEN_APIURL}/api/filming`
+      );
       return res?.data;
     },
   });

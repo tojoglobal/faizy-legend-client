@@ -24,7 +24,7 @@ const FilmingCard = ({ img, youtube_id, title, onPlay }) => {
           </button>
         </div>
       </div>
-      <div className="mt-3 text-center text-white font-bold text-lg px-2">
+      <div className="mt-3 uppercase text-white font-bold text-lg">
         {title}
       </div>
     </div>
