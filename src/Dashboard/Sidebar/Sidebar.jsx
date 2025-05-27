@@ -149,9 +149,9 @@ const menuItems = [
   //   ],
   // },
   {
-    label: "Calendar",
+    label: "Articles",
     icon: <Calendar size={20} />,
-    to: "/dashboard/calendar",
+    to: "/dashboard/articles",
   },
   {
     label: "Chat",
