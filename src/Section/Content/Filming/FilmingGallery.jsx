@@ -1,34 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import VideoModal from "./VideoModal";
 import FilmingCard from "./FilmingCard";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export default function FilmingGallery() {
   const [openVideo, setOpenVideo] = useState(null);
-  const [cards, setCards] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchFilmingVideos = async () => {
-      try {
-        const response = await axios.get("http://localhost:5001/api/filming");
-        setCards(response.data);
-      } catch (err) {
-        setError(err.message || "Failed to fetch filming videos");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: cards = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5001/api/filming");
+      return res?.data;
+    },
+  });
+  const selectedCard = cards?.find((card) => card.youtube_id === openVideo);
 
-    fetchFilmingVideos();
-  }, []);
-
-  const selectedCard = cards.find((card) => card.youtube_id === openVideo);
-
-  if (loading) return <div className="text-center py-8">Loading videos...</div>;
-  if (error) {
-    console.log(error);
+  if (isLoading)
+    return <div className="text-center py-8">Loading videos...</div>;
+  if (isError) {
     return <div className="text-center py-8 text-red-500">Error: {error}</div>;
   }
 

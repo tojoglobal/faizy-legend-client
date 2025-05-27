@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-const API_URL = "http://localhost:5001/api/filming";
+const API_URL = `${import.meta.env.VITE_OPEN_APIURL}/api/filming`;
 
 const getYoutubeId = (input) => {
   if (!input) return "";
@@ -210,14 +210,14 @@ const AdminUpdateFilmingGallery = () => {
                 </td>
                 <td className="px-2 py-2">
                   <button
-                    className="bg-green-600 px-3 py-1 text-white rounded mr-2"
+                    className="bg-green-600 cursor-pointer px-3 py-1 text-white rounded mr-2"
                     onClick={onSaveNew}
                     disabled={isSaving}
                   >
                     {isSaving ? "Saving..." : "Add"}
                   </button>
                   <button
-                    className="bg-gray-700 px-3 py-1 text-white rounded"
+                    className="bg-gray-700 cursor-pointer px-3 py-1 text-white rounded"
                     onClick={onCancelNew}
                   >
                     Cancel
@@ -278,14 +278,14 @@ const AdminUpdateFilmingGallery = () => {
                   </td>
                   <td className="px-2 py-2">
                     <button
-                      className="bg-green-600 px-3 py-1 text-white rounded mr-2"
+                      className="bg-green-600 cursor-pointer px-3 py-1 text-white rounded mr-2"
                       onClick={onSaveEdit}
                       disabled={isSaving}
                     >
                       {isSaving ? "Saving..." : "Save"}
                     </button>
                     <button
-                      className="bg-gray-700 px-3 py-1 text-white rounded"
+                      className="bg-gray-700 cursor-pointer px-3 py-1 text-white rounded"
                       onClick={onCancelEdit}
                     >
                       Cancel
@@ -310,13 +310,13 @@ const AdminUpdateFilmingGallery = () => {
                   <td className="px-2 py-2">{video.description || "-"}</td>
                   <td className="px-2 py-2">
                     <button
-                      className="bg-blue-600 hover:bg-blue-700 px-3 py-1 text-white rounded mr-2"
+                      className="bg-blue-600 cursor-pointer hover:bg-blue-700 px-3 py-1 text-white rounded mr-2"
                       onClick={() => onEdit(video)}
                     >
                       Edit
                     </button>
                     <button
-                      className="bg-red-600 hover:bg-red-700 px-3 py-1 text-white rounded"
+                      className="bg-red-600 cursor-pointer hover:bg-red-700 px-3 py-1 text-white rounded"
                       onClick={() => onDelete(video.id)}
                     >
                       Delete
