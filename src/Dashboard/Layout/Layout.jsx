@@ -11,7 +11,7 @@ const DashboardLayout = () => {
   const toggleMobileSidebar = () => setMobileOpen(!mobileOpen);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white dashboard-dark">
+    <div className="dashboard flex min-h-screen bg-gray-900 text-white dashboard-dark">
       {/* Sidebar - Fixed position on mobile, sticky on desktop */}
       <aside
         className={`fixed md:sticky top-0 z-50 h-screen overflow-y-auto bg-gray-800 flex flex-col ${

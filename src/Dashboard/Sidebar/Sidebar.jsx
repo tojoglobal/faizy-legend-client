@@ -38,72 +38,73 @@ const logo =
   "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
 const smallLogo =
   "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
+  
 const menuItems = [
   {
     label: "Dashboard",
     icon: <LayoutDashboard size={20} />,
     to: "/dashboard",
   },
-  {
-    label: "Orders",
-    icon: <PackageCheck size={20} />,
-    to: "/dashboard/orders",
-  },
-  {
-    label: "Client Messages",
-    icon: <MessageSquareText size={20} />,
-    to: "/dashboard/client-messages",
-  },
-  {
-    label: "Trade In",
-    icon: <Repeat size={20} />,
-    to: "/dashboard/trade-in",
-  },
-  {
-    label: "Support",
-    icon: <LifeBuoy size={20} />,
-    to: "/dashboard/support",
-  },
-  {
-    label: "Service Inquiries",
-    icon: <BsQuestionCircle size={20} />,
-    to: "/dashboard/service-inquiries",
-  },
-  {
-    label: "Product",
-    icon: <MdOutlineShoppingCart size={20} />,
-    to: "/dashboard/product",
-  },
-  {
-    label: "Add Software",
-    icon: <MonitorCogIcon size={20} />,
-    to: "/dashboard/add-software",
-  },
-  {
-    label: "Add UserManuals",
-    icon: <BookUser size={20} />,
-    to: "/dashboard/add-userManuals",
-  },
-  {
-    label: "Add QuickGuides",
-    icon: <BookmarkCheck size={20} />,
-    to: "/dashboard/add-quickGuides",
-  },
-  {
-    label: "Add categorys",
-    icon: <MdCategory size={20} />,
-    to: "/dashboard/add-categorys",
-  },
-  {
-    label: "Taxes",
-    icon: <MdPercent size={20} />,
-    to: "/dashboard/taxesmanager",
-  },
-  {
-    label: "Promo Code",
-    icon: <MdLocalOffer size={20} />,
-    to: "/dashboard/promocodemanager",
-  },
+  // {
+  //   label: "Orders",
+  //   icon: <PackageCheck size={20} />,
+  //   to: "/dashboard/orders",
+  // },
+  // {
+  //   label: "Client Messages",
+  //   icon: <MessageSquareText size={20} />,
+  //   to: "/dashboard/client-messages",
+  // },
+  // {
+  //   label: "Trade In",
+  //   icon: <Repeat size={20} />,
+  //   to: "/dashboard/trade-in",
+  // },
+  // {
+  //   label: "Support",
+  //   icon: <LifeBuoy size={20} />,
+  //   to: "/dashboard/support",
+  // },
+  // {
+  //   label: "Service Inquiries",
+  //   icon: <BsQuestionCircle size={20} />,
+  //   to: "/dashboard/service-inquiries",
+  // },
+  // {
+  //   label: "Product",
+  //   icon: <MdOutlineShoppingCart size={20} />,
+  //   to: "/dashboard/product",
+  // },
+  // {
+  //   label: "Add Software",
+  //   icon: <MonitorCogIcon size={20} />,
+  //   to: "/dashboard/add-software",
+  // },
+  // {
+  //   label: "Add UserManuals",
+  //   icon: <BookUser size={20} />,
+  //   to: "/dashboard/add-userManuals",
+  // },
+  // {
+  //   label: "Add QuickGuides",
+  //   icon: <BookmarkCheck size={20} />,
+  //   to: "/dashboard/add-quickGuides",
+  // },
+  // {
+  //   label: "Add categorys",
+  //   icon: <MdCategory size={20} />,
+  //   to: "/dashboard/add-categorys",
+  // },
+  // {
+  //   label: "Taxes",
+  //   icon: <MdPercent size={20} />,
+  //   to: "/dashboard/taxesmanager",
+  // },
+  // {
+  //   label: "Promo Code",
+  //   icon: <MdLocalOffer size={20} />,
+  //   to: "/dashboard/promocodemanager",
+  // },
   {
     label: "Subscriber",
     icon: <Tags size={20} />,
@@ -230,7 +231,7 @@ const Sidebar = ({
               </Link>
             ) : (
               <Link to="/">
-                <img src={logo} alt="Logo" className="w-[50%]" />
+                <img src={logo} alt="Logo" className="w-[15%]" />
               </Link>
             )}
           </h2>
