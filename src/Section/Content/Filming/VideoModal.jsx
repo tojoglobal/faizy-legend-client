@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { FiX } from "react-icons/fi";
 
-const VideoModal = ({ open, onClose, youtubeId, title, description }) => {
+const VideoModal = ({ open, onClose, youtubeId, title }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
@@ -29,10 +29,10 @@ const VideoModal = ({ open, onClose, youtubeId, title, description }) => {
       className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
     >
-      <div className="relative w-full max-w-4xl">
+      <div className="relative w-full max-w-5xl mx-auto">
         <button
           onClick={onClose}
-          className="absolute -top-12 right-0 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-colors"
+          className="absolute top-1 right-0 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-white/20 transition-colors"
           aria-label="Close video"
         >
           <FiX size={24} />
@@ -47,10 +47,6 @@ const VideoModal = ({ open, onClose, youtubeId, title, description }) => {
             frameBorder="0"
           />
         </div>
-        {title && (
-          <div className="mt-4 text-white text-xl font-bold">{title}</div>
-        )}
-        {description && <div className="mt-2 text-gray-300">{description}</div>}
       </div>
     </div>
   );
