@@ -1,180 +1,48 @@
 import { useEffect, useState } from "react";
 import { useLocation, NavLink, Link } from "react-router-dom";
+import SidebarProfileDropdown from "./SidebarProfileDropdown/SidebarProfileDropdown";
 import {
   Menu,
   X,
   LayoutDashboard,
-  Calendar,
   ChevronDown,
   ChevronUp,
-  MessageCircle,
-  File,
-  Users,
-  Layers,
-  Drum,
-  // MonitorCogIcon,
-  // PackageCheck,
-  // MessageSquareText,
-  // Repeat,
-  // LifeBuoy,
-  // BookUser,
-  // BookmarkCheck,
-  Tags,
+  Image,
+  ShoppingCart,
+  BookOpenText,
+  Newspaper,
 } from "lucide-react";
-import SidebarProfileDropdown from "./SidebarProfileDropdown/SidebarProfileDropdown";
-
-// import {
-//   MdArticle,
-  // MdCategory,
-  // MdLocalOffer,
-  // MdOutlineShoppingCart,
-  // MdPercent,
-  // MdWebStories,
-// } from "react-icons/md";
-// import { BsQuestionCircle } from "react-icons/bs";
 
 const logo =
   "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
 const smallLogo =
   "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
-  
+
 const menuItems = [
   {
     label: "Dashboard",
     icon: <LayoutDashboard size={20} />,
     to: "/dashboard",
   },
-  // {
-  //   label: "Orders",
-  //   icon: <PackageCheck size={20} />,
-  //   to: "/dashboard/orders",
-  // },
-  // {
-  //   label: "Client Messages",
-  //   icon: <MessageSquareText size={20} />,
-  //   to: "/dashboard/client-messages",
-  // },
-  // {
-  //   label: "Trade In",
-  //   icon: <Repeat size={20} />,
-  //   to: "/dashboard/trade-in",
-  // },
-  // {
-  //   label: "Support",
-  //   icon: <LifeBuoy size={20} />,
-  //   to: "/dashboard/support",
-  // },
-  // {
-  //   label: "Service Inquiries",
-  //   icon: <BsQuestionCircle size={20} />,
-  //   to: "/dashboard/service-inquiries",
-  // },
-  // {
-  //   label: "Product",
-  //   icon: <MdOutlineShoppingCart size={20} />,
-  //   to: "/dashboard/product",
-  // },
-  // {
-  //   label: "Add Software",
-  //   icon: <MonitorCogIcon size={20} />,
-  //   to: "/dashboard/add-software",
-  // },
-  // {
-  //   label: "Add UserManuals",
-  //   icon: <BookUser size={20} />,
-  //   to: "/dashboard/add-userManuals",
-  // },
-  // {
-  //   label: "Add QuickGuides",
-  //   icon: <BookmarkCheck size={20} />,
-  //   to: "/dashboard/add-quickGuides",
-  // },
-  // {
-  //   label: "Add categorys",
-  //   icon: <MdCategory size={20} />,
-  //   to: "/dashboard/add-categorys",
-  // },
-  // {
-  //   label: "Taxes",
-  //   icon: <MdPercent size={20} />,
-  //   to: "/dashboard/taxesmanager",
-  // },
-  // {
-  //   label: "Promo Code",
-  //   icon: <MdLocalOffer size={20} />,
-  //   to: "/dashboard/promocodemanager",
-  // },
   {
     label: "Filming Gallery",
-    icon: <Tags size={20} />,
+    icon: <Image size={20} />,
     to: "/dashboard/filming-gallery",
   },
   {
     label: "Shopping",
-    icon: <Drum size={20} />,
+    icon: <ShoppingCart size={20} />,
     to: "/dashboard/shopping",
   },
   {
     label: "Booking Data",
-    icon: <Drum size={20} />,
+    icon: <BookOpenText size={20} />,
     to: "/dashboard/booking-data",
   },
-  // {
-  //   label: "Blog Controll",
-  //   icon: <MdArticle size={20} />,
-  //   submenu: [
-  //     { label: "TS Blog", to: "/dashboard/ts-blog" },
-  //     { label: "Author", to: "/dashboard/author" },
-  //     { label: "Blog Type", to: "/dashboard/blog-type" },
-  //   ],
-  // },
-  // {
-  //   label: "Website Controll",
-  //   icon: <MdWebStories size={20} />,
-  //   submenu: [
-  //     { label: "Home Page", to: "/dashboard/home-page" },
-  //     { label: "Hire", to: "/dashboard/hire" },
-  //     { label: "Service", to: "/dashboard/service" },
-  //     { label: "About Us", to: "/dashboard/about-us" },
-  //     { label: "Contact Us", to: "/dashboard/contact-us" },
-  //     { label: "Certificate Tracking", to: "/dashboard/cc" },
-  //   ],
-  // },
-  // {
-  //   label: "Email",
-  //   icon: <Mail size={20} />,
-  //   submenu: [
-  //     { label: "Inbox", to: "/dashboard/email/inbox" },
-  //     { label: "Sent", to: "/dashboard/email/sent" },
-  //   ],
-  // },
   {
     label: "Articles",
-    icon: <Calendar size={20} />,
+    icon: <Newspaper size={20} />,
     to: "/dashboard/articles",
-  },
-  {
-    label: "Chat",
-    icon: <MessageCircle size={20} />,
-    to: "/dashboard/chat",
-  },
-  {
-    label: "Files",
-    icon: <File size={20} />,
-    submenu: [
-      { label: "Documents", to: "/dashboard/files/documents" },
-      { label: "Images", to: "/dashboard/files/images" },
-    ],
-  },
-  {
-    label: "Users",
-    icon: <Users size={20} />,
-    to: "/dashboard/users",
-  },
-  {
-    label: "Layouts",
-    icon: <Layers size={20} />,
-    to: "/dashboard/layouts",
   },
 ];
 

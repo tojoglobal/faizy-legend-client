@@ -20,7 +20,7 @@ import DashboardWidgets from "./DBComponents/DashboardWidgets";
 export default function Dashboard() {
   return (
     <div className="p-1 pt-0 grid md:gap-4 grid-cols-1 xl:grid-cols-4">
-      {/* Top Metrics */}
+    {/* Top Metrics */}
       <Card className="border-0 col-span-1 xl:col-span-4 bg-slate-900 text-white">
         <CardContent className="px-0 md:px-0 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           <MetricBox
