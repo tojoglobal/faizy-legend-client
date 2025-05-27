@@ -3,7 +3,7 @@ import "./Section.css";
 import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import AboutContent from "./Content/About/AboutContent";
-import ModelingGallery from "./Content/Modeling/Modeling";
+import ModelingGallery from "./Content/Modeling/ModelingGallery";
 import FilmingGallery from "./Content/Filming/FilmingGallery";
 import Ugc from "./Content/UGC/Ugc";
 import ArticleGrid from "./Content/ArticleGrid/ArticleGrid";
