@@ -13,6 +13,8 @@ import AdminUpdateFilmingGallery from "./AdminUpdate/AdminUpdateFilmingGallery";
 import AdminUpdateShopping from "./AdminUpdate/AdminUpdateShopping";
 import ModelingGalleryTable from "./Dashboard/ModelingGallery/ModelingGalleryTable";
 import UgcGallery from "./Dashboard/UgcGallery/UgcGallery";
+import AdminBookingData from "./AdminUpdate/AdminBookingData";
+import AdminUpdateArticles from "./AdminUpdate/AdminUpdateArticles";
 
 const AppLayout = () => {
   return (
@@ -33,6 +35,8 @@ const AppLayout = () => {
         <Route path="modeling-gallery" element={<ModelingGalleryTable />} />
         <Route path="ugc-gallery" element={<UgcGallery />} />
         <Route path="shopping" element={<AdminUpdateShopping />} />
+        <Route path="booking-data" element={<AdminBookingData />} />
+        <Route path="articles" element={<AdminUpdateArticles />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>

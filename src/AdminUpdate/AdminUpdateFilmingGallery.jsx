@@ -204,9 +204,9 @@ export default function AdminUpdateFilmingGallery() {
         </button>
       </div>
       <div className="overflow-x-auto rounded-lg shadow-md bg-gray-800">
-        <table className="min-w-full">
+        <table className="min-w-full text-white border border-gray-600">
           <thead>
-            <tr className="bg-gray-900 text-white border border-gray-600">
+            <tr className="bg-gray-900">
               <th className="px-2 py-2 rounded-tl-lg">Thumbnail</th>
               <th className="px-2 py-2">Title</th>
               <th className="px-2 py-2">YouTube Link</th>
@@ -223,7 +223,7 @@ export default function AdminUpdateFilmingGallery() {
                     <img
                       src={getThumbnail(getYoutubeId(newVideo.youtube_id))}
                       alt="preview"
-                      className="w-24 h-16 object-cover rounded shadow"
+                      className="w-24 h-12 object-cover rounded shadow"
                     />
                   )}
                 </td>
@@ -315,7 +315,7 @@ export default function AdminUpdateFilmingGallery() {
                       <img
                         src={getThumbnail(getYoutubeId(editingData.youtube_id))}
                         alt="preview"
-                        className="w-24 h-16 object-cover rounded shadow"
+                        className="w-24 h-12 object-cover rounded shadow"
                       />
                     </td>
                     <td className="px-2 py-2 align-middle">
@@ -387,7 +387,7 @@ export default function AdminUpdateFilmingGallery() {
                       <img
                         src={getThumbnail(getYoutubeId(video.youtube_id))}
                         alt={video.title}
-                        className="w-24 h-16 object-cover rounded shadow"
+                        className="w-24 h-12 object-cover rounded shadow"
                         loading="lazy"
                       />
                     </td>

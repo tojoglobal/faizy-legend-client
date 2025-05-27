@@ -151,10 +151,8 @@ const AdminUpdateShopping = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Manage Shop</h1>
-
-      {/* Category Management */}
+    <div className="max-w-5xl mx-auto">
+      <h1 className="text-2xl font-bold mb-3">Manage Shop</h1>
       <div className="mb-10">
         <h2 className="text-xl font-semibold mb-2">Categories</h2>
         <div className="flex gap-2 mb-2">
@@ -165,14 +163,14 @@ const AdminUpdateShopping = () => {
             placeholder="New Category"
           />
           <button
-            className="bg-green-700 text-white px-3 py-1 rounded"
+            className="bg-green-700 cursor-pointer text-white px-3 py-1 rounded"
             onClick={addCategory}
           >
             <FaPlus />
           </button>
         </div>
         <ul className="space-y-1">
-          {categories.map((cat) =>
+          {categories?.map((cat, idx) =>
             editingCatId === cat.id ? (
               <li key={cat.id} className="flex gap-2 items-center">
                 <input
@@ -181,13 +179,13 @@ const AdminUpdateShopping = () => {
                   onChange={(e) => setEditingCatName(e.target.value)}
                 />
                 <button
-                  className="bg-green-600 text-white px-2 rounded"
+                  className="bg-green-600 cursor-pointer text-white px-2 py-[2px] rounded"
                   onClick={() => saveEditCategory(cat)}
                 >
                   <FaSave />
                 </button>
                 <button
-                  className="bg-gray-600 text-white px-2 rounded"
+                  className="bg-gray-600 cursor-pointer text-white px-2 py-[2px] rounded"
                   onClick={() => setEditingCatId(null)}
                 >
                   <FaTimes />
@@ -195,9 +193,9 @@ const AdminUpdateShopping = () => {
               </li>
             ) : (
               <li key={cat.id} className="flex gap-2 items-center">
-                <span>{cat.name}</span>
+                {idx + 1}. <span>{cat.name}</span>
                 <button
-                  className="bg-yellow-600 text-white px-2 rounded"
+                  className="bg-yellow-600 cursor-pointer text-white px-2 py-[2px] rounded"
                   onClick={() => {
                     setEditingCatId(cat.id);
                     setEditingCatName(cat.name);
@@ -206,7 +204,7 @@ const AdminUpdateShopping = () => {
                   <FaEdit />
                 </button>
                 <button
-                  className="bg-red-600 text-white px-2 rounded"
+                  className="bg-red-600 cursor-pointer text-white px-2 py-[2px] rounded"
                   onClick={() => deleteCategory(cat.id)}
                 >
                   <FaTrash />
@@ -216,20 +214,26 @@ const AdminUpdateShopping = () => {
           )}
         </ul>
       </div>
-
       {/* Products Management */}
       <div>
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
           <h2 className="text-xl font-semibold">Products</h2>
           <button
-            className="bg-green-700 text-white px-3 py-1 rounded"
+            className="bg-teal-700 cursor-pointer text-white flex items-center gap-1 px-3 py-1 rounded"
             onClick={() => setAddRow(true)}
           >
             <FaPlus /> Add Product
           </button>
         </div>
-        <div className="overflow-x-auto shadow rounded bg-gray-900">
-          <table className="min-w-full">
+        <div className="w-full shadow rounded bg-gray-900 overflow-hidden">
+          <table className="min-w-full table-fixed">
+            <colgroup>
+              <col style={{ width: "80px" }} />
+              <col style={{ width: "170px" }} />
+              <col style={{ width: "130px" }} />
+              <col style={{ width: "230px" }} />
+              <col style={{ width: "120px" }} />
+            </colgroup>
             <thead>
               <tr className="bg-gray-800 text-white">
                 <th className="p-2">Image</th>
@@ -242,7 +246,7 @@ const AdminUpdateShopping = () => {
             <tbody>
               {addRow && (
                 <tr className="bg-gray-800">
-                  <td className="p-2">
+                  <td>
                     <input
                       type="file"
                       accept="image/*"
@@ -258,17 +262,18 @@ const AdminUpdateShopping = () => {
                   </td>
                   <td className="p-2">
                     <input
-                      className="p-1 rounded bg-gray-700 text-white"
+                      className="p-1 rounded bg-gray-700 text-white w-full"
                       value={newProduct.name}
                       onChange={(e) =>
                         setNewProduct((p) => ({ ...p, name: e.target.value }))
                       }
                       placeholder="Product Name"
+                      maxLength={80}
                     />
                   </td>
                   <td className="p-2">
                     <select
-                      className="p-1 rounded bg-gray-700 text-white"
+                      className="p-1 rounded cursor-pointer bg-gray-700 text-white w-full"
                       value={newProduct.category_id}
                       onChange={(e) =>
                         setNewProduct((p) => ({
@@ -287,26 +292,27 @@ const AdminUpdateShopping = () => {
                   </td>
                   <td className="p-2">
                     <input
-                      className="p-1 rounded bg-gray-700 text-white"
+                      className="p-1 rounded bg-gray-700 text-white w-full truncate"
                       value={newProduct.link}
                       onChange={(e) =>
                         setNewProduct((p) => ({ ...p, link: e.target.value }))
                       }
                       placeholder="Product Link"
+                      maxLength={120}
                     />
                   </td>
-                  <td className="p-2 flex gap-2">
+                  <td className="p-2 flex gap-2 justify-center">
                     <button
-                      className="bg-green-600 text-white px-2 rounded"
+                      className="bg-green-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={addProduct}
                     >
-                      <FaSave />
+                      <FaSave /> Save
                     </button>
                     <button
-                      className="bg-gray-600 text-white px-2 rounded"
+                      className="bg-gray-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                       onClick={() => setAddRow(false)}
                     >
-                      <FaTimes />
+                      <FaTimes /> Cancel
                     </button>
                   </td>
                 </tr>
@@ -332,7 +338,7 @@ const AdminUpdateShopping = () => {
                     </td>
                     <td className="p-2">
                       <input
-                        className="p-1 rounded bg-gray-700 text-white"
+                        className="p-1 rounded bg-gray-700 text-white w-full"
                         value={editingData.name}
                         onChange={(e) =>
                           setEditingData((p) => ({
@@ -340,11 +346,12 @@ const AdminUpdateShopping = () => {
                             name: e.target.value,
                           }))
                         }
+                        maxLength={80}
                       />
                     </td>
                     <td className="p-2">
                       <select
-                        className="p-1 rounded bg-gray-700 text-white"
+                        className="p-1 rounded cursor-pointer bg-gray-700 text-white w-full"
                         value={editingData.category_id}
                         onChange={(e) =>
                           setEditingData((p) => ({
@@ -363,7 +370,7 @@ const AdminUpdateShopping = () => {
                     </td>
                     <td className="p-2">
                       <input
-                        className="p-1 rounded bg-gray-700 text-white"
+                        className="p-1 rounded bg-gray-700 text-white w-full truncate"
                         value={editingData.link}
                         onChange={(e) =>
                           setEditingData((p) => ({
@@ -371,20 +378,21 @@ const AdminUpdateShopping = () => {
                             link: e.target.value,
                           }))
                         }
+                        maxLength={120}
                       />
                     </td>
-                    <td className="p-2 flex gap-2">
+                    <td className="p-2 flex gap-2 justify-center">
                       <button
-                        className="bg-green-600 text-white px-2 rounded"
+                        className="bg-green-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                         onClick={saveEditProduct}
                       >
-                        <FaSave />
+                        <FaSave /> Save
                       </button>
                       <button
-                        className="bg-gray-600 text-white px-2 rounded"
+                        className="bg-gray-600 flex items-center gap-1 cursor-pointer text-white px-2 py-[2px] rounded"
                         onClick={() => setEditingId(null)}
                       >
-                        <FaTimes />
+                        <FaTimes /> Cancel
                       </button>
                     </td>
                   </tr>
@@ -399,16 +407,21 @@ const AdminUpdateShopping = () => {
                     </td>
                     <td className="p-2">{product.name}</td>
                     <td className="p-2">{product.category_name}</td>
-                    <td className="p-2">{product.link}</td>
-                    <td className="p-2 flex gap-2">
+                    <td
+                      className="p-2 max-w-[170px] truncate text-xs text-blue-300"
+                      title={product.link}
+                    >
+                      {product.link}
+                    </td>
+                    <td className="p-2 flex gap-2 justify-center">
                       <button
-                        className="bg-yellow-600 text-white px-2 rounded"
+                        className="bg-yellow-600 cursor-pointer text-white px-2 py-[2px] rounded"
                         onClick={() => startEditProduct(product)}
                       >
                         <FaEdit />
                       </button>
                       <button
-                        className="bg-red-600 text-white px-2 rounded"
+                        className="bg-red-600 cursor-pointer text-white px-2 py-[2px] rounded"
                         onClick={() => deleteProduct(product.id)}
                       >
                         <FaTrash />

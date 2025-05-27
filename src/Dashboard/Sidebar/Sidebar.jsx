@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, NavLink, Link } from "react-router-dom";
+import SidebarProfileDropdown from "./SidebarProfileDropdown/SidebarProfileDropdown";
 import {
   Menu,
   X,
@@ -11,8 +12,11 @@ import {
   Drum,
   Tags,
   BookImage,
+  Image,
+  ShoppingCart,
+  BookOpenText,
+  Newspaper,
 } from "lucide-react";
-import SidebarProfileDropdown from "./SidebarProfileDropdown/SidebarProfileDropdown";
 
 const logo =
   "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
@@ -33,12 +37,22 @@ const menuItems = [
   },
   {
     label: "Filming Gallery",
-    icon: <Tags size={20} />,
+    icon: <Image size={20} />,
     to: "/dashboard/filming-gallery",
   },
   {
+    label: "Articles",
+    icon: <Newspaper size={20} />,
+    to: "/dashboard/articles",
+  },
+  {
+    label: "Booking Data",
+    icon: <BookOpenText size={20} />,
+    to: "/dashboard/booking-data",
+  },
+  {
     label: "Shopping",
-    icon: <Drum size={20} />,
+    icon: <ShoppingCart size={20} />,
     to: "/dashboard/shopping",
   },
 
