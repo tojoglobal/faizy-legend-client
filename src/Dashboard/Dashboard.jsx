@@ -200,7 +200,7 @@ function DashLink({ icon, to, label }) {
   return (
     <Link
       to={to}
-      className="flex items-center gap-3 px-4 py-3 rounded-lg bg-slate-800 hover:bg-indigo-600 transition text-gray-200 hover:text-white font-medium"
+      className="flex items-center gap-3 p-3 rounded-lg bg-slate-800 hover:bg-teal-600 transition text-gray-200 hover:text-white font-medium"
     >
       <span className="text-xl">{icon}</span>
       {label}
