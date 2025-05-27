@@ -33,7 +33,7 @@ export default function FilmingGallery() {
   }
 
   return (
-    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+    <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
       <VideoModal
         open={!!openVideo}
         onClose={() => setOpenVideo(null)}
@@ -42,7 +42,7 @@ export default function FilmingGallery() {
       {cards.map((card) => (
         <FilmingCard
           key={card.id}
-          img={card.image_url}
+          youtube_id={card.youtube_id}
           title={card.title}
           onPlay={() => setOpenVideo(card.youtube_id)}
         />
