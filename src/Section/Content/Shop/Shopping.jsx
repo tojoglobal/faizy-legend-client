@@ -1,78 +1,56 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import ShoppingCard from "./ShoppingCard";
+import axios from "axios";
 
-const products = [
-  {
-    id: 1,
-    name: "Faizy Comic",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIMdbyTDzP2wEubL1tF5zaNUqPugO_TkzUdQ&s",
-    category: "Shirts",
-    link: "/product/faizy-comic",
-  },
-  {
-    id: 2,
-    name: "Simple Design",
-    image: "/shirts/simple-design.png",
-    category: "Shirts",
-    link: "/product/simple-design",
-  },
-  {
-    id: 3,
-    name: "Vitiligo Crown",
-    image: "/shirts/vitiligo-crown.png",
-    category: "Shirts",
-    link: "/product/vitiligo-crown",
-  },
-  {
-    id: 4,
-    name: "Wolf Design",
-    image: "/shirts/wolf-design.png",
-    category: "Shirts",
-    link: "/product/wolf-design",
-  },
-  {
-    id: 5,
-    name: "Faizy Comic",
-    image: "/shirts/faizy-comic.png",
-    category: "Shirts",
-    link: "/product/faizy-comic",
-  },
-  {
-    id: 6,
-    name: "Simple Design",
-    image: "/shirts/simple-design.png",
-    category: "Shirts",
-    link: "/product/simple-design",
-  },
-  {
-    id: 7,
-    name: "Vitiligo Crown",
-    image: "/shirts/vitiligo-crown.png",
-    category: "Shirts",
-    link: "/product/vitiligo-crown",
-  },
-  {
-    id: 8,
-    name: "Wolf Design",
-    image: "/shirts/wolf-design.png",
-    category: "Shirts",
-    link: "/product/wolf-design",
-  },
-];
+const API = import.meta.env.VITE_OPEN_APIURL;
 
-const categories = ["Category Filter", "Shirts"];
+// Utility to get absolute image url
+const getImageUrl = (imageUrl) => {
+  if (!imageUrl) return "";
+  if (/^https?:\/\//.test(imageUrl)) return imageUrl;
+  return `${API.replace(/\/$/, "")}${imageUrl}`;
+};
 
-const Shopping = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Category Filter");
+export default function Shopping() {
+  const { data: products = [], isLoading } = useQuery({
+    queryKey: ["shop-products"],
+    queryFn: async () => {
+      const res = await axios.get(`${API}/api/shopping/products`);
+      return res.data;
+    },
+  });
+
+  const { data: categories = [], isLoading: catLoading } = useQuery({
+    queryKey: ["shop-categories"],
+    queryFn: async () => {
+      const res = await axios.get(`${API}/api/shopping/categories`);
+      return res.data;
+    },
+  });
+
+  // Build filter options (prepend "All" option)
+  const categoryOptions = ["All", ...categories.map((c) => c.name)];
+
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  // Map products with absolute image URLs
+  const mappedProducts = products.map((p) => ({
+    ...p,
+    image: getImageUrl(p.image_url),
+    category: p.category_name,
+    link: p.link,
+  }));
 
   const filteredProducts =
-    selectedCategory === "Category Filter"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
+    selectedCategory === "All"
+      ? mappedProducts
+      : mappedProducts.filter(
+          (product) => product.category === selectedCategory
+        );
 
   return (
-    <div className="">
+    <div>
       {/* Category Filter */}
       <div className="mb-8 relative w-48">
         <select
@@ -80,7 +58,7 @@ const Shopping = () => {
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="w-full p-1 text-white appearance-none cursor-pointer focus:outline-none focus:bg-[#191919] bg-[#191919] border-b border-white"
         >
-          {categories.map((category) => (
+          {categoryOptions.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>
@@ -93,9 +71,11 @@ const Shopping = () => {
         </div>
       </div>
       {/* Product Grid */}
-      <ShoppingCard filteredProducts={filteredProducts} />
+      {isLoading || catLoading ? (
+        <div className="text-gray-300 py-8 text-center">Loading...</div>
+      ) : (
+        <ShoppingCard filteredProducts={filteredProducts} />
+      )}
     </div>
   );
-};
-
-export default Shopping;
+}

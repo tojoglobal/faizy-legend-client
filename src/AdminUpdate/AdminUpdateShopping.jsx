@@ -5,6 +5,13 @@ import { FaEdit, FaTrash, FaPlus, FaSave, FaTimes } from "react-icons/fa";
 
 const API = import.meta.env.VITE_OPEN_APIURL;
 
+// Utility to get absolute image url
+const getImageUrl = (imageUrl) => {
+  if (!imageUrl) return "";
+  if (/^https?:\/\//.test(imageUrl)) return imageUrl;
+  return `${API.replace(/\/$/, "")}${imageUrl}`;
+};
+
 const fetchCategories = async () => {
   const res = await axios.get(`${API}/api/shopping/categories`);
   return res.data;
@@ -34,8 +41,6 @@ const AdminUpdateShopping = () => {
     category_id: "",
     link: "",
   });
-console.log(products);
-  // Load categories & products
   useEffect(() => {
     fetchCategories().then(setCategories);
     fetchProducts().then(setProducts);
@@ -122,7 +127,6 @@ console.log(products);
     form.append("name", editingData.name);
     form.append("category_id", editingData.category_id);
     form.append("link", editingData.link);
-    // Only append image if changed
     if (editingData.image) form.append("image", editingData.image);
     else form.append("image_url", editingData.image_url);
     await axios.put(`${API}/api/shopping/products/${editingId}`, form, {
@@ -320,7 +324,7 @@ console.log(products);
                         src={
                           editingData.image
                             ? URL.createObjectURL(editingData.image)
-                            : product.image_url
+                            : getImageUrl(product.image_url)
                         }
                         alt={product.name}
                         className="w-16 h-16 mt-2 object-cover rounded"
@@ -388,7 +392,7 @@ console.log(products);
                   <tr key={product.id} className="border-b border-gray-700">
                     <td className="p-2">
                       <img
-                        src={product.image_url}
+                        src={getImageUrl(product.image_url)}
                         alt={product.name}
                         className="w-16 h-16 object-cover rounded"
                       />

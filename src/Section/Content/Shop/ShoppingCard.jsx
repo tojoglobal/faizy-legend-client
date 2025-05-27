@@ -13,6 +13,7 @@ const ShoppingCard = ({ filteredProducts }) => {
             src={product.image}
             alt={product.name}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 group-hover:hero-overlay group-hover:bg-opacity-10 transition-opacity duration-300 flex items-center justify-center">
             <h3 className="text-xl hidden group-hover:block font-semibold text-gray-300 text-center">
