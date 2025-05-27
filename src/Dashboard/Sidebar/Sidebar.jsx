@@ -116,6 +116,11 @@ const menuItems = [
     to: "/dashboard/shopping",
   },
   {
+    label: "Booking Data",
+    icon: <Drum size={20} />,
+    to: "/dashboard/booking-data",
+  },
+  {
     label: "Blog Controll",
     icon: <MdArticle size={20} />,
     submenu: [

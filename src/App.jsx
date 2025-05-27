@@ -11,6 +11,7 @@ import Gallery from "./Section/Content/Modeling/gallery/Gallery";
 import { ScrollProvider } from "./context/ScrollContext";
 import AdminUpdateFilmingGallery from "./AdminUpdate/AdminUpdateFilmingGallery";
 import AdminUpdateShopping from "./AdminUpdate/AdminUpdateShopping";
+import AdminBookingData from "./AdminUpdate/AdminBookingData";
 
 const AppLayout = () => {
   return (
@@ -29,6 +30,7 @@ const AppLayout = () => {
         <Route index element={<Dashboard />} />
         <Route path="filming-gallery" element={<AdminUpdateFilmingGallery />} />
         <Route path="shopping" element={<AdminUpdateShopping />} />
+        <Route path="booking-data" element={<AdminBookingData />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
