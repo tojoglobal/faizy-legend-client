@@ -204,9 +204,9 @@ export default function AdminUpdateFilmingGallery() {
         </button>
       </div>
       <div className="overflow-x-auto rounded-lg shadow-md bg-gray-800">
-        <table className="min-w-full">
+        <table className="min-w-full text-white border border-gray-700">
           <thead>
-            <tr className="bg-gray-900 text-white border border-gray-600">
+            <tr className="bg-gray-900">
               <th className="px-2 py-2 rounded-tl-lg">Thumbnail</th>
               <th className="px-2 py-2">Title</th>
               <th className="px-2 py-2">YouTube Link</th>

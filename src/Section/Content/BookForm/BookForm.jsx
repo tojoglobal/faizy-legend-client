@@ -73,7 +73,7 @@ export default function BookForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-6xl font-poppins mx-auto w-full px-2 py-10 bg-[#181818] flex flex-col gap-6"
+      className="max-w-4xl font-poppins mx-auto w-full px-2 py-10 bg-[#181818] flex flex-col gap-6"
       noValidate
     >
       <div className="flex flex-col md:flex-row gap-4">
