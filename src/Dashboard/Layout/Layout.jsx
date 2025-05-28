@@ -25,7 +25,6 @@ const DashboardLayout = () => {
           toggleMobileSidebar={toggleMobileSidebar}
         />
       </aside>
-
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-h-screen w-full">
         {/* Top Menu Bar - Sticky */}
@@ -36,14 +35,12 @@ const DashboardLayout = () => {
             toggleSidebar={toggleSidebar}
           />
         </header>
-
         {/* Scrollable Content Area */}
         <main className="flex-1 overflow-y-auto">
           <div className="p-3 md:p-4">
             <Outlet />
           </div>
         </main>
-
         {/* Footer - Sticky at bottom */}
         <footer className="sticky bottom-0 bg-gray-800 text-center text-sm py-3 text-gray-400">
           <div className="px-4">

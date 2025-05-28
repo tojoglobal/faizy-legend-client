@@ -1,13 +1,4 @@
-import React from "react";
-import {
-  Menu,
-  Bell,
-  Search,
-  Settings,
-  Maximize2,
-  Sun,
-  Moon,
-} from "lucide-react";
+import { Menu, Bell, Search, Settings, Maximize2 } from "lucide-react";
 // import { useAppContext } from "../../context/useAppContext";
 
 const TopMenuBar = ({ toggleMobileSidebar, collapsed, toggleSidebar }) => {
@@ -42,7 +33,6 @@ const TopMenuBar = ({ toggleMobileSidebar, collapsed, toggleSidebar }) => {
           Dashboard
         </span>
       </div>
-
       {/* Right Side: Search Bar, Notifications, Fullscreen, Settings */}
       <div className="flex items-center gap-4">
         {/* Search Bar */}
