@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s;
 }
 
 .logo {
@@ -61,12 +62,112 @@
   width: 80%;
 }
 
-@media (max-width: 900px) {
-  .nav-list {
-    gap: 1.25rem;
-  }
+/* Hamburger styles */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  z-index: 30;
+  cursor: pointer;
+}
+.menu-toggle span,
+.menu-toggle span::before,
+.menu-toggle span::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 30px;
+  background: #fff;
+  border-radius: 2px;
+  transition: 0.3s;
+  position: relative;
+}
+.menu-toggle span::before {
+  position: absolute;
+  top: -10px;
+  left: 0;
+}
+.menu-toggle span::after {
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
 
+/* Mobile menu overlay */
+.mobile-nav {
+  display: none;
+}
+@media (max-width: 900px) {
   .navbar {
     height: 56px;
+    justify-content: flex-start;
+    background: transparent;
+  }
+  .nav-list {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(15, 15, 15, 0.97);
+    z-index: 1000;
+    padding-top: 40px;
+    animation: menuOpen 0.2s;
+  }
+  .mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .mobile-nav-item {
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .mobile-nav-item.active,
+  .mobile-nav-item:hover {
+    color: #e5e5e5;
+  }
+  .mobile-nav-close {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    font-size: 2.5rem;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+  }
+}
+@keyframes menuOpen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

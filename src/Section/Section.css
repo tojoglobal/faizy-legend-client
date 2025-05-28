@@ -132,7 +132,6 @@
   font-size: 3.2rem;
   cursor: pointer;
   color: #fff;
-  /* color: #ffe34b; */
   transition: color 0.2s;
 }
 
@@ -207,5 +206,11 @@
   }
   .content-title {
     font-size: 1.2rem;
+  }
+}
+@media (max-width: 720px) {
+  .section-plus-btn {
+    bottom: 20%;
+    font-size: 2.2rem;
   }
 }

@@ -128,7 +128,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       style={{
         backgroundImage: bg,
         backgroundSize: "cover",
-        backgroundPosition: "top center",
+        backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
       }}
