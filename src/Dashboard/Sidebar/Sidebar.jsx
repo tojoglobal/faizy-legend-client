@@ -7,6 +7,11 @@ import {
   LayoutDashboard,
   ChevronDown,
   ChevronUp,
+  Users,
+  Layers,
+  Drum,
+  Tags,
+  BookImage,
   Image,
   ShoppingCart,
   BookOpenText,
@@ -23,6 +28,12 @@ const menuItems = [
     label: "Dashboard",
     icon: <LayoutDashboard size={20} />,
     to: "/dashboard",
+  },
+
+  {
+    label: "modeling Gallery",
+    icon: <BookImage size={20} />,
+    to: "/dashboard/modeling-gallery",
   },
   {
     label: "Filming Gallery",
@@ -43,6 +54,17 @@ const menuItems = [
     label: "Shopping",
     icon: <ShoppingCart size={20} />,
     to: "/dashboard/shopping",
+  },
+
+  {
+    label: "UGC",
+    icon: <Users size={20} />,
+    to: "/dashboard/ugc-gallery",
+  },
+  {
+    label: "Layouts",
+    icon: <Layers size={20} />,
+    to: "/dashboard/layouts",
   },
 ];
 
