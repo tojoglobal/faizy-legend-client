@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import Section from "../Section/Section";
 import { useScroll } from "../context/ScrollContext";
+import { useAppContext } from "../context/useAppContext";
+import VideoModal from "./../Section/Content/Filming/VideoModal";
 
 const sections = [
   { id: "hero", label: "" },
@@ -15,6 +17,7 @@ const sections = [
 ];
 
 function Home() {
+  const { openVideo, setOpenVideo, selectedCard } = useAppContext();
   const sectionRefs = useRef([]);
   const [activeSection, setActiveSection] = useState(sections[0].id);
   const { scrollToSection, setScrollToSection } = useScroll();
@@ -55,6 +58,12 @@ function Home() {
 
   return (
     <div className="body-part-setup">
+      <VideoModal
+        open={!!openVideo}
+        onClose={() => setOpenVideo(null)}
+        youtubeId={selectedCard?.youtube_id}
+        title={selectedCard?.title}
+      />
       <Navbar
         sections={sections}
         activeSection={activeSection}

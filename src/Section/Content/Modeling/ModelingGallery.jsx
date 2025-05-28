@@ -1,81 +1,67 @@
-/* eslint-disable react-refresh/only-export-components */
+import { useQuery } from "@tanstack/react-query";
 import "./modeling.css";
-import ModelingCard from "./ModelingCard";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import ModelingCard from "./ModelingCard";
 
-export const modelingCards = [
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_8828-scaled.jpg",
-    title: "MOUNTAIN VIBES",
-    meta: "Phoenix, Arizona | @Elivireichphoto",
-    type: "mountain-vibes",
-    photographer: "@Elivireichphoto",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_8625-scaled.jpg",
-    title: "LEOPARD IN STYLE",
-    meta: "Houston, Texas | @Valentinoui",
-    type: "leopard-in-style",
-    photographer: "@Valentinoui",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_86651-scaled.jpg",
-    title: "SHADOWED SILENCE",
-    meta: "Katy, Texas | @pdl_photography",
-    type: "shadowed-silence",
-    photographer: "@pdl_photography",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_8625-scaled.jpg",
-    title: "SUITED BUT SAVAGE",
-    meta: "Houston, Texas | @skinmintclinent",
-    type: "suited-but-savage",
-    photographer: "@skinmintclinent",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_8828-scaled.jpg",
-    title: "MOUNTAIN VIBES",
-    meta: "Phoenix, Arizona | @Elivireichphoto",
-    type: "mountain-vibes",
-    photographer: "@Elivireichphoto",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_8625-scaled.jpg",
-    title: "LEOPARD IN STYLE",
-    meta: "Houston, Texas | @Valentinoui",
-    type: "leopard-in-style",
-    photographer: "@Valentinoui",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_86651-scaled.jpg",
-    title: "SHADOWED SILENCE",
-    meta: "Katy, Texas | @pdl_photography",
-    type: "shadowed-silence",
-    photographer: "@pdl_photography",
-  },
-  {
-    img: "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/04/IMG_8724-scaled.jpg",
-    title: "SUITED BUT SAVAGE",
-    meta: "Houston, Texas | @skinmintclinent",
-    type: "suited-but-savage",
-    photographer: "@skinmintclinent",
-  },
-];
+const API_URL = `${import.meta.env.VITE_OPEN_APIURL}/api/modeling-gallery`;
+
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .replace(/--+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}
 
 const ModelingGallery = () => {
+  const {
+    data: modelingData = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["modeling-gallery"],
+    queryFn: async () => {
+      const res = await axios.get(API_URL);
+      return res.data;
+    },
+  });
+
   return (
     <div className="w-full pt-4 pb-8 px-2 md:px-8 relative">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
-        {modelingCards.map((card, index) => (
-          <Link
-            key={card.title + index}
-            to={`/gallery/${encodeURIComponent(card.type)}`}
-            className="cursor-pointer"
-            style={{ textDecoration: "none" }}
-          >
-            <ModelingCard img={card.img} title={card.title} meta={card.meta} />
-          </Link>
-        ))}
+        {isLoading ? (
+          <div className="col-span-full text-center text-gray-400 py-12">
+            Loading...
+          </div>
+        ) : isError ? (
+          <div className="col-span-full text-center text-red-400 py-12">
+            {error?.message || "Error loading galleries"}
+          </div>
+        ) : modelingData.length > 0 ? (
+          modelingData.map((card, index) => (
+            <Link
+              key={card.name + index}
+              to={`/gallery/${slugify(card.name)}`}
+              className="cursor-pointer"
+              style={{ textDecoration: "none" }}
+            >
+              <ModelingCard
+                img={card?.thumbnail}
+                title={card?.name}
+                location={card?.location}
+                photographer={card?.photographer}
+              />
+            </Link>
+          ))
+        ) : (
+          <div className="col-span-full text-center text-gray-400 py-12">
+            No modeling galleries found.
+          </div>
+        )}
       </div>
     </div>
   );

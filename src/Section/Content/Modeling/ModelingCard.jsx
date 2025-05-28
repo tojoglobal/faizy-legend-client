@@ -1,4 +1,4 @@
-const ModelingCard = ({ img, title, meta }) => {
+const ModelingCard = ({ img, title, location, photographer }) => {
   return (
     <div className="relative w-full max-w-[320px] mx-auto group">
       {/* Main Card Container */}
@@ -9,9 +9,8 @@ const ModelingCard = ({ img, title, meta }) => {
           style={{ right: "-10px" }}
         ></div>
 
-        {/* Card Image (full width/height) */}
         <img
-          src={img}
+          src={`${import.meta.env.VITE_OPEN_APIURL}/${img}`}
           alt={title}
           className="w-full h-[340px] rounded-[15px] object-cover z-20 relative"
           style={{ minHeight: "180px" }}
@@ -38,7 +37,7 @@ const ModelingCard = ({ img, title, meta }) => {
             {title}
           </div>
           <div className="text-[#e5e5e5] text-[0.98rem] font-light tracking-wide drop-shadow">
-            {meta}
+            {location} | @ {photographer}
           </div>
         </div>
       </div>
