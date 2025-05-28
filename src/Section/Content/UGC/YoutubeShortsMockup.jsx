@@ -9,12 +9,11 @@ const YoutubeShortsMockup = ({ videoUrl, title = "HEARVIEW GLASSES" }) => {
             src={videoUrl}
             title={title}
             frameBorder="0"
-            allow="autoplay; fullscreen "
-            // allowFullScreen
+            allow="autoplay; fullscreen"
           ></iframe>
         </div>
       </div>
-      <div className="mt-5 text-white font-extrabold tracking-widest text-center text-base md:text-lg">
+      <div className="mt-5 text-white font-bold tracking-widest text-lg uppercase md:text-xl">
         {title}
       </div>
     </div>

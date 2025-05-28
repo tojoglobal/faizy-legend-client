@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaFacebook, FaLinkedin, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router";
