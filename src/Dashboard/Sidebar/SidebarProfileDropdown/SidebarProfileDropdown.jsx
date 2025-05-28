@@ -4,7 +4,6 @@ import {
   ChevronUp,
   User,
   MessageSquare,
-  HelpCircle,
   CreditCard,
   Settings,
   Lock,
@@ -36,7 +35,7 @@ const SidebarProfileDropdown = () => {
   };
 
   return (
-    <div className=" relative p-3">
+    <div className="relative p-3">
       {/* Profile Trigger */}
       <button
         onClick={() => setOpen(!open)}
@@ -68,17 +67,17 @@ const SidebarProfileDropdown = () => {
               onClick={onLogoutClick}
             />
           </div>
-          <div className="border-t" />
-          <div className="p-2">
-            <DropdownItem
+          {/* <div className="border-t" />
+          <div className="p-2"> */}
+            {/* <DropdownItem
               icon={<CreditCard size={16} />}
               label={
                 <span>
                   Balance: <span className="font-semibold">$5971.67</span>
                 </span>
               }
-            />
-            <DropdownItem
+            /> */}
+            {/* <DropdownItem
               icon={<Settings size={16} />}
               label={
                 <span className="flex items-center gap-1">
@@ -88,9 +87,9 @@ const SidebarProfileDropdown = () => {
                   </span>
                 </span>
               }
-            />
-            <DropdownItem icon={<Lock size={16} />} label="Lock screen" />
-          </div>
+            /> */}
+            {/* <DropdownItem icon={<Lock size={16} />} label="Lock screen" /> */}
+          {/* </div> */}
         </div>
       )}
     </div>
