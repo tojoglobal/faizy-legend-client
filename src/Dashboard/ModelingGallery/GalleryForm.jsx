@@ -147,7 +147,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black/70 via-gray-900/80 to-slate-900/70 backdrop-blur-sm">
       <div className="bg-gradient-to-br from-[#1a1a23] via-[#20202a] to-[#29293a] rounded-3xl p-8 max-w-2xl w-full shadow-2xl relative overflow-auto max-h-[95vh] border border-gray-800">
         <button
-          className="absolute top-5 right-5 text-gray-400 hover:text-white focus:outline-none"
+          className="absolute cursor-pointer top-5 right-5 text-gray-400 hover:text-white focus:outline-none"
           onClick={onClose}
         >
           <XMarkIcon className="w-8 h-8" />
@@ -163,7 +163,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
         >
           {/* Name */}
           <div>
-            <label className="block font-semibold text-gray-300 mb-1 flex items-center gap-2">
+            <label className="font-semibold text-gray-300 mb-1 flex items-center gap-2">
               <CameraIcon className="w-5 h-5 text-purple-400" />
               Name
             </label>
@@ -176,7 +176,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
           </div>
           {/* Location */}
           <div>
-            <label className="block font-semibold text-gray-300 mb-1 flex items-center gap-2">
+            <label className="font-semibold text-gray-300 mb-1 flex items-center gap-2">
               <MapPinIcon className="w-5 h-5 text-emerald-400" />
               Location
             </label>
@@ -188,7 +188,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
           </div>
           {/* Photographer */}
           <div>
-            <label className="block font-semibold text-gray-300 mb-1 flex items-center gap-2">
+            <label className="font-semibold text-gray-300 mb-1 flex items-center gap-2">
               <UserIcon className="w-5 h-5 text-yellow-400" />
               Photographer
             </label>
@@ -277,7 +277,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold text-lg tracking-wide shadow-xl transition"
+            className="w-full cursor-pointer bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold text-lg tracking-wide shadow-xl transition"
           >
             {initial.id ? "Update Gallery" : "Create Gallery"}
           </button>

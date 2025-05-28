@@ -35,7 +35,7 @@ export default function ModelingGalleryTable() {
         <h2 className="text-xl font-bold">Modeling Galleries</h2>
         <button
           onClick={() => setEditGallery({})}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white px-4 py-1.5 rounded"
         >
           + Create Gallery
         </button>

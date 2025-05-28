@@ -31,7 +31,7 @@ const menuItems = [
   },
 
   {
-    label: "modeling Gallery",
+    label: "Modeling Gallery",
     icon: <BookImage size={20} />,
     to: "/dashboard/modeling-gallery",
   },
