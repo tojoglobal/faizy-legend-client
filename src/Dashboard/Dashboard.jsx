@@ -5,11 +5,23 @@ import {
   FaUsers,
   FaFileAlt,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 import { useQueries } from "@tanstack/react-query";
 import axios from "axios";
 
+// You can swap to other chart libs if you like. Here we use recharts for variety.
 const API = import.meta.env.VITE_OPEN_APIURL;
 
 const COLORS = ["#6366f1", "#22d3ee", "#f59e42", "#8b5cf6", "#10b981"];
@@ -42,7 +54,6 @@ export default function Dashboard() {
       {
         queryKey: ["users"],
         queryFn: async () => {
-          // You may need to implement this endpoint on the backend
           try {
             const res = await axios.get(`${API}/api/users`);
             return res.data;
@@ -66,156 +77,222 @@ export default function Dashboard() {
     { name: "Users", value: users.length },
   ];
 
+  // Example: Recent growth, static demo data. Replace with your own if you have it.
+  const barData = [
+    {
+      name: "Products",
+      value: products.length,
+      growth: Math.round(products.length * 0.1 + 2), // Fake growth
+    },
+    {
+      name: "Articles",
+      value: articles.length,
+      growth: Math.round(articles.length * 0.1 + 1),
+    },
+    {
+      name: "Book Forms",
+      value: bookForms.length,
+      growth: Math.round(bookForms.length * 0.1 + 1),
+    },
+    {
+      name: "Users",
+      value: users.length,
+      growth: Math.round(users.length * 0.13 + 3),
+    },
+  ];
+
   return (
-    <div className="min-h-[75vh] flex flex-col md:flex-row items-stretch gap-8 p-6 bg-gradient-to-br from-slate-900 to-slate-800">
-      {/* Left: Menu */}
-      <div className="w-full md:w-1/3 xl:w-1/4 flex-shrink-0 flex flex-col gap-6">
-        <div className="rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-extrabold tracking-tight mb-6 text-indigo-300">
-            Admin Shortcuts
-          </h2>
-          <div className="space-y-3">
-            <DashLink
-              icon={<FaBoxOpen />}
-              to="/dashboard/shopping"
-              label="Manage Products"
-            />
-            <DashLink
-              icon={<FaFileAlt />}
-              to="/dashboard/articles"
-              label="Manage Articles"
-            />
-            <DashLink
-              icon={<FaBookOpen />}
-              to="/dashboard/booking-data"
-              label="Manage Book Forms"
-            />
-            <DashLink
-              icon={<FaUsers />}
-              to="/dashboard/users"
-              label="User Management"
-            />
-          </div>
-        </div>
-        <div className="hidden md:block bg-slate-900/80 rounded-xl shadow-md px-6 py-4 mt-8">
-          <span className="text-gray-400 text-xs">
-            faizy-legend admin system
-          </span>
-        </div>
-      </div>
-      {/* Right: Pie chart and stats */}
+    <div className="min-h-[80vh] flex flex-col xl:flex-row gap-8 p-6 bg-gradient-to-br from-slate-950 to-slate-800 transition-all">
+      {/* Main dashboard area */}
       <div className="flex-1 flex flex-col gap-8">
-        <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-          <div className="bg-slate-900/80 rounded-xl shadow-md w-full max-w-xs flex flex-col items-center p-6">
-            <h3 className="text-xl font-bold text-indigo-300 mb-2">Overview</h3>
-            {isLoading ? (
-              <div className="h-[200px] flex items-center justify-center w-full text-gray-400">
-                Loading...
-              </div>
-            ) : (
-              <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    innerRadius={40}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    paddingAngle={2}
-                    dataKey="value"
-                    label={({ name, percent }) =>
-                      percent > 0.14 ? `${name}` : ""
-                    }
-                  >
-                    {pieData.map((entry, idx) => (
-                      <Cell
-                        key={`cell-${idx}`}
-                        fill={COLORS[idx % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            )}
-            <div className="mt-4 flex flex-col gap-1 w-full">
-              {pieData.map((item, i) => (
-                <div
-                  key={item.name}
-                  className="flex items-center gap-2 text-sm"
-                >
-                  <span
-                    className="inline-block w-3 h-3 rounded-full"
-                    style={{ backgroundColor: COLORS[i % COLORS.length] }}
+        {/* Welcome & stats */}
+        <div className="relative flex flex-col md:flex-row gap-8 items-stretch">
+          <div className="flex-1 flex flex-col gap-6">
+            <div className="bg-slate-900/90 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row items-center gap-6">
+              <div className="flex-1">
+                <div className="flex gap-4 flex-wrap">
+                  <WidgetStat
+                    icon={<FaBoxOpen className="text-blue-400" />}
+                    label="Products"
+                    value={isLoading ? "..." : products.length}
                   />
-                  <span className="text-gray-300">{item.name}</span>
-                  <span className="ml-auto font-semibold text-indigo-200">
-                    {item.value}
-                  </span>
+                  <WidgetStat
+                    icon={<FaFileAlt className="text-orange-400" />}
+                    label="Articles"
+                    value={isLoading ? "..." : articles.length}
+                  />
+                  <WidgetStat
+                    icon={<FaBookOpen className="text-green-400" />}
+                    label="Book Forms"
+                    value={isLoading ? "..." : bookForms.length}
+                  />
+                  <WidgetStat
+                    icon={<FaUsers className="text-yellow-400" />}
+                    label="Users"
+                    value={isLoading ? "..." : users.length}
+                  />
                 </div>
-              ))}
+                <div className="mt-6">
+                  <div className="text-lg text-gray-100 font-bold flex items-center gap-2">
+                    <FaChartPie className="text-indigo-500" />
+                    Dashboard Overview
+                  </div>
+                  <div className="text-gray-400 mt-1 text-sm max-w-xl">
+                    Welcome to the Faizy-Legend Admin Dashboard. Manage shop,
+                    articles, book forms, and users with powerful tools and
+                    modern UI. Key data always at a glance!
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-80 xl:w-96 h-64 flex flex-col items-center">
+                <div className="font-semibold text-indigo-300 mb-2">
+                  Distribution
+                </div>
+                {isLoading ? (
+                  <div className="h-[200px] flex items-center justify-center w-full text-gray-400">
+                    Loading...
+                  </div>
+                ) : (
+                  <ResponsiveContainer width="100%" height="95%">
+                    <PieChart>
+                      <Pie
+                        data={pieData}
+                        innerRadius={50}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={({ name, percent }) =>
+                          percent > 0.14 ? `${name}` : ""
+                        }
+                        paddingAngle={2}
+                        stroke="#1e293b"
+                        strokeWidth={2}
+                      >
+                        {pieData.map((entry, idx) => (
+                          <Cell
+                            key={`cell-${idx}`}
+                            fill={COLORS[idx % COLORS.length]}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
+                <div className="mt-2 flex flex-wrap gap-2 justify-center">
+                  {pieData.map((item, i) => (
+                    <div
+                      key={item.name}
+                      className="flex items-center gap-2 text-xs"
+                    >
+                      <span
+                        className="inline-block w-3 h-3 rounded-full"
+                        style={{ backgroundColor: COLORS[i % COLORS.length] }}
+                      />
+                      <span className="text-gray-300">{item.name}</span>
+                      <span className="ml-1 font-semibold text-indigo-200">
+                        {item.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Growth/Trends Bar Chart */}
+            <div className="bg-slate-900/90 rounded-2xl shadow-xl p-6">
+              <div className="font-semibold text-indigo-300 mb-2">
+                Recent Growth
+              </div>
+              <div className="w-full h-60">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={barData}
+                    margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                    <XAxis dataKey="name" stroke="#94a3b8" />
+                    <YAxis stroke="#94a3b8" />
+                    <Tooltip />
+                    <Legend />
+                    <Bar
+                      dataKey="value"
+                      fill="#6366f1"
+                      name="Total"
+                      radius={[8, 8, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="growth"
+                      fill="#22d3ee"
+                      name="Recent Growth"
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
-          <div className="w-full max-w-md flex flex-col gap-6">
-            <WidgetStat
+        </div>
+      </div>
+
+      {/* Sidebar Quick Summary */}
+      <aside className="w-full xl:w-72 flex-shrink-0 flex flex-col gap-6">
+        <div className="bg-slate-900/90 rounded-2xl shadow-xl p-6">
+          <div className="font-extrabold text-2xl tracking-tight mb-4 text-indigo-300">
+            Quick Summary
+          </div>
+          <ul className="space-y-3">
+            <SidebarStat
               icon={<FaBoxOpen className="text-blue-400" />}
               label="Products"
               value={isLoading ? "..." : products.length}
             />
-            <WidgetStat
+            <SidebarStat
               icon={<FaFileAlt className="text-orange-400" />}
               label="Articles"
               value={isLoading ? "..." : articles.length}
             />
-            <WidgetStat
+            <SidebarStat
               icon={<FaBookOpen className="text-green-400" />}
               label="Book Forms"
               value={isLoading ? "..." : bookForms.length}
             />
-            <WidgetStat
+            <SidebarStat
               icon={<FaUsers className="text-yellow-400" />}
               label="Users"
               value={isLoading ? "..." : users.length}
             />
-          </div>
+          </ul>
         </div>
-        <div className="flex-1 flex flex-col justify-center items-center">
-          <div className="bg-slate-900/80 rounded-xl shadow-md p-6 w-full flex flex-col items-center">
-            <FaChartPie className="w-10 h-10 text-indigo-500 mb-3" />
-            <div className="text-lg text-gray-200 font-semibold">
-              Welcome to the Faizy-Legend Admin Dashboard
-            </div>
-            <div className="text-gray-400 text-center mt-2 text-sm max-w-lg">
-              Manage your shop, articles, book forms, and users with powerful
-              tools and a modern UI. Use the sidebar for quick navigation and
-              see all key data at a glance!
-            </div>
-          </div>
+        <div className="bg-gradient-to-r from-indigo-800 via-indigo-500 to-teal-400 rounded-2xl shadow-xl px-6 py-4 mt-6 flex flex-col items-center">
+          <span className="text-white font-bold text-lg">faizy-legend</span>
+          <span className="text-gray-200 text-xs mt-1 tracking-wide">
+            Admin System
+          </span>
         </div>
-      </div>
+      </aside>
     </div>
-  );
-}
-
-function DashLink({ icon, to, label }) {
-  return (
-    <Link
-      to={to}
-      className="flex items-center gap-3 p-3 rounded-lg bg-slate-800 hover:bg-teal-600 transition text-gray-200 hover:text-white font-medium"
-    >
-      <span className="text-xl">{icon}</span>
-      {label}
-    </Link>
   );
 }
 
 function WidgetStat({ icon, label, value }) {
   return (
-    <div className="flex items-center gap-3 bg-slate-800 rounded-lg px-4 py-4 shadow text-gray-200">
+    <div className="flex items-center gap-3 bg-slate-800 rounded-xl px-4 py-3 shadow text-gray-200 min-w-[120px]">
       <span className="text-2xl">{icon}</span>
       <div className="flex flex-col">
         <span className="text-xs text-gray-400">{label}</span>
         <span className="text-lg font-bold">{value}</span>
       </div>
     </div>
+  );
+}
+
+function SidebarStat({ icon, label, value }) {
+  return (
+    <li className="flex items-center gap-3 p-3 rounded-lg bg-slate-800">
+      <span className="text-xl">{icon}</span>
+      <span className="text-gray-200 font-medium">{label}</span>
+      <span className="ml-auto font-semibold text-indigo-200">{value}</span>
+    </li>
   );
 }
