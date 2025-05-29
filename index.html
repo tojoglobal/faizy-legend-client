@@ -8,7 +8,30 @@
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="loading-screen" role="status">
+        <img src="/icon.webp" alt="TOJO Global Loading" />
+      </div>
+    </div>
+    <style>
+      /* Loader Styling */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #101010;
+        z-index: 9999;
+      }
+      #loading-screen img {
+        width: 150px;
+        height: auto;
+      }
+    </style>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

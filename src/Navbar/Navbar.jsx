@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Navbar.css";
 
+const logo = "/icon.webp";
+
 function Navbar({ sections, activeSection, onNavClick }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -15,7 +17,7 @@ function Navbar({ sections, activeSection, onNavClick }) {
         <img
           onClick={() => handleNavClick("hero")}
           className="w-[65px] h-[65px]"
-          src="https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png"
+          src={logo}
           alt="logo"
         />
       </div>

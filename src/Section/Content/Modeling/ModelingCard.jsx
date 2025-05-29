@@ -12,7 +12,7 @@ const ModelingCard = ({ img, title, location, photographer }) => {
         <img
           src={`${import.meta.env.VITE_OPEN_APIURL}/${img}`}
           alt={title}
-          className="w-full h-[340px] rounded-[15px] object-cover z-20 relative"
+          className="w-full h-full rounded-[15px] object-cover z-20 relative"
           style={{ minHeight: "180px" }}
         />
 

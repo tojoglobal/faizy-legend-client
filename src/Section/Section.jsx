@@ -120,6 +120,8 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
     }
   };
 
+  const isMobile = window.innerWidth < 1024;
+
   return (
     <section
       id={section.id}
@@ -130,7 +132,8 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
         backgroundSize: "cover",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
+        // backgroundAttachment: "fixed",
+        backgroundAttachment: isMobile ? "scroll" : "fixed",
       }}
     >
       <div className="bg-overlay" />

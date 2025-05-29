@@ -59,7 +59,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Color and opacity */
+  background: rgba(0, 0, 0, 0.342); /* Color and opacity */
   z-index: 1;
   pointer-events: none;
 }
@@ -196,6 +196,22 @@
   line-height: 1.7;
 }
 
+.section-background {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@media (max-width: 1024px) {
+  .section-background {
+    background-attachment: scroll; /* Prevents mobile jank */
+    background-position: center top;
+  }
+}
+
 @media (max-width: 900px) {
   .big-title,
   .section-title {
@@ -207,10 +223,51 @@
   .content-title {
     font-size: 1.2rem;
   }
+  .section-background {
+    background-size: cover;
+    background-position: center top;
+    background-attachment: scroll;
+    min-height: 70vh;
+  }
 }
-@media (max-width: 720px) {
+
+@media (max-width: 600px) {
+  .section-background {
+    background-size: cover;
+    background-position: 60% top;
+    min-height: 100vh;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
   .section-plus-btn {
     bottom: 20%;
     font-size: 2.2rem;
+  }
+  .scroll_minus_btn {
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+  }
+  .content-part {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-background {
+    background-size: cover;
+    background-position: 65% top;
+    min-height: 100vh;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  #book {
+    background-position: 70% top !important;
+  }
+  #shop {
+    background-position: 78% top !important;
+  }
+  .section-title {
+    font-size: 15vw;
   }
 }
