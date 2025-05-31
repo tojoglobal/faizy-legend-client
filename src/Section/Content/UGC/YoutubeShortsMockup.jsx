@@ -13,7 +13,7 @@ const YoutubeShortsMockup = ({ videoUrl, title = "HEARVIEW GLASSES" }) => {
           ></iframe>
         </div>
       </div>
-      <div className="mt-5 text-white font-bold tracking-widest text-lg uppercase md:text-xl">
+      <div className="mt-5 text-white font-bold tracking-widest text-lg mx-10 sm:mx-0 uppercase md:text-xl">
         {title}
       </div>
     </div>

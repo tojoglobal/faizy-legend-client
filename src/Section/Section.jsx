@@ -24,6 +24,8 @@ const sectionBackgrounds = {
   shop: "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/03/trainer.png')",
 };
 
+const heroVideo = "/video/Home-Banner-online-video-cutter.mp4";
+
 const sectionContents = {
   about: {
     title: "Introduction",
@@ -63,18 +65,8 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
   if (section.id === "hero") {
     return (
       <section id={section.id} className="hero-full-section" ref={ref}>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="background-video"
-          poster="https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png"
-        >
-          <source
-            src="https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/02/Home-Banner-online-video-cutter.com_-1.mp4"
-            type="video/mp4"
-          />
+        <video autoPlay loop muted playsInline className="background-video">
+          <source src={heroVideo} type="video/mp4" />
         </video>
         <div className="section-content">
           <h1 className="big-title pt-[45vh]">FAIZY LEGEND</h1>
@@ -147,7 +139,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
           <FiPlusCircle />
         </div>
       </div>
-      {/* Content Part */}
+      {/* Content Modal/Panel */}
       <div
         ref={contentPartRef}
         className={`content-part ${open ? "open" : ""}`}
@@ -156,7 +148,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
         <div className="scroll_minus_btn" onClick={handleMinusClick}>
           <FiMinusCircle />
         </div>
-        <div className="content-inner max-w-10/12">
+        <div className="content-inner w-full md:max-w-10/12">
           <h2 className={`content-title ${section?.id}_content_title`}>
             {content?.title}
           </h2>

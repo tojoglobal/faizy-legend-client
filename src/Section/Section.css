@@ -259,7 +259,7 @@
     background-position: 65% top;
     min-height: 100vh;
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 0rem;
   }
   #book {
     background-position: 70% top !important;
