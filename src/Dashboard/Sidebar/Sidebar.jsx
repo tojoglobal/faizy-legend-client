@@ -18,10 +18,8 @@ import {
   Newspaper,
 } from "lucide-react";
 
-const logo =
-  "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
-const smallLogo =
-  "https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/icon.png";
+const logo = "/icon.webp";
+const smallLogo = "/icon.webp";
 
 const menuItems = [
   {

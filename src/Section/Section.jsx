@@ -11,17 +11,13 @@ import BookForm from "./Content/BookForm/BookForm";
 import Shopping from "./Content/Shop/Shopping";
 
 const sectionBackgrounds = {
-  about:
-    "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/ad-1-_2_.webp')",
-  modeling:
-    "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/Artboard-Copy-1aaa-scaled.webp')",
-  filming:
-    "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/Artboard-f_11zon.webp')",
-  ugc: "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/Screen-Shot-2025-01-20-at-3.10.55-PM.png')",
-  articles:
-    "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/wmremove-transformed-1_11zon.webp')",
-  book: "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/01/image.png')",
-  shop: "url('https://aliceblue-rhinoceros-454708.hostingersite.com/wp-content/uploads/2025/03/trainer.png')",
+  about: "url('./Images/abouthero.webp')",
+  modeling: "url('./Images/modelingHero.webp')",
+  filming: "url('./Images/filmingHero.webp')",
+  ugc: "url('./Images/ugcHero.webp')",
+  articles: "url('./Images/articlesHero.webp')",
+  book: "url('./Images/bookHero.webp')",
+  shop: "url('./Images/shopHero.webp')",
 };
 
 const heroVideo = "/video/Home-Banner-online-video-cutter.mp4";
