@@ -129,10 +129,22 @@
 .section-plus-btn {
   position: absolute;
   bottom: 10%;
-  font-size: 3.2rem;
+  font-size: 2.70rem;
   cursor: pointer;
   color: #fff;
   transition: color 0.2s;
+}
+
+/* plus minus button hover effect */
+.section-plus-btn,
+.scroll_minus_btn {
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.section-plus-btn:hover,
+.scroll_minus_btn:hover {
+  transform: scale(1.1);
 }
 
 .section-plus-btn:hover {
@@ -162,7 +174,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.75rem;
+  font-size: 2.70rem;
   font-weight: 900;
   color: #fff;
   /* color: #ffe34b; */
@@ -205,6 +217,24 @@
   background-attachment: fixed;
 }
 
+/* for section top mobile video play */
+@media (max-width: 768px) {
+  .background-video {
+    /* position: fixed; */
+    /* Critical for iOS */
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: cover;
+  }
+
+  .hero-full-section {
+    position: relative;
+    overflow: hidden;
+  }
+}
+
 @media (max-width: 1024px) {
   .section-background {
     background-attachment: scroll; /* Prevents mobile jank */
@@ -241,10 +271,10 @@
   }
   .section-plus-btn {
     bottom: 20%;
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
   .scroll_minus_btn {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 3rem;
   }
   .content-part {

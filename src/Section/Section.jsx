@@ -61,11 +61,22 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
   if (section.id === "hero") {
     return (
       <section id={section.id} className="hero-full-section" ref={ref}>
-        <video autoPlay loop muted playsInline className="background-video">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="background-video"
+          // Critical mobile fixes:
+          disablePictureInPicture
+          preload="auto"
+          webkit-playsinline="true" // For iOS
+          x-webkit-airplay="allow" // For iOS
+        >
           <source src={heroVideo} type="video/mp4" />
         </video>
         <div className="section-content">
-          <h1 className="big-title pt-[45vh]">FAIZY LEGEND</h1>
+          <h1 className="big-title pt-[43vh]">FAIZY LEGEND</h1>
           <div className="hero_subtitle mt-[4rem]">
             MODEL | ACTOR | INFLUENCER
           </div>
@@ -118,7 +129,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       style={{
         backgroundImage: bg,
         backgroundSize: "cover",
-        backgroundPosition: "center center",
+        backgroundPosition: "center top",
         backgroundRepeat: "no-repeat",
         // backgroundAttachment: "fixed",
         backgroundAttachment: isMobile ? "scroll" : "fixed",

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../../../Navbar/Navbar";
 import { FiX } from "react-icons/fi";
 import { useScroll } from "../../../../context/ScrollContext";
@@ -42,6 +42,11 @@ const Gallery = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const navigate = useNavigate();
   const { setScrollToSection } = useScroll();
+
+  // 👇 Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   const {
     data: galleries = [],

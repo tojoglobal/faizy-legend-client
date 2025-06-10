@@ -16,7 +16,7 @@ function Navbar({ sections, activeSection, onNavClick }) {
       <div className="logo cursor-pointer">
         <img
           onClick={() => handleNavClick("hero")}
-          className="w-[65px] h-[65px]"
+          className="w-[60px] h-[60px]"
           src={logo}
           alt="logo"
         />
