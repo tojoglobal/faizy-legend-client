@@ -12,6 +12,89 @@
   transition: background 0.2s;
 }
 
+/* Hamburger styles old */
+/* .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  z-index: 30;
+  cursor: pointer;
+}
+
+.menu-toggle span,
+.menu-toggle span::before,
+.menu-toggle span::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 30px;
+  background: #fff;
+  border-radius: 2px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.menu-toggle span::before {
+  position: absolute;
+  top: -10px;
+  left: 0;
+}
+
+.menu-toggle span::after {
+  position: absolute;
+  top: 10px;
+  left: 0;
+} */
+
+/* Improved Hamburger Button Styles - replaces old ones */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  z-index: 30;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+}
+
+.menu-toggle-bar {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  border-radius: 2px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.menu-toggle-bar::before,
+.menu-toggle-bar::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #fff;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  transition: 0.3s;
+}
+
+.menu-toggle-bar::before {
+  top: -10px;
+}
+
+.menu-toggle-bar::after {
+  top: 10px;
+}
+
 .logo {
   margin-right: 1rem;
   user-select: none;
@@ -62,56 +145,26 @@
   width: 80%;
 }
 
-/* Hamburger styles */
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  position: absolute;
-  right: 20px;
-  top: 16px;
-  z-index: 30;
-  cursor: pointer;
-}
-.menu-toggle span,
-.menu-toggle span::before,
-.menu-toggle span::after {
-  content: "";
-  display: block;
-  height: 3px;
-  width: 30px;
-  background: #fff;
-  border-radius: 2px;
-  transition: 0.3s;
-  position: relative;
-}
-.menu-toggle span::before {
-  position: absolute;
-  top: -10px;
-  left: 0;
-}
-.menu-toggle span::after {
-  position: absolute;
-  top: 10px;
-  left: 0;
-}
-
 /* Mobile menu overlay */
 .mobile-nav {
   display: none;
 }
+
 @media (max-width: 900px) {
   .navbar {
     height: 56px;
     justify-content: flex-start;
     background: transparent;
   }
+
   .nav-list {
     display: none;
   }
+
   .menu-toggle {
     display: block;
   }
+
   .mobile-nav {
     display: flex;
     flex-direction: column;
@@ -127,6 +180,7 @@
     padding-top: 40px;
     animation: menuOpen 0.2s;
   }
+
   .mobile-nav-list {
     display: flex;
     flex-direction: column;
@@ -135,6 +189,7 @@
     padding: 0;
     margin: 0;
   }
+
   .mobile-nav-item {
     font-size: 20px;
     letter-spacing: 4px;
@@ -147,10 +202,12 @@
     transition: color 0.2s;
     padding: 0;
   }
+
   .mobile-nav-item.active,
   .mobile-nav-item:hover {
     color: #e5e5e5;
   }
+
   .mobile-nav-close {
     position: absolute;
     top: 22px;
@@ -163,10 +220,12 @@
     z-index: 1100;
   }
 }
+
 @keyframes menuOpen {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

@@ -27,7 +27,7 @@ function Navbar({ sections, activeSection, onNavClick }) {
         aria-label="Open menu"
         onClick={() => setMobileOpen(true)}
       >
-        <span></span>
+        <span className="menu-toggle-bar"></span>
       </button>
       {/* Desktop Nav */}
       <ul className="nav-list">
