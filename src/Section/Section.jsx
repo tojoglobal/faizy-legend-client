@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import "./Section.css";
 import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
@@ -56,18 +56,34 @@ const sectionContents = {
 const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const [open, setOpen] = useState(false);
   const contentPartRef = useRef(null);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    // Ensure video plays when component mounts
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.log("Autoplay prevented:", error);
+      });
+    }
+  }, []);
 
   // Hero Section
   if (section.id === "hero") {
     return (
       <section id={section.id} className="hero-full-section" ref={ref}>
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
           className="background-video"
+          // Important attributes for mobile support
+          webkit-playsinline="true"
+          x-webkit-airplay="allow"
+          x5-playsinline="true"
+          disablePictureInPicture
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
