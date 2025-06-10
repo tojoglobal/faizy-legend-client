@@ -66,8 +66,12 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
           loop
           muted
           playsInline
-          preload="auto"
           className="background-video"
+          // Critical mobile fixes:
+          disablePictureInPicture
+          preload="auto"
+          webkit-playsinline="true" // For iOS
+          x-webkit-airplay="allow" // For iOS
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
