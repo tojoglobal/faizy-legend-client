@@ -1,5 +1,6 @@
 import { forwardRef, useRef, useState } from "react";
 import "./Section.css";
+import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
 import AboutContent from "./Content/About/AboutContent";
 import ModelingGallery from "./Content/Modeling/ModelingGallery";
@@ -62,34 +63,31 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const handlePlusClick = () => {
     setOpen(true);
     setTimeout(() => {
-      if (contentPartRef.current) {
-        contentPartRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
+      contentPartRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }, 100);
   };
 
   const handleMinusClick = () => {
     setOpen(false);
-    if (scrollToSection) {
-      scrollToSection(section.id);
-    } else if (ref && ref.current) {
-      ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    scrollToSection
+      ? scrollToSection(section.id)
+      : ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
     <>
+      {/* Section Background with Plus Button */}
       <section
         id={section.id}
+        ref={ref}
         className={
           section.id === "hero"
             ? "hero-full-section section-background"
             : "full-section section-background"
         }
-        ref={ref}
         style={{
           backgroundImage: bg,
           backgroundSize: "cover",
@@ -99,36 +97,55 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
         }}
       >
         <div className="bg-overlay" />
-        <div className="text_full_section">
-          <h1 className="section-title font-oswald">{section.label}</h1>
-          <div
-            className="section-plus-btn"
-            onClick={handlePlusClick}
-            aria-label="Open Content"
-          >
-            <FiPlusCircle />
+
+        {section.id === "hero" ? (
+          <div className="section-content">
+            <h1 className="big-title pt-[43vh]">FAIZY LEGEND</h1>
+            <div className="hero_subtitle mt-[4rem]">
+              MODEL | ACTOR | INFLUENCER
+            </div>
+            <div
+              className="hero-scroll-down"
+              onClick={() => scrollToSection && scrollToSection("about")}
+              aria-label="Scroll to About"
+            >
+              <FaRegArrowAltCircleDown />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="text_full_section">
+            <h1 className="section-title font-oswald">{section.label}</h1>
+            <div
+              className="section-plus-btn"
+              onClick={handlePlusClick}
+              aria-label="Open Content"
+            >
+              <FiPlusCircle />
+            </div>
+          </div>
+        )}
       </section>
 
-      {/* Content Panel */}
-      <div
-        ref={contentPartRef}
-        className={`content-part ${open ? "open" : ""}`}
-        style={{ display: open ? "block" : "none" }}
-      >
-        <div className="scroll_minus_btn" onClick={handleMinusClick}>
-          <FiMinusCircle />
-        </div>
-        <div className="content-inner w-full md:max-w-10/12">
-          <h2 className={`content-title ${section?.id}_content_title`}>
-            {content?.title}
-          </h2>
-          <div className={`content-text ${section?.id}_content_text`}>
-            {content?.text}
+      {/* Content Part (Outside Background Section) */}
+      {section.id !== "hero" && (
+        <div
+          ref={contentPartRef}
+          className={`content-part ${open ? "open" : ""}`}
+          style={{ display: open ? "block" : "none" }}
+        >
+          <div className="scroll_minus_btn" onClick={handleMinusClick}>
+            <FiMinusCircle />
+          </div>
+          <div className="content-inner w-full md:max-w-10/12">
+            <h2 className={`content-title ${section?.id}_content_title`}>
+              {content?.title}
+            </h2>
+            <div className={`content-text ${section?.id}_content_text`}>
+              {content?.text}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 });
