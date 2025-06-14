@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
@@ -12,5 +13,8 @@ export default defineConfig({
       "@/Components": path.resolve(__dirname, "src/Components"),
       "@/lib": path.resolve(__dirname, "src/lib"),
     },
+  },
+  build: {
+    chunkSizeWarningLimit: 1000,
   },
 });

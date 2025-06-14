@@ -16,7 +16,7 @@ function Navbar({ sections, activeSection, onNavClick }) {
       <div className="logo cursor-pointer">
         <img
           onClick={() => handleNavClick("hero")}
-          className="w-[65px] h-[65px]"
+          className="w-[60px] h-[60px]"
           src={logo}
           alt="logo"
         />
@@ -27,7 +27,7 @@ function Navbar({ sections, activeSection, onNavClick }) {
         aria-label="Open menu"
         onClick={() => setMobileOpen(true)}
       >
-        <span></span>
+        <span className="menu-toggle-bar"></span>
       </button>
       {/* Desktop Nav */}
       <ul className="nav-list">

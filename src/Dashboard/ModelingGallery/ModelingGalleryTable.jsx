@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import GalleryForm from "./GalleryForm";
+import Swal from "sweetalert2";
 
 // const API = "/api/modeling-gallery";
 
@@ -17,9 +18,33 @@ export default function ModelingGalleryTable() {
   }, []);
 
   const deleteGallery = async (id) => {
-    if (!window.confirm("Delete this gallery?")) return;
-    await fetch(`${API}/${id}`, { method: "DELETE" });
-    setGalleries(galleries.filter((g) => g.id !== id));
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+
+        if (res.ok) {
+          setGalleries(galleries.filter((g) => g.id !== id));
+
+          Swal.fire("Deleted!", "The gallery has been deleted.", "success");
+        } else {
+          Swal.fire("Error!", "Failed to delete the gallery.", "error");
+        }
+      } catch (error) {
+        Swal.fire(
+          "Error!",
+          error.message || "An unexpected error occurred.",
+          "error"
+        );
+      }
+    }
   };
 
   const afterSave = () => {
@@ -83,13 +108,13 @@ export default function ModelingGalleryTable() {
                 <td className="p-2 flex gap-2">
                   <button
                     onClick={() => setEditGallery(g)}
-                    className="p-1 rounded hover:bg-gray-800"
+                    className="p-1 cursor-pointer rounded hover:bg-gray-800"
                   >
                     <PencilIcon className="w-5 h-5 text-blue-400" />
                   </button>
                   <button
                     onClick={() => deleteGallery(g.id)}
-                    className="p-1 rounded hover:bg-gray-800"
+                    className="p-1 cursor-pointer rounded hover:bg-gray-800"
                   >
                     <TrashIcon className="w-5 h-5 text-red-400" />
                   </button>
