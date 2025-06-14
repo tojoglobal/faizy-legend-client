@@ -111,49 +111,52 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const isMobile = window.innerWidth < 1024;
 
   return (
-    <section
-      id={section.id}
-      className="full-section section-background"
-      ref={ref}
-      style={{
-        backgroundImage: bg,
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-        // backgroundAttachment: "fixed",
-        backgroundAttachment: isMobile ? "scroll" : "fixed",
-      }}
-    >
-      <div className="bg-overlay" />
-      <div className="text_full_section">
-        <h1 className="section-title font-oswald">{section.label}</h1>
-        <div
-          className="section-plus-btn"
-          onClick={handlePlusClick}
-          aria-label="Open Content"
-        >
-          <FiPlusCircle />
-        </div>
-      </div>
-      {/* Content Modal/Panel */}
-      <div
-        ref={contentPartRef}
-        className={`content-part ${open ? "open" : ""}`}
-        style={{ display: open ? "block" : "none" }}
+    <>
+      <section
+        id={section.id}
+        className="full-section section-background"
+        ref={ref}
+        style={{
+          backgroundImage: bg,
+          backgroundSize: "cover",
+          backgroundPosition: "top center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: isMobile ? "scroll" : "fixed",
+        }}
       >
-        <div className="scroll_minus_btn" onClick={handleMinusClick}>
-          <FiMinusCircle />
-        </div>
-        <div className="content-inner w-full md:max-w-10/12">
-          <h2 className={`content-title ${section?.id}_content_title`}>
-            {content?.title}
-          </h2>
-          <div className={`content-text ${section?.id}_content_text`}>
-            {content?.text}
+        <div className="bg-overlay" />
+        <div className="text_full_section">
+          <h1 className="section-title font-oswald">{section.label}</h1>
+          <div
+            className="section-plus-btn"
+            onClick={handlePlusClick}
+            aria-label="Open Content"
+          >
+            <FiPlusCircle />
           </div>
         </div>
-      </div>{" "}
-    </section>
+      </section>
+      <section>
+        {/* Content Modal/Panel */}
+        <div
+          ref={contentPartRef}
+          className={`content-part ${open ? "open" : ""}`}
+          style={{ display: open ? "block" : "none" }}
+        >
+          <div className="scroll_minus_btn" onClick={handleMinusClick}>
+            <FiMinusCircle />
+          </div>
+          <div className="content-inner w-full md:max-w-10/12">
+            <h2 className={`content-title ${section?.id}_content_title`}>
+              {content?.title}
+            </h2>
+            <div className={`content-text ${section?.id}_content_text`}>
+              {content?.text}
+            </div>
+          </div>
+        </div>{" "}
+      </section>
+    </>
   );
 });
 

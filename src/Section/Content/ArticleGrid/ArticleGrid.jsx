@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -19,8 +19,11 @@ const ArticleGrid = () => {
     },
   });
 
+  // Hover state for each article
+  const [hoveredId, setHoveredId] = useState(null);
+
   return (
-    <section className="w-full py-4  sm:px-4 md:px-8  mx-auto">
+    <section className="w-full py-4 sm:px-4 md:px-8 mx-auto">
       {isLoading ? (
         <div className="text-center text-white py-12">Loading...</div>
       ) : (
@@ -30,6 +33,8 @@ const ArticleGrid = () => {
               key={article.id}
               href={article.link}
               className="group relative block rounded-xl overflow-hidden shadow-md transition-transform duration-200 hover:scale-[1.02] bg-[#232323]"
+              onMouseEnter={() => setHoveredId(article.id)}
+              onMouseLeave={() => setHoveredId(null)}
             >
               <div className="aspect-w-16 aspect-h-10 w-full">
                 <img
@@ -44,8 +49,9 @@ const ArticleGrid = () => {
                 <span className="text-white font-poppins font-semibold text-base sm:text-lg md:text-2xl text-center drop-shadow-lg px-2">
                   {article.title}
                 </span>
-                <span className="mt-2 text-xs sm:text-sm md:text-base font-poppins font-normal text-white bg-black/60 px-3 py-1 rounded-full">
-                  views
+                <span className="mt-2 text-xs sm:text-sm md:text-base font-poppins font-normal text-white bg-blue-600 px-4 py-1 rounded-full transition-all duration-200 shadow">
+                  {"read more"}
+                  {/* {hoveredId === article.id ? "read more" : "views"} */}
                 </span>
               </div>
             </a>

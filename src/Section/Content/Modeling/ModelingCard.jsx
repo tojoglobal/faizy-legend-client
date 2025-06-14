@@ -1,6 +1,6 @@
 const ModelingCard = ({ img, title, location, photographer }) => {
   return (
-    <div className="relative w-full max-w-[320px] mx-auto group">
+    <div className="w-full max-w-[320px] mx-auto group">
       {/* Main Card Container */}
       <div className="relative bg-[#232323] rounded-[15px] shadow-none transition-transform duration-500  group-hover:scale-[1.03]">
         {/* Gray right overlay UNDER the image */}
@@ -15,21 +15,17 @@ const ModelingCard = ({ img, title, location, photographer }) => {
           className="w-full h-full rounded-[15px] object-cover z-20 relative"
           style={{ minHeight: "180px" }}
         />
+        {/* Top-right  border */}
+        {/* Top border*/}
+        <div className="absolute top-[10px]  right-[10px] h-[1px] bg-[#e5e5e5] w-[60px] group-hover:w-[93%]  z-50 transition-all duration-300"></div>
+        {/* Right border */}
+        <div className="absolute top-[10px]  right-[10px] z-50  w-[1px] bg-[#e5e5e5] group-hover:h-[95.7%]  md:group-hover:h-[95%] h-[60px]  transition-all duration-300"></div>
 
-        {/* Top-right 10px border */}
-        <div className="absolute top-[10px]  right-[10px] z-30 flex">
-          {/* Top border */}
-          <div className="block h-[1px] bg-[#e5e5e5]  w-[60px] group-hover:min-w-[298px] transition-all duration-300"></div>
-          {/* Right border */}
-          <div className="block w-[1px] bg-[#e5e5e5] group-hover:h-[320px] h-[60px]   transition-all duration-300"></div>
-        </div>
-        {/* Bottom-left 10px border */}
-        <div className="absolute bottom-[10px] left-[10px] z-30 flex flex-col items-start">
-          {/* Left border */}
-          <div className="block w-[1px] group-hover:h-[319px] h-[60px]  bg-[#e5e5e5] transition-all duration-300"></div>
-          {/* Bottom border */}
-          <div className="block h-[1px] group-hover:min-w-[298px] w-[60px]  bg-[#e5e5e5] transition-all duration-300"></div>
-        </div>
+        {/* Bottom-left  border */}
+        {/* Left border */}
+        <div className="absolute bottom-[10px] left-[10px] z-30 w-[1px] h-[60px] bg-[#e5e5e5] transition-all duration-300 group-hover:h-[95.7%] md:group-hover:h-[95%]"></div>
+        {/* Bottom border */}
+        <div className="absolute bottom-[10px] left-[10px] z-30  h-[1px] group-hover:w-[93%] w-[60px]  bg-[#e5e5e5] transition-all duration-300"></div>
 
         {/* Caption OVER the image */}
         <div className="absolute z-40 left-0 bottom-0 w-full px-5 pb-5 pt-12 flex flex-col items-start justify-end bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-transparent">
