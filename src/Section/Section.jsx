@@ -100,8 +100,11 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
 
         {section.id === "hero" ? (
           <div className="section-content">
-            <h1 className="big-title pt-[43vh]">FAIZY LEGEND</h1>
-            <div className="hero_subtitle mt-[4rem]">
+            {/* <h1 className="big-title font-oswald pt-[43vh]">FAIZY LEGEND</h1> */}
+            <h1 className="font-oswald pt-[43vh] text-5xl md:text-[165px]  font-normal tracking-[8px] uppercase text-white leading-[1.05] m-0">
+              FAIZY LEGEND
+            </h1>
+            <div className="hero_subtitle font-oswald mt-[4rem]">
               MODEL | ACTOR | INFLUENCER
             </div>
             <div
@@ -114,7 +117,10 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
           </div>
         ) : (
           <div className="text_full_section">
-            <h1 className="section-title font-oswald">{section.label}</h1>
+            {/* <h1 className="section-title font-oswald">{section.label}</h1> */}
+            <h1 className="font-oswald text-5xl md:text-[150px] font-normal tracking-[6px] leading-[1] m-0 uppercase text-white">
+              {section.label}
+            </h1>
             <div
               className="section-plus-btn"
               onClick={handlePlusClick}
