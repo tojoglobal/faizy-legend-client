@@ -228,6 +228,21 @@
   background-attachment: fixed;
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    /* transform: translateY(40px); */
+  }
+  to {
+    opacity: 1;
+    /* transform: translateY(0); */
+  }
+}
+
+.hero-fade-in {
+  animation: fadeInUp 1s cubic-bezier(0.62, 0.28, 0.23, 0.99) 0.2s both;
+}
+
 /* for section top mobile video play */
 @media (max-width: 768px) {
   .background-video {
