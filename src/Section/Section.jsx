@@ -77,9 +77,9 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
     setTimeout(() => {
       contentPartRef.current?.scrollIntoView({
         behavior: "smooth",
-        block: "center",
+        block: "start",
       });
-    }, 100);
+    }, 400);
   };
 
   const handleMinusClick = () => {
@@ -168,7 +168,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       <div
         ref={contentPartRef}
         className={`content-part ${open ? "open" : ""}`}
-        style={{ display: open ? "block" : "none" }}
+        // style={{ display: open ? "block" : "none" }}
       >
         <div className="scroll_minus_btn" onClick={handleMinusClick}>
           <FiMinusCircle />
