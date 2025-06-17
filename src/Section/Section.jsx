@@ -55,6 +55,11 @@ const sectionContents = {
 const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const [open, setOpen] = useState(false);
   const contentPartRef = useRef(null);
+
+  const bg = sectionBackgrounds[section.id] || "#191919";
+  const content = sectionContents[section.id];
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+
   if (section.id === "hero") {
     return (
       <section
@@ -66,11 +71,12 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
             : "full-section section-background"
         }
         style={{
-          backgroundImage: "url('./Images/sectionHero.jpg')",
+          // backgroundImage: "url('./Images/sectionHero.jpg')",
+          backgroundImage: bg,
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
-          // backgroundAttachment: isMobile ? "scroll" : "fixed",
+          backgroundAttachment: isMobile ? "scroll" : "fixed",
         }}
       >
         <div className="bg-overlay" />
@@ -93,10 +99,6 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       </section>
     );
   }
-
-  const bg = sectionBackgrounds[section.id] || "#191919";
-  const content = sectionContents[section.id];
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
   const handlePlusClick = () => {
     setOpen(true);
@@ -152,25 +154,24 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       </section>
 
       {/* Content Part (Outside Background Section) */}
-      {section.id !== "hero" && (
-        <div
-          ref={contentPartRef}
-          className={`content-part ${open ? "open" : ""}`}
-          style={{ display: open ? "block" : "none" }}
-        >
-          <div className="scroll_minus_btn" onClick={handleMinusClick}>
-            <FiMinusCircle />
-          </div>
-          <div className="content-inner w-full md:max-w-10/12">
-            <h2 className={`content-title ${section?.id}_content_title`}>
-              {content?.title}
-            </h2>
-            <div className={`content-text ${section?.id}_content_text`}>
-              {content?.text}
-            </div>
+
+      <div
+        ref={contentPartRef}
+        className={`content-part ${open ? "open" : ""}`}
+        style={{ display: open ? "block" : "none" }}
+      >
+        <div className="scroll_minus_btn" onClick={handleMinusClick}>
+          <FiMinusCircle />
+        </div>
+        <div className="content-inner w-full md:max-w-10/12">
+          <h2 className={`content-title ${section?.id}_content_title`}>
+            {content?.title}
+          </h2>
+          <div className={`content-text ${section?.id}_content_text`}>
+            {content?.text}
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 });
