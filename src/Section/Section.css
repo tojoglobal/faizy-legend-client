@@ -290,14 +290,7 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .section-background {
-    background-attachment: scroll;
-    /* Prevents mobile jank */
-    background-position: center top;
-  }
-}
-
+/* On small screens, less than 900px, reduce min-height for section-background (not for content-part) */
 @media (max-width: 900px) {
 
   .big-title,
@@ -321,6 +314,7 @@
   }
 }
 
+/* Even smaller screens, fine-tune paddings and sizes */
 @media (max-width: 600px) {
   .section-background {
     background-size: cover;
@@ -346,22 +340,6 @@
   }
 }
 
-/* added 17 june */
-@media (pointer: coarse),
-(hover: none) {
-  .section-background {
-    background-attachment: scroll !important;
-  }
-}
-
-@supports (-webkit-touch-callout: none) {
-  .section-background {
-    background-attachment: scroll !important;
-  }
-}
-
-/* added 17 june */
-
 @media (max-width: 480px) {
   .section-background {
     background-size: cover;
@@ -381,5 +359,31 @@
 
   .section-title {
     font-size: 15vw;
+  }
+}
+
+/* Make sections and content-part always fill the viewport on medium and large devices */
+@media (min-width: 768px) {
+
+  .hero-full-section,
+  .full-section,
+  .content-part,
+  .content-part.open {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+}
+
+/* iOS/touch device background fix */
+@media (pointer: coarse),
+(hover: none) {
+  .section-background {
+    background-attachment: scroll !important;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .section-background {
+    background-attachment: scroll !important;
   }
 }
