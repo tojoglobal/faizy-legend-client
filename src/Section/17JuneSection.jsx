@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import "./Section.css";
 import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
@@ -55,22 +55,50 @@ const sectionContents = {
 const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const [open, setOpen] = useState(false);
   const contentPartRef = useRef(null);
-  const [bgAttachment, setBgAttachment] = useState("fixed");
-
-  useEffect(() => {
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isMobile = window.innerWidth < 768;
-
-    if (isIOS || isMobile) {
-      setBgAttachment("scroll");
-    } else {
-      setBgAttachment("fixed");
-    }
-  }, []);
 
   const bg = sectionBackgrounds[section.id] || "#191919";
   const content = sectionContents[section.id];
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+
+  if (section.id === "hero") {
+    return (
+      <section
+        id={section.id}
+        ref={ref}
+        className={
+          section.id === "hero"
+            ? "hero-full-section section-background"
+            : "full-section section-background"
+        }
+        style={{
+          // backgroundImage: "url('./Images/sectionHero.jpg')",
+          backgroundImage: bg,
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: isMobile ? "scroll" : "fixed",
+        }}
+      >
+        <div className="bg-overlay" />
+        <div className="section-content">
+          {/* <h1 className="big-title font-oswald pt-[43vh]">FAIZY LEGEND</h1> */}
+          <h1 className="font-oswald pt-[43vh] text-5xl md:text-[165px]  font-normal tracking-[8px] uppercase text-white leading-[1.05] m-0">
+            FAIZY LEGEND
+          </h1>
+          <div className="hero_subtitle font-oswald mt-[4rem]">
+            MODEL | ACTOR | INFLUENCER
+          </div>
+          <div
+            className="hero-scroll-down"
+            onClick={() => scrollToSection && scrollToSection("about")}
+            aria-label="Scroll to About"
+          >
+            <FaRegArrowAltCircleDown />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const handlePlusClick = () => {
     setOpen(true);
@@ -89,45 +117,6 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       : ref?.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  if (section.id === "hero") {
-    return (
-      <section
-        id={section.id}
-        ref={ref}
-        className={
-          section.id === "hero"
-            ? "hero-full-section section-background"
-            : "full-section section-background"
-        }
-        style={{
-          // backgroundImage: "url('./Images/sectionHero.jpg')",
-          backgroundImage: bg,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: bgAttachment,
-        }}
-      >
-        <div className="bg-overlay" />
-        <div className="section-content">
-          <h1 className="font-oswald pt-[43vh] text-4xl md:text-[165px] font-normal tracking-[8px] uppercase text-white leading-[1.05] m-0">
-            FAIZY LEGEND
-          </h1>
-          <div className="hero_subtitle font-oswald mt-[3rem] md:mt-[4rem]">
-            MODEL | ACTOR | INFLUENCER
-          </div>
-          <div
-            className="hero-scroll-down"
-            onClick={() => scrollToSection && scrollToSection("about")}
-            aria-label="Scroll to About"
-          >
-            <FaRegArrowAltCircleDown />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <>
       {/* Section Background with Plus Button */}
@@ -144,10 +133,11 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
-          backgroundAttachment: bgAttachment,
+          backgroundAttachment: isMobile ? "scroll" : "fixed",
         }}
       >
         <div className="bg-overlay" />
+
         <div className="text_full_section">
           {/* <h1 className="section-title font-oswald">{section.label}</h1> */}
           <h1 className="font-oswald text-5xl md:text-[150px] font-normal tracking-[6px] leading-[1] m-0 uppercase text-white">

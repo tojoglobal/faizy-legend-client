@@ -239,6 +239,7 @@
     opacity: 0;
     /* transform: translateY(40px); */
   }
+
   to {
     opacity: 1;
     /* transform: translateY(0); */
@@ -322,6 +323,21 @@
     padding-bottom: 2rem;
   }
 }
+
+/* added 17 june */
+@media (pointer: coarse),
+(hover: none) {
+  .section-background {
+    background-attachment: scroll !important;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .section-background {
+    background-attachment: scroll !important;
+  }
+}
+/* added 17 june */
 
 @media (max-width: 480px) {
   .section-background {
