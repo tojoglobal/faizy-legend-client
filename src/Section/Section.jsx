@@ -74,12 +74,15 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
 
   const handlePlusClick = () => {
     setOpen(true);
-    setTimeout(() => {
-      contentPartRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 400);
+    setTimeout(
+      () => {
+        contentPartRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      },
+      section.id === "shop" ? 350 : 100
+    );
   };
 
   const handleMinusClick = () => {
