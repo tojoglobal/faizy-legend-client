@@ -340,8 +340,8 @@
   }
 
   .content-part {
-    padding-top: 3rem;
-    padding-bottom: 2rem;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
@@ -384,6 +384,7 @@
     min-height: 0 !important;
     height: auto !important;
   }
+  
   .content-part.open {
     min-height: 100vh !important;
     height: auto !important;
