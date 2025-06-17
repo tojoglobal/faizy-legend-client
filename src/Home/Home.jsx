@@ -69,6 +69,7 @@ function Home() {
         activeSection={activeSection}
         onNavClick={scrollToSectionHandler}
       />
+
       {sections.map((section, idx) => (
         <Section
           key={section.id}

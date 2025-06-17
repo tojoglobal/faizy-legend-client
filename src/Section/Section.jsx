@@ -60,6 +60,46 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const content = sectionContents[section.id];
   const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
+  if (section.id === "hero") {
+    return (
+      <section
+        id={section.id}
+        ref={ref}
+        className={
+          section.id === "hero"
+            ? "hero-full-section section-background"
+            : "full-section section-background"
+        }
+        style={{
+          // backgroundImage: "url('./Images/sectionHero.jpg')",
+          backgroundImage: bg,
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: isMobile ? "scroll" : "fixed",
+        }}
+      >
+        <div className="bg-overlay" />
+        <div className="section-content">
+          {/* <h1 className="big-title font-oswald pt-[43vh]">FAIZY LEGEND</h1> */}
+          <h1 className="font-oswald pt-[43vh] text-5xl md:text-[165px]  font-normal tracking-[8px] uppercase text-white leading-[1.05] m-0">
+            FAIZY LEGEND
+          </h1>
+          <div className="hero_subtitle font-oswald mt-[4rem]">
+            MODEL | ACTOR | INFLUENCER
+          </div>
+          <div
+            className="hero-scroll-down"
+            onClick={() => scrollToSection && scrollToSection("about")}
+            aria-label="Scroll to About"
+          >
+            <FaRegArrowAltCircleDown />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const handlePlusClick = () => {
     setOpen(true);
     setTimeout(() => {
@@ -98,54 +138,40 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       >
         <div className="bg-overlay" />
 
-        {section.id === "hero" ? (
-          <div className="section-content">
-            <h1 className="big-title pt-[43vh]">FAIZY LEGEND</h1>
-            <div className="hero_subtitle mt-[4rem]">
-              MODEL | ACTOR | INFLUENCER
-            </div>
-            <div
-              className="hero-scroll-down"
-              onClick={() => scrollToSection && scrollToSection("about")}
-              aria-label="Scroll to About"
-            >
-              <FaRegArrowAltCircleDown />
-            </div>
+        <div className="text_full_section">
+          {/* <h1 className="section-title font-oswald">{section.label}</h1> */}
+          <h1 className="font-oswald text-5xl md:text-[150px] font-normal tracking-[6px] leading-[1] m-0 uppercase text-white">
+            {section.label}
+          </h1>
+          <div
+            className="section-plus-btn"
+            onClick={handlePlusClick}
+            aria-label="Open Content"
+          >
+            <FiPlusCircle />
           </div>
-        ) : (
-          <div className="text_full_section">
-            <h1 className="section-title font-oswald">{section.label}</h1>
-            <div
-              className="section-plus-btn"
-              onClick={handlePlusClick}
-              aria-label="Open Content"
-            >
-              <FiPlusCircle />
-            </div>
-          </div>
-        )}
+        </div>
       </section>
 
       {/* Content Part (Outside Background Section) */}
-      {section.id !== "hero" && (
-        <div
-          ref={contentPartRef}
-          className={`content-part ${open ? "open" : ""}`}
-          style={{ display: open ? "block" : "none" }}
-        >
-          <div className="scroll_minus_btn" onClick={handleMinusClick}>
-            <FiMinusCircle />
-          </div>
-          <div className="content-inner w-full md:max-w-10/12">
-            <h2 className={`content-title ${section?.id}_content_title`}>
-              {content?.title}
-            </h2>
-            <div className={`content-text ${section?.id}_content_text`}>
-              {content?.text}
-            </div>
+
+      <div
+        ref={contentPartRef}
+        className={`content-part ${open ? "open" : ""}`}
+        style={{ display: open ? "block" : "none" }}
+      >
+        <div className="scroll_minus_btn" onClick={handleMinusClick}>
+          <FiMinusCircle />
+        </div>
+        <div className="content-inner w-full md:max-w-10/12">
+          <h2 className={`content-title ${section?.id}_content_title`}>
+            {content?.title}
+          </h2>
+          <div className={`content-text ${section?.id}_content_text`}>
+            {content?.text}
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 });

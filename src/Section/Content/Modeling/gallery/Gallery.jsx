@@ -42,6 +42,10 @@ const Gallery = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const navigate = useNavigate();
   const { setScrollToSection } = useScroll();
+  // 👇 Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   // 👇 Scroll to top on mount
   useEffect(() => {
@@ -154,7 +158,7 @@ const Gallery = () => {
         )}
         {selectedIndex !== null && gallery && (
           <div
-            className="fixed inset-0 z-[9999] hero-overlay bg-opacity-0 flex items-center justify-center"
+            className="fixed inset-0 z-[9999] hero-overlay bg-opacity-0 flex items-start justify-center pt-10"
             onClick={closeModal}
           >
             <div
