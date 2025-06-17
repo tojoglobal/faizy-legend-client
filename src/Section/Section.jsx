@@ -78,7 +78,7 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
       () => {
         contentPartRef.current?.scrollIntoView({
           behavior: "smooth",
-          block: "start",
+          block: section.id === "shop" ? "end" : "start",
         });
       },
       section.id === "shop" ? 350 : 100
