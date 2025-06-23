@@ -11,7 +11,7 @@ const FilmingCard = ({ img, youtube_id, title, onPlay }) => {
         <img
           src={src}
           alt={title}
-          className="w-full h-36 object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-44 object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-100 transition-opacity duration-300">
@@ -24,7 +24,7 @@ const FilmingCard = ({ img, youtube_id, title, onPlay }) => {
           </button>
         </div>
       </div>
-      <div className="mt-3 uppercase text-white font-bold text-lg">
+      <div className="mt-2 mx-2 md:mx-0 uppercase text-white font-bold text-lg">
         {title}
       </div>
     </div>

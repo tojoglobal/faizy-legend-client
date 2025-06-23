@@ -56,7 +56,7 @@ export default function Shopping() {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="w-full p-1 text-white appearance-none cursor-pointer focus:outline-none focus:bg-[#191919] bg-[#191919] border-b border-white"
+          className="w-full mx-2 md:mx-0 p-1 text-white appearance-none cursor-pointer focus:outline-none focus:bg-[#191919] bg-[#191919] border-b border-white"
         >
           {categoryOptions.map((category) => (
             <option key={category} value={category}>

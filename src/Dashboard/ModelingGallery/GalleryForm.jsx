@@ -7,6 +7,7 @@ import {
   UserIcon,
   PhotoIcon,
 } from "@heroicons/react/24/solid";
+import { FaSpinner } from "react-icons/fa";
 const API = import.meta.env.VITE_OPEN_APIURL;
 
 export default function GalleryForm({ initial = {}, onClose, afterSave }) {
@@ -42,6 +43,9 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
       : []
   );
   const fileInputRef = useRef();
+
+  // Loader state
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     register("thumbnail");
@@ -82,6 +86,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
   };
 
   const onSubmit = async (data) => {
+    setShowLoader(true);
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("location", data.location);
@@ -116,6 +121,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
       : `${API}/api/modeling-gallery`;
 
     const res = await fetch(url, { method, body: formData });
+    setShowLoader(false);
     if (!res.ok) {
       alert("Failed to save!");
       return;
@@ -143,12 +149,34 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
     }
   };
 
+  // ---- Modal handling for close on backdrop click & ESC ----
+  const modalContentRef = useRef();
+
+  // ESC key closes modal
+  useEffect(() => {
+    function onEsc(e) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onEsc);
+    return () => window.removeEventListener("keydown", onEsc);
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black/70 via-gray-900/80 to-slate-900/70 backdrop-blur-sm">
-      <div className="bg-gradient-to-br from-[#1a1a23] via-[#20202a] to-[#29293a] rounded-3xl p-8 max-w-2xl w-full shadow-2xl relative overflow-auto max-h-[95vh] border border-gray-800">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black/70 via-gray-900/80 to-slate-900/70 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        ref={modalContentRef}
+        className="bg-gradient-to-br from-[#1a1a23] via-[#20202a] to-[#29293a] rounded-3xl p-8 max-w-2xl w-full shadow-2xl relative overflow-auto max-h-[95vh] border border-gray-800"
+        onClick={(e) => e.stopPropagation()}
+        tabIndex={-1}
+      >
         <button
+          type="button"
           className="absolute cursor-pointer top-5 right-5 text-gray-400 hover:text-white focus:outline-none"
           onClick={onClose}
+          tabIndex={0}
         >
           <XMarkIcon className="w-8 h-8" />
         </button>
@@ -161,7 +189,6 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
           className="space-y-7"
           encType="multipart/form-data"
         >
-          {/* Name */}
           <div>
             <label className="font-semibold text-gray-300 mb-1 flex items-center gap-2">
               <CameraIcon className="w-5 h-5 text-purple-400" />
@@ -174,7 +201,6 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               required
             />
           </div>
-          {/* Location */}
           <div>
             <label className="font-semibold text-gray-300 mb-1 flex items-center gap-2">
               <MapPinIcon className="w-5 h-5 text-emerald-400" />
@@ -186,7 +212,6 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               placeholder="City, Country"
             />
           </div>
-          {/* Photographer */}
           <div>
             <label className="font-semibold text-gray-300 mb-1 flex items-center gap-2">
               <UserIcon className="w-5 h-5 text-yellow-400" />
@@ -198,7 +223,6 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               placeholder="@photographer"
             />
           </div>
-          {/* Thumbnail */}
           <div>
             <label className="block font-semibold text-gray-300 mb-1">
               Thumbnail
@@ -222,7 +246,6 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               )}
             </div>
           </div>
-          {/* Gallery Images */}
           <div>
             <label className="block font-semibold text-gray-300 mb-1">
               Gallery Images
@@ -276,10 +299,19 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
           </div>
           <button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full cursor-pointer bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold text-lg tracking-wide shadow-xl transition"
+            disabled={isSubmitting || showLoader}
+            className="w-full cursor-pointer bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold text-lg tracking-wide shadow-xl transition flex items-center justify-center gap-3"
           >
-            {initial.id ? "Update Gallery" : "Create Gallery"}
+            {showLoader ? (
+              <>
+                <FaSpinner className="animate-spin" />
+                {initial.id ? "Updating..." : "Creating..."}
+              </>
+            ) : initial.id ? (
+              "Update Gallery"
+            ) : (
+              "Create Gallery"
+            )}
           </button>
         </form>
       </div>

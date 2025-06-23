@@ -176,8 +176,8 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
         <div className="scroll_minus_btn" onClick={handleMinusClick}>
           <FiMinusCircle />
         </div>
-        <div className="content-inner w-full md:max-w-10/12">
-          <h2 className={`content-title ${section?.id}_content_title`}>
+        <div className="w-full md:max-w-11/12 mx-auto pt-0 md:pr-5 pb-5 md:pl-5">
+          <h2 className={`content-title ${section?.id}_content_title mx-2 md:mx-0`}>
             {content?.title}
           </h2>
           <div className={`content-text ${section?.id}_content_text`}>

@@ -51,7 +51,7 @@ const Gallery = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-  
+
   const {
     data: galleries = [],
     isLoading,
@@ -108,7 +108,7 @@ const Gallery = () => {
         </h1>
         <div className="text-center text-white text-[18px] mb-8">
           {gallery?.location}
-          {gallery?.photographer ? ` |  @ ${gallery.photographer}` : ""}
+          {gallery?.photographer ? ` |  @${gallery.photographer}` : ""}
         </div>
         {isLoading ? (
           <div className="text-center text-gray-300 py-16">Loading...</div>
@@ -125,7 +125,7 @@ const Gallery = () => {
             No images in this gallery.
           </div>
         ) : (
-          <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 space-y-4 gap-4  w-full  mx-auto">
+          <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 space-y-4 gap-4 w-full mx-auto">
             {images.map((img, idx) => (
               <div
                 key={img + idx}

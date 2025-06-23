@@ -8,13 +8,13 @@ const ModelingCard = ({ img, title, location, photographer }) => {
           className="absolute top-2 right-0 h-[95%] w-[18%] bg-[#707070] z-10 pointer-events-none rounded-r-[15px]"
           style={{ right: "-10px" }}
         ></div>
-
-        <img
-          src={`${import.meta.env.VITE_OPEN_APIURL}/${img}`}
-          alt={title}
-          className="w-full h-full rounded-[15px] object-cover z-20 relative"
-          style={{ minHeight: "180px" }}
-        />
+        <div className=" h-[400px]">
+          <img
+            src={`${import.meta.env.VITE_OPEN_APIURL}/${img}`}
+            alt={title}
+            className="w-full h-full rounded-[15px] object-cover z-20 relative"
+          />
+        </div>
         {/* Top-right  border */}
         {/* Top border*/}
         <div className="absolute top-[10px]  right-[10px] h-[1px] bg-[#e5e5e5] w-[60px] group-hover:w-[93%]  z-50 transition-all duration-300"></div>
@@ -33,7 +33,7 @@ const ModelingCard = ({ img, title, location, photographer }) => {
             {title}
           </div>
           <div className="text-[#e5e5e5] text-[0.98rem] font-light tracking-wide drop-shadow">
-            {location} | @ {photographer}
+            {location} | @{photographer}
           </div>
         </div>
       </div>

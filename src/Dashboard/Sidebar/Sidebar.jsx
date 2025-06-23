@@ -99,7 +99,7 @@ const Sidebar = ({
     <>
       <div
         className={`bg-gray-800 flex flex-col justify-between fixed md:relative z-[60] transition-all duration-300 ${
-          collapsed ? "w-20 pt-5 md:pt-0" : "w-60 md:w-64"
+          collapsed ? "w-20 pt-5 md:pt-0" : "w-56 md:w-64"
         } h-screen ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
@@ -152,6 +152,7 @@ const Sidebar = ({
                 <NavLink
                   key={label}
                   to={to}
+                  onClick={mobileOpen ? toggleMobileSidebar : undefined}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-1 md:px-3 py-2 rounded-md text-sm font-medium transition ${
                       isActive && location.pathname === to
@@ -193,6 +194,7 @@ const Sidebar = ({
                         <NavLink
                           key={item.to}
                           to={item.to}
+                          onClick={mobileOpen ? toggleMobileSidebar : undefined}
                           className={({ isActive }) =>
                             `block text-sm px-2 py-1 rounded text-gray-300 hover:bg-teal-600 hover:text-white ${
                               isActive ? "bg-teal-600 text-white" : ""
