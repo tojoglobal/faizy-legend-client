@@ -8,6 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import useDataQuery from "../utils/useDataQuery"; // Adjust if needed
+import { Link } from "react-router-dom";
 
 const FANART_TABS = [{ name: "Photos" }, { name: "Videos" }];
 
@@ -27,7 +28,7 @@ const API = "/api/fan-art";
 const Fanart = () => {
   const [query, setQuery] = useState("");
   const [selectedTab, setSelectedTab] = useState(0);
-  const [modalItem, setModalItem] = useState(null); // { ...item, index }
+  const [modalItem, setModalItem] = useState(null);
   const [sortBy, setSortBy] = useState("newest");
   const [playingIndex, setPlayingIndex] = useState(null);
   const { data: apiData, isLoading, error } = useDataQuery(["fanArt"], API);
@@ -132,6 +133,7 @@ const Fanart = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] px-4 py-10">
+      <Link to="/add-fanart">Add Fanart</Link>
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex flex-col items-center mb-8">
@@ -169,7 +171,6 @@ const Fanart = () => {
             </select>
           </div>
         </div>
-
         {/* Tabs for asset type */}
         <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>
           <Tab.List className="flex space-x-2 justify-center mb-10">

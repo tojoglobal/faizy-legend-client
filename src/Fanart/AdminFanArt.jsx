@@ -1,13 +1,23 @@
-import { TrashIcon, CheckCircle2, XCircle, PlusCircle } from "lucide-react";
+import {
+  TrashIcon,
+  CheckCircle2,
+  XCircle,
+  PlusCircle,
+  Eye,
+} from "lucide-react";
 import Swal from "sweetalert2";
 import { useAxiospublic } from "../Hooks/useAxiospublic";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import useDataQuery from "../utils/useDataQuery";
+import { useState } from "react";
+import FanArtDetailsModal from "./FanArtDetailsModal";
 
 export default function AdminFanArt() {
   const axiospublic = useAxiospublic();
   const API = "/api/fan-art";
+  const [selected, setSelected] = useState(null);
+
   const {
     data: artsRaw,
     isLoading,
@@ -139,13 +149,13 @@ export default function AdminFanArt() {
           <table className="w-full table-auto border-collapse text-sm">
             <thead>
               <tr className="bg-gray-800 text-white">
-                <th className="p-2">Thumbnail</th>
-                <th className="p-2">Title</th>
-                <th className="p-2">Fan Name</th>
-                <th className="p-2">Tags</th>
-                <th className="p-2">Date</th>
-                <th className="p-2">Status</th>
-                <th className="p-2">Actions</th>
+                <th className="p-2 text-left">Thumbnail</th>
+                <th className="p-2 text-left">Title</th>
+                <th className="p-2 text-left">Fan Name</th>
+                <th className="p-2 text-left">Tags</th>
+                <th className="p-2 text-left">Date</th>
+                <th className="p-2 text-left">Status</th>
+                <th className="p-2 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -160,9 +170,9 @@ export default function AdminFanArt() {
                         src={
                           a.images[0].startsWith("http")
                             ? a.images[0]
-                            : `${
-                                import.meta.env.VITE_OPEN_APIURL
-                              }/uploads/${a.images[0].replace(/^.*[\\/]/, "")}`
+                            : `${import.meta.env.VITE_OPEN_APIURL}${
+                                a.images[0]
+                              }`
                         }
                         alt={a.title}
                         className="w-16 h-16 object-cover rounded"
@@ -202,6 +212,13 @@ export default function AdminFanArt() {
                     )}
                   </td>
                   <td className="p-2 flex gap-2">
+                    <button
+                      onClick={() => setSelected(a)}
+                      className="p-1 cursor-pointer rounded hover:bg-blue-100"
+                      title="View Details"
+                    >
+                      <Eye className="w-5 h-5 text-blue-600" />
+                    </button>
                     {a.approved === null && (
                       <>
                         <button
@@ -244,6 +261,14 @@ export default function AdminFanArt() {
           </table>
         </div>
       )}
+      <FanArtDetailsModal
+        open={!!selected}
+        art={selected}
+        onClose={() => setSelected(null)}
+        onApprove={handleApprove}
+        onReject={handleReject}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }
