@@ -188,19 +188,17 @@ export default function AdminUpdateFilmingGallery() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <h1 className="text-xl font-extrabold mb-3 text-white text-center">
-        Manage Filming Gallery
-      </h1>
-      <div className="flex justify-end mb-4">
+    <div className="p-2 max-w-7xl mx-auto">
+      <div className="flex justify-between mb-4">
+        <h1 className="text-xl font-bold">Manage Filming Gallery</h1>
         <button
-          className={`flex cursor-pointer items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 rounded-sm font-semibold shadow transition-all duration-200 ${
+          className={`bg-teal-600 cursor-pointer hover:bg-teal-700 text-white px-4 py-1.5 rounded font-medium transition ${
             addRow ? "opacity-60 pointer-events-none" : ""
           }`}
           onClick={() => setAddRow(true)}
           disabled={addRow}
         >
-          <FaPlus /> Add New Video
+          + Add New Video
         </button>
       </div>
       <div className="overflow-x-auto rounded-lg shadow-md bg-gray-800">

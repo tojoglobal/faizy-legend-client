@@ -1,14 +1,7 @@
-import {
-  TrashIcon,
-  CheckCircle2,
-  XCircle,
-  PlusCircle,
-  Eye,
-} from "lucide-react";
+import { TrashIcon, CheckCircle2, XCircle, Eye } from "lucide-react";
 import Swal from "sweetalert2";
 import { useAxiospublic } from "../Hooks/useAxiospublic";
 import { useMutation } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
 import useDataQuery from "../utils/useDataQuery";
 import { useState } from "react";
 import FanArtDetailsModal from "./FanArtDetailsModal";
@@ -131,12 +124,6 @@ export default function AdminFanArt() {
     <div className="p-2 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Fan Art Approvals</h2>
-        <Link
-          to="/add-fan-art"
-          className="flex items-center gap-1 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1.5 rounded font-medium transition"
-        >
-          <PlusCircle size={18} /> Add Fan Art
-        </Link>
       </div>
       {isLoading ? (
         <div className="text-center py-8 text-gray-400">Loading...</div>

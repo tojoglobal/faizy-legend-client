@@ -219,10 +219,10 @@ const AdminUpdateShopping = () => {
         <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
           <h2 className="text-xl font-semibold">Products</h2>
           <button
-            className="bg-teal-700 cursor-pointer text-white flex items-center gap-1 px-3 py-1 rounded"
+            className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white px-4 py-1.5 rounded font-medium transition"
             onClick={() => setAddRow(true)}
           >
-            <FaPlus /> Add Product
+            + Add Product
           </button>
         </div>
         <div className="w-full shadow rounded bg-gray-900 overflow-hidden">
