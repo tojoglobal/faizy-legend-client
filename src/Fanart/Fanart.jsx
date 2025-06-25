@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 
 const FANART_TABS = [{ name: "Photos" }, { name: "Videos" }];
+const PAGE_SIZES = [3, 6, 9, 12];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -32,12 +33,22 @@ const Fanart = () => {
   const [modalItem, setModalItem] = useState(null);
   const [sortBy, setSortBy] = useState("newest");
   const [playingIndex, setPlayingIndex] = useState(null);
-  const { data: apiData, isLoading, error } = useDataQuery(["fanArt"], API);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(9);
+
+  const {
+    data: apiData,
+    isLoading,
+    error,
+  } = useDataQuery(
+    ["fanArt", page, perPage],
+    `${API}?page=${page}&limit=${perPage}`
+  );
 
   // Prepare and normalize data
   const items = useMemo(() => {
-    if (!Array.isArray(apiData)) return [];
-    return apiData
+    if (!apiData?.rows) return [];
+    return apiData.rows
       .filter((item) => item.approved === 1)
       .map((item) => {
         // Parse images/videos/tags
@@ -132,8 +143,12 @@ const Fanart = () => {
     return arr;
   }, [items, query, sortBy]);
 
+  // Pagination meta
+  const total = apiData?.total || 0;
+  const lastPage = apiData?.lastPage || 1;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-4 py-10">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div>
@@ -180,6 +195,89 @@ const Fanart = () => {
               ))}
             </select>
           </div>
+        </div>
+        {/* Pagination Controls */}
+        <div className="flex flex-col sm:flex-row justify-between items-center my-8 gap-2">
+          <div className="flex items-center gap-2">
+            <span className="mr-2 text-sm text-gray-500">Show:</span>
+            <select
+              className="border rounded px-2 py-1 text-sm focus:outline-none cursor-pointer"
+              value={perPage}
+              onChange={(e) => {
+                setPerPage(Number(e.target.value));
+                setPage(1);
+              }}
+            >
+              {PAGE_SIZES.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+              <option value={99999}>All</option>
+            </select>
+          </div>
+          {lastPage > 1 && (
+            <div className="flex items-center gap-1 mt-2 sm:mt-0">
+              <button
+                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+                onClick={() => setPage(1)}
+                disabled={page === 1}
+              >
+                &laquo; First
+              </button>
+              <button
+                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                Previous
+              </button>
+              {Array.from({ length: lastPage }, (_, i) => i + 1)
+                .filter(
+                  (n) =>
+                    n === 1 ||
+                    n === lastPage ||
+                    (n >= page - 1 && n <= page + 1)
+                )
+                .map((n, idx, arr) =>
+                  idx > 0 && n - arr[idx - 1] > 1 ? (
+                    <span key={n + "-dots"} className="px-1 text-gray-400">
+                      ...
+                    </span>
+                  ) : (
+                    <button
+                      key={n}
+                      className={`px-3 py-1 rounded ${
+                        n === page
+                          ? "bg-indigo-600 text-white shadow font-bold"
+                          : "hover:bg-gray-200 text-gray-700"
+                      }`}
+                      onClick={() => setPage(n)}
+                      disabled={n === page}
+                    >
+                      {n}
+                    </button>
+                  )
+                )}
+              <button
+                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+                onClick={() => setPage((p) => Math.min(lastPage, p + 1))}
+                disabled={page === lastPage}
+              >
+                Next
+              </button>
+              <button
+                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+                onClick={() => setPage(lastPage)}
+                disabled={page === lastPage}
+              >
+                Last &raquo;
+              </button>
+              <span className="ml-2 text-gray-500 text-sm">
+                Page {page} of {lastPage} ({total} total)
+              </span>
+            </div>
+          )}
         </div>
         {/* Tabs for asset type */}
         <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>

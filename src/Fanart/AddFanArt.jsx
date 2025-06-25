@@ -11,6 +11,7 @@ import {
 } from "react-icons/fi";
 import { useMutation } from "@tanstack/react-query";
 import { useAxiospublic } from "../Hooks/useAxiospublic";
+import Swal from "sweetalert2";
 
 const MAX_IMAGES = 10;
 const MAX_VIDEOS = 2;
@@ -51,10 +52,13 @@ const AddFanArt = () => {
       return res.data;
     },
     onSuccess: () => {
-      setMessage({
-        type: "success",
-        text: "Submitted! Awaiting admin approval.",
+      Swal.fire({
+        icon: "success",
+        title: "Submitted!",
+        text: "Awaiting admin approval.",
+        confirmButtonColor: "#6366f1",
       });
+      setMessage(null);
       setTitle("");
       setUser("");
       setTags("");
@@ -62,10 +66,13 @@ const AddFanArt = () => {
       setVideos([]);
     },
     onError: (err) => {
-      setMessage({
-        type: "error",
+      Swal.fire({
+        icon: "error",
+        title: "Upload failed",
         text: err?.response?.data?.error || "Upload failed.",
+        confirmButtonColor: "#ef4444",
       });
+      setMessage(null);
     },
   });
 
@@ -73,13 +80,20 @@ const AddFanArt = () => {
     e.preventDefault();
     setMessage(null);
     if (!title || !user) {
-      setMessage({ type: "error", text: "Title and your name are required." });
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Fields",
+        text: "Title and your name are required.",
+        confirmButtonColor: "#f59e42",
+      });
       return;
     }
     if (images.length === 0 && videos.length === 0) {
-      setMessage({
-        type: "error",
+      Swal.fire({
+        icon: "warning",
+        title: "No Media",
         text: "Please add at least 1 image or video.",
+        confirmButtonColor: "#f59e42",
       });
       return;
     }
@@ -87,7 +101,7 @@ const AddFanArt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white px-2 lg:px-4 py-3 lg:py-10">
+    <div className="bg-white p-3">
       <div className="max-w-2xl mx-auto p-4 lg:p-6 rounded-3xl shadow-2xl my-10 bg-white">
         <h2 className="text-2xl lg:text-3xl font-extrabold text-gray-900 mb-5 text-center tracking-tight">
           Add Your Fan Art
