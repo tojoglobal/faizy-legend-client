@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 
 const FANART_TABS = [{ name: "Photos" }, { name: "Videos" }];
-const PAGE_SIZES = [3, 6, 9, 12];
+const PAGE_SIZES = [6, 9, 12];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -51,7 +51,6 @@ const Fanart = () => {
     return apiData.rows
       .filter((item) => item.approved === 1)
       .map((item) => {
-        // Parse images/videos/tags
         let images = [];
         let videos = [];
         let tags = [];
@@ -78,7 +77,6 @@ const Fanart = () => {
                 .map((t) => t.trim())
                 .filter(Boolean)
             : item.tags || [];
-        // URLs
         const apiBase = import.meta.env.VITE_OPEN_APIURL || "";
         return {
           id: item.id,
@@ -96,7 +94,6 @@ const Fanart = () => {
       });
   }, [apiData]);
 
-  // Filter by tab and query
   const filteredPhotos = useMemo(() => {
     let arr = items.filter(
       (item) =>
@@ -107,7 +104,6 @@ const Fanart = () => {
             tag.toLowerCase().includes(query.toLowerCase())
           ))
     );
-    // Sort
     if (sortBy === "newest") {
       arr = arr.sort((a, b) => new Date(b.date) - new Date(a.date));
     } else if (sortBy === "oldest") {
@@ -130,7 +126,6 @@ const Fanart = () => {
             tag.toLowerCase().includes(query.toLowerCase())
           ))
     );
-    // Sort
     if (sortBy === "newest") {
       arr = arr.sort((a, b) => new Date(b.date) - new Date(a.date));
     } else if (sortBy === "oldest") {
@@ -143,9 +138,72 @@ const Fanart = () => {
     return arr;
   }, [items, query, sortBy]);
 
-  // Pagination meta
   const total = apiData?.total || 0;
   const lastPage = apiData?.lastPage || 1;
+
+  // Pagination controls component (centered at bottom of cards)
+  function PaginationControls() {
+    if (lastPage <= 1) return null;
+    return (
+      <div className="flex justify-center items-center gap-2 mt-10 select-none">
+        <button
+          className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+          onClick={() => setPage(1)}
+          disabled={page === 1}
+        >
+          &laquo; First
+        </button>
+        <button
+          className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        {Array.from({ length: lastPage }, (_, i) => i + 1)
+          .filter(
+            (n) => n === 1 || n === lastPage || (n >= page - 1 && n <= page + 1)
+          )
+          .map((n, idx, arr) =>
+            idx > 0 && n - arr[idx - 1] > 1 ? (
+              <span key={n + "-dots"} className="px-1 text-gray-400">
+                ...
+              </span>
+            ) : (
+              <button
+                key={n}
+                className={`px-3 py-1 rounded ${
+                  n === page
+                    ? "bg-indigo-600 text-white shadow font-bold"
+                    : "hover:bg-gray-200 text-gray-700"
+                }`}
+                onClick={() => setPage(n)}
+                disabled={n === page}
+              >
+                {n}
+              </button>
+            )
+          )}
+        <button
+          className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+          onClick={() => setPage((p) => Math.min(lastPage, p + 1))}
+          disabled={page === lastPage}
+        >
+          Next
+        </button>
+        <button
+          className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
+          onClick={() => setPage(lastPage)}
+          disabled={page === lastPage}
+        >
+          Last &raquo;
+        </button>
+        <span className="ml-2 text-gray-500 text-sm">
+          Page {page} of {lastPage} ({total} total)
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-4 py-10">
@@ -196,88 +254,23 @@ const Fanart = () => {
             </select>
           </div>
         </div>
-        {/* Pagination Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-center my-8 gap-2">
-          <div className="flex items-center gap-2">
-            <span className="mr-2 text-sm text-gray-500">Show:</span>
-            <select
-              className="border rounded px-2 py-1 text-sm focus:outline-none cursor-pointer"
-              value={perPage}
-              onChange={(e) => {
-                setPerPage(Number(e.target.value));
-                setPage(1);
-              }}
-            >
-              {PAGE_SIZES.map((n) => (
-                <option key={n} value={n}>
-                  {n}
-                </option>
-              ))}
-              <option value={99999}>All</option>
-            </select>
-          </div>
-          {lastPage > 1 && (
-            <div className="flex items-center gap-1 mt-2 sm:mt-0">
-              <button
-                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
-                onClick={() => setPage(1)}
-                disabled={page === 1}
-              >
-                &laquo; First
-              </button>
-              <button
-                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-              >
-                Previous
-              </button>
-              {Array.from({ length: lastPage }, (_, i) => i + 1)
-                .filter(
-                  (n) =>
-                    n === 1 ||
-                    n === lastPage ||
-                    (n >= page - 1 && n <= page + 1)
-                )
-                .map((n, idx, arr) =>
-                  idx > 0 && n - arr[idx - 1] > 1 ? (
-                    <span key={n + "-dots"} className="px-1 text-gray-400">
-                      ...
-                    </span>
-                  ) : (
-                    <button
-                      key={n}
-                      className={`px-3 py-1 rounded ${
-                        n === page
-                          ? "bg-indigo-600 text-white shadow font-bold"
-                          : "hover:bg-gray-200 text-gray-700"
-                      }`}
-                      onClick={() => setPage(n)}
-                      disabled={n === page}
-                    >
-                      {n}
-                    </button>
-                  )
-                )}
-              <button
-                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
-                onClick={() => setPage((p) => Math.min(lastPage, p + 1))}
-                disabled={page === lastPage}
-              >
-                Next
-              </button>
-              <button
-                className="px-2 py-1 rounded hover:bg-gray-200 text-gray-700 disabled:opacity-50"
-                onClick={() => setPage(lastPage)}
-                disabled={page === lastPage}
-              >
-                Last &raquo;
-              </button>
-              <span className="ml-2 text-gray-500 text-sm">
-                Page {page} of {lastPage} ({total} total)
-              </span>
-            </div>
-          )}
+        {/* Show select page size */}
+        <div className="flex justify-center items-center gap-2 mb-6">
+          <span className="mr-2 text-sm text-gray-500">Show:</span>
+          <select
+            className="border rounded px-2 py-1 text-sm focus:outline-none cursor-pointer"
+            value={perPage}
+            onChange={(e) => {
+              setPerPage(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            {PAGE_SIZES.map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
         </div>
         {/* Tabs for asset type */}
         <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>
@@ -310,83 +303,86 @@ const Fanart = () => {
                   Error loading fan art.
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-                  {filteredPhotos.length === 0 && (
-                    <div className="col-span-full text-center text-gray-400 py-16 text-xl">
-                      No fan art found matching your search.
-                    </div>
-                  )}
-                  {filteredPhotos.map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
-                    >
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
+                    {filteredPhotos.length === 0 && (
+                      <div className="col-span-full text-center text-gray-400 py-16 text-xl">
+                        No fan art found matching your search.
+                      </div>
+                    )}
+                    {filteredPhotos.map((item) => (
                       <div
-                        className="relative cursor-pointer"
-                        onClick={() =>
-                          setModalItem({ ...item, index: 0, mode: "photo" })
-                        }
+                        key={item.id}
+                        className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
                       >
-                        <img
-                          src={item.images[0]}
-                          alt={item.title}
-                          className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
-                          <button
-                            className="bg-white/80 rounded-full p-2 hover:bg-indigo-100 shadow"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalItem({
-                                ...item,
-                                index: 0,
-                                mode: "photo",
-                              });
-                            }}
-                            aria-label="View large"
-                          >
-                            <FiMaximize2 className="text-xl text-indigo-600" />
-                          </button>
-                          <a
-                            href={item.images[0]}
-                            download
-                            className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label="Download"
-                          >
-                            <FiDownload className="text-xl text-pink-500" />
-                          </a>
-                        </div>
-                        {item.images.length > 1 && (
-                          <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
-                            +{item.images.length} images
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-col flex-1 p-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-lg text-gray-700">
-                            {item.title}
-                          </span>
-                          <span className="ml-auto text-xs text-indigo-500 rounded-full px-2 py-0.5 bg-indigo-50 font-semibold">
-                            by {item.user}
-                          </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {item.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="bg-gradient-to-r from-pink-200 to-indigo-100 text-indigo-700 rounded-full px-2 py-0.5 text-xs font-medium"
+                        <div
+                          className="relative cursor-pointer"
+                          onClick={() =>
+                            setModalItem({ ...item, index: 0, mode: "photo" })
+                          }
+                        >
+                          <img
+                            src={item.images[0]}
+                            alt={item.title}
+                            className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
+                            <button
+                              className="bg-white/80 rounded-full p-2 hover:bg-indigo-100 shadow"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalItem({
+                                  ...item,
+                                  index: 0,
+                                  mode: "photo",
+                                });
+                              }}
+                              aria-label="View large"
                             >
-                              {tag}
+                              <FiMaximize2 className="text-xl text-indigo-600" />
+                            </button>
+                            <a
+                              href={item.images[0]}
+                              download
+                              className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label="Download"
+                            >
+                              <FiDownload className="text-xl text-pink-500" />
+                            </a>
+                          </div>
+                          {item.images.length > 1 && (
+                            <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
+                              +{item.images.length} images
                             </span>
-                          ))}
+                          )}
+                        </div>
+                        <div className="flex flex-col flex-1 p-4">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-bold text-lg text-gray-700">
+                              {item.title}
+                            </span>
+                            <span className="ml-auto text-xs text-indigo-500 rounded-full px-2 py-0.5 bg-indigo-50 font-semibold">
+                              by {item.user}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            {item.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="bg-gradient-to-r from-pink-200 to-indigo-100 text-indigo-700 rounded-full px-2 py-0.5 text-xs font-medium"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                  <PaginationControls />
+                </>
               )}
             </Tab.Panel>
             {/* Videos */}
@@ -400,99 +396,92 @@ const Fanart = () => {
                   Error loading fan art.
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-                  {filteredVideos.length === 0 && (
-                    <div className="col-span-full text-center text-gray-400 py-16 text-xl">
-                      No videos found matching your search.
-                    </div>
-                  )}
-                  {filteredVideos.map((item, idx) => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
-                    >
-                      <div className="relative cursor-pointer">
-                        {/* Only play the video if this card is the playingIndex */}
-                        <ReactPlayer
-                          url={item.videos[0]}
-                          width="100%"
-                          height="225px"
-                          controls
-                          playing={playingIndex === idx}
-                          onPlay={() => setPlayingIndex(idx)}
-                          onPause={() => setPlayingIndex(null)}
-                          onClickPreview={() => setPlayingIndex(idx)}
-                          light={true}
-                          playIcon={
-                            <button className="bg-white/80 cursor-pointer rounded-full p-3 hover:bg-indigo-100 shadow border border-indigo-300">
-                              <svg
-                                viewBox="0 0 24 24"
-                                className="w-8 h-8 text-indigo-600"
-                              >
-                                <polygon
-                                  points="5,3 19,12 5,21"
-                                  fill="currentColor"
-                                />
-                              </svg>
-                            </button>
-                          }
-                        />
-                        <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
-                          <button
-                            className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalItem({
-                                ...item,
-                                index: 0,
-                                mode: "video",
-                              });
-                              setPlayingIndex(null);
-                            }}
-                            aria-label="View large"
-                          >
-                            <FiMaximize2 className="text-xl text-indigo-600" />
-                          </button>
-                          <a
-                            href={item.videos[0]}
-                            download
-                            className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label="Download"
-                          >
-                            <FiDownload className="text-xl text-pink-500" />
-                          </a>
-                        </div>
-                        {item.videos.length > 1 && (
-                          <span className="absolute bottom-0 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
-                            +{item.videos.length} videos
-                          </span>
-                        )}
-                        {/* Video Title & User moved to bottom overlay, right aligned */}
-                        {/* <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg px-3 py-1 flex flex-col items-end shadow">
-                          <span className="font-semibold text-gray-700 text-sm">
-                            {item.title}
-                          </span>
-                          <span className="text-indigo-500 text-xs font-semibold">
-                            by {item.user}
-                          </span>
-                        </div> */}
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
+                    {filteredVideos.length === 0 && (
+                      <div className="col-span-full text-center text-gray-400 py-16 text-xl">
+                        No videos found matching your search.
                       </div>
-                      <div className="flex flex-col flex-1 p-4">
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {item.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="bg-gradient-to-r from-pink-200 to-indigo-100 text-indigo-700 rounded-full px-2 py-0.5 text-xs font-medium"
+                    )}
+                    {filteredVideos.map((item, idx) => (
+                      <div
+                        key={item.id}
+                        className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
+                      >
+                        <div className="relative cursor-pointer">
+                          <ReactPlayer
+                            url={item.videos[0]}
+                            width="100%"
+                            height="225px"
+                            controls
+                            playing={playingIndex === idx}
+                            onPlay={() => setPlayingIndex(idx)}
+                            onPause={() => setPlayingIndex(null)}
+                            onClickPreview={() => setPlayingIndex(idx)}
+                            light={true}
+                            playIcon={
+                              <button className="bg-white/80 cursor-pointer rounded-full p-3 hover:bg-indigo-100 shadow border border-indigo-300">
+                                <svg
+                                  viewBox="0 0 24 24"
+                                  className="w-8 h-8 text-indigo-600"
+                                >
+                                  <polygon
+                                    points="5,3 19,12 5,21"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </button>
+                            }
+                          />
+                          <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
+                            <button
+                              className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalItem({
+                                  ...item,
+                                  index: 0,
+                                  mode: "video",
+                                });
+                                setPlayingIndex(null);
+                              }}
+                              aria-label="View large"
                             >
-                              {tag}
+                              <FiMaximize2 className="text-xl text-indigo-600" />
+                            </button>
+                            <a
+                              href={item.videos[0]}
+                              download
+                              className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label="Download"
+                            >
+                              <FiDownload className="text-xl text-pink-500" />
+                            </a>
+                          </div>
+                          {item.videos.length > 1 && (
+                            <span className="absolute bottom-0 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
+                              +{item.videos.length} videos
                             </span>
-                          ))}
+                          )}
+                        </div>
+                        <div className="flex flex-col flex-1 p-4">
+                          <div className="flex flex-wrap gap-2 mt-1">
+                            {item.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="bg-gradient-to-r from-pink-200 to-indigo-100 text-indigo-700 rounded-full px-2 py-0.5 text-xs font-medium"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                  <PaginationControls />
+                </>
               )}
             </Tab.Panel>
           </Tab.Panels>
