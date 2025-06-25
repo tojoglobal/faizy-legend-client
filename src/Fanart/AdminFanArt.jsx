@@ -17,9 +17,9 @@ export default function AdminFanArt() {
 
   const { data, isLoading, error, refetch } = useDataQuery(
     ["fanArtAdmin", page, perPage],
-    `${API}?page=${page}&limit=${perPage}`
+    `/api/fan-art/admin?page=${page}&limit=${perPage}`
   );
-  console.log(data);
+
   // Parse images/tags (since stored as JSON/text in DB)
   const arts = Array.isArray(data?.rows)
     ? data.rows.map((a) => ({
