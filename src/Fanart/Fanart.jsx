@@ -29,6 +29,7 @@ const Fanart = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [modalItem, setModalItem] = useState(null); // { ...item, index }
   const [sortBy, setSortBy] = useState("newest");
+  const [playingIndex, setPlayingIndex] = useState(null);
   const { data: apiData, isLoading, error } = useDataQuery(["fanArt"], API);
 
   // Prepare and normalize data
@@ -296,24 +297,22 @@ const Fanart = () => {
                       No videos found matching your search.
                     </div>
                   )}
-                  {filteredVideos.map((item) => (
+                  {filteredVideos.map((item, idx) => (
                     <div
                       key={item.id}
                       className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
                     >
-                      <div
-                        className="relative cursor-pointer"
-                        onClick={() =>
-                          setModalItem({ ...item, index: 0, mode: "video" })
-                        }
-                      >
-                        {/* Display a player thumbnail (light mode) */}
+                      <div className="relative cursor-pointer">
+                        {/* Only play the video if this card is the playingIndex */}
                         <ReactPlayer
                           url={item.videos[0]}
                           width="100%"
                           height="225px"
-                          controls={false}
-                          playing={false}
+                          controls
+                          playing={playingIndex === idx}
+                          onPlay={() => setPlayingIndex(idx)}
+                          onPause={() => setPlayingIndex(null)}
+                          onClickPreview={() => setPlayingIndex(idx)}
                           light={true}
                           playIcon={
                             <button className="bg-white/80 rounded-full p-3 hover:bg-indigo-100 shadow border border-indigo-300">
@@ -328,9 +327,6 @@ const Fanart = () => {
                               </svg>
                             </button>
                           }
-                          onClickPreview={() =>
-                            setModalItem({ ...item, index: 0, mode: "video" })
-                          }
                         />
                         <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
                           <button
@@ -342,6 +338,7 @@ const Fanart = () => {
                                 index: 0,
                                 mode: "video",
                               });
+                              setPlayingIndex(null);
                             }}
                             aria-label="View large"
                           >
@@ -362,16 +359,17 @@ const Fanart = () => {
                             +{item.videos.length} videos
                           </span>
                         )}
-                      </div>
-                      <div className="flex flex-col flex-1 p-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-lg text-gray-700">
+                        {/* Video Title & User moved to bottom overlay, right aligned */}
+                        <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg px-3 py-1 flex flex-col items-end shadow">
+                          <span className="font-semibold text-gray-700 text-sm">
                             {item.title}
                           </span>
-                          <span className="ml-auto text-xs text-indigo-500 rounded-full px-2 py-0.5 bg-indigo-50 font-semibold">
+                          <span className="text-indigo-500 text-xs font-semibold">
                             by {item.user}
                           </span>
                         </div>
+                      </div>
+                      <div className="flex flex-col flex-1 p-4">
                         <div className="flex flex-wrap gap-2 mt-1">
                           {item.tags.map((tag) => (
                             <span
@@ -473,7 +471,7 @@ const Fanart = () => {
                       width="100%"
                       height="60vh"
                       controls
-                      playing
+                      playing={false}
                     />
                     <div className="absolute top-4 right-4 flex gap-2 z-10">
                       <a
@@ -500,7 +498,7 @@ const Fanart = () => {
                   width="100%"
                   height="60vh"
                   controls
-                  playing
+                  playing={false}
                 />
                 <div className="absolute top-4 right-4 flex gap-2 z-10">
                   <a
