@@ -464,7 +464,7 @@ const Fanart = () => {
                           </a>
                         </div>
                         {item.videos.length > 1 && (
-                          <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
+                          <span className="absolute bottom-0 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
                             +{item.videos.length} videos
                           </span>
                         )}
