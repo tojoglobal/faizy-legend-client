@@ -16,11 +16,14 @@ import UgcGallery from "./Dashboard/UgcGallery/UgcGallery";
 import AdminBookingData from "./AdminUpdate/AdminBookingData";
 import AdminUpdateArticles from "./AdminUpdate/AdminUpdateArticles";
 import Fanart from "./Fanart/Fanart";
+import AdminFanArt from "./Fanart/AdminFanArt";
+import AddFanArt from "./Fanart/AddFanArt";
 
 const AppLayout = () => {
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
+      <Route path="/add-fanart" element={<AddFanArt />} />
       <Route path="/fanart" element={<Fanart />} />
       <Route path="/gallery/:title" element={<Gallery />} />
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -34,6 +37,7 @@ const AppLayout = () => {
       >
         <Route index element={<Dashboard />} />
         <Route path="filming-gallery" element={<AdminUpdateFilmingGallery />} />
+        <Route path="fanart" element={<AdminFanArt />} />
         <Route path="modeling-gallery" element={<ModelingGalleryTable />} />
         <Route path="ugc-gallery" element={<UgcGallery />} />
         <Route path="shopping" element={<AdminUpdateShopping />} />

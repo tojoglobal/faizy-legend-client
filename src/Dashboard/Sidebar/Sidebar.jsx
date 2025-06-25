@@ -16,6 +16,7 @@ import {
   ShoppingCart,
   BookOpenText,
   Newspaper,
+  Palette,
 } from "lucide-react";
 
 const logo = "/icon.webp";
@@ -27,7 +28,11 @@ const menuItems = [
     icon: <LayoutDashboard size={20} />,
     to: "/dashboard",
   },
-
+  {
+    label: "Fan Art",
+    icon: <Palette size={20} />,
+    to: "/dashboard/fanart",
+  },
   {
     label: "Modeling Gallery",
     icon: <BookImage size={20} />,
@@ -53,7 +58,6 @@ const menuItems = [
     icon: <ShoppingCart size={20} />,
     to: "/dashboard/shopping",
   },
-
   {
     label: "UGC",
     icon: <Users size={20} />,

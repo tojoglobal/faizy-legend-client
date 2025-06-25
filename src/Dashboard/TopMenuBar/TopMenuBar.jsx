@@ -12,7 +12,7 @@ const TopMenuBar = ({ toggleMobileSidebar, collapsed, toggleSidebar }) => {
   };
 
   return (
-    <div className="flex justify-between items-center px-4 py-[10px] shadow  w-full">
+    <div className="flex justify-between items-center px-4 py-[10px] shadow w-full">
       {/* Left Side: Menu Icon and Dashboard Text */}
       <div className="flex items-center gap-3">
         <button
