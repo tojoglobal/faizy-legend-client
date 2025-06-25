@@ -424,7 +424,7 @@ const Fanart = () => {
                           onClickPreview={() => setPlayingIndex(idx)}
                           light={true}
                           playIcon={
-                            <button className="bg-white/80 rounded-full p-3 hover:bg-indigo-100 shadow border border-indigo-300">
+                            <button className="bg-white/80 cursor-pointer rounded-full p-3 hover:bg-indigo-100 shadow border border-indigo-300">
                               <svg
                                 viewBox="0 0 24 24"
                                 className="w-8 h-8 text-indigo-600"
@@ -439,7 +439,7 @@ const Fanart = () => {
                         />
                         <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
                           <button
-                            className="bg-white/80 rounded-full p-2 hover:bg-indigo-100 shadow"
+                            className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
                             onClick={(e) => {
                               e.stopPropagation();
                               setModalItem({
@@ -469,14 +469,14 @@ const Fanart = () => {
                           </span>
                         )}
                         {/* Video Title & User moved to bottom overlay, right aligned */}
-                        <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg px-3 py-1 flex flex-col items-end shadow">
+                        {/* <div className="absolute bottom-2 right-2 bg-white/80 rounded-lg px-3 py-1 flex flex-col items-end shadow">
                           <span className="font-semibold text-gray-700 text-sm">
                             {item.title}
                           </span>
                           <span className="text-indigo-500 text-xs font-semibold">
                             by {item.user}
                           </span>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="flex flex-col flex-1 p-4">
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -533,7 +533,7 @@ const Fanart = () => {
                         <FiDownload className="inline mr-2 -mt-1" /> Download
                       </a>
                       <button
-                        className="bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                        className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
                         onClick={() => setModalItem(null)}
                       >
                         Close
@@ -558,7 +558,7 @@ const Fanart = () => {
                     <FiDownload className="inline mr-2 -mt-1" /> Download
                   </a>
                   <button
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                    className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
                     onClick={() => setModalItem(null)}
                   >
                     Close
@@ -591,7 +591,7 @@ const Fanart = () => {
                         <FiDownload className="inline mr-2 -mt-1" /> Download
                       </a>
                       <button
-                        className="bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                        className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
                         onClick={() => setModalItem(null)}
                       >
                         Close
@@ -618,7 +618,7 @@ const Fanart = () => {
                     <FiDownload className="inline mr-2 -mt-1" /> Download
                   </a>
                   <button
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                    className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
                     onClick={() => setModalItem(null)}
                   >
                     Close
@@ -626,12 +626,12 @@ const Fanart = () => {
                 </div>
               </>
             )}
-            <div className="absolute bottom-4 left-6 text-lg font-bold text-gray-700 bg-white/80 rounded-xl px-4 py-2 shadow z-10">
+            {/* <div className="absolute bottom-4 left-6 text-lg font-bold text-gray-700 bg-white/80 rounded-xl px-4 py-2 shadow z-10">
               {modalItem.title}{" "}
               <span className="font-normal text-gray-500 text-base">
                 by {modalItem.user}
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
