@@ -9,6 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import useDataQuery from "../utils/useDataQuery"; // Adjust if needed
 import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 const FANART_TABS = [{ name: "Photos" }, { name: "Videos" }];
 
@@ -133,25 +134,34 @@ const Fanart = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] px-4 py-10">
-      <Link to="/add-fanart">Add Fanart</Link>
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col items-center mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-            Fan Art Gallery
-          </h1>
-          <p className="text-lg text-gray-500 mt-2">
-            Search, view and download premium fan art curated by our team.
-          </p>
+        <div>
+          <div className="w-full sm:w-auto flex flex-col items-center text-center">
+            <h1 className="text-2xl lg:text-3xl font-semibold tracking-tight">
+              Fan Art Gallery
+            </h1>
+            <p className="text-lg text-gray-500 my-1">
+              Search, view and download premium fan art curated by our team.
+            </p>
+          </div>
         </div>
-
+        <div className="flex w-full sm:w-auto justify-center">
+          <Link
+            to="/add-fanart"
+            className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-pink-500 hover:from-indigo-700 hover:to-pink-600 text-white px-4 py-1.5 rounded-lg font-semibold text-lg transition-all duration-200"
+          >
+            <Plus className="w-5 h-5" />
+            Add Fanart
+          </Link>
+        </div>
         {/* Search + Sort */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full max-w-xl mx-auto mb-7">
+        <div className="flex flex-col mt-3 sm:flex-row sm:items-center gap-4 w-full max-w-xl mx-auto mb-5">
           <div className="relative flex-1">
             <input
               type="text"
               placeholder="Search by fan name, title, or tag..."
-              className="w-full py-3 px-5 pl-12 rounded-xl shadow-lg border border-gray-200 focus:ring-2 focus:ring-indigo-300 bg-white text-gray-800 text-lg outline-none"
+              className="w-full py-2.5 px-5 pl-12 rounded-xl shadow-lg border border-gray-200 bg-white text-gray-800 text-lg outline-none"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -161,7 +171,7 @@ const Fanart = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="py-2 px-4 rounded-xl border border-gray-200 bg-white text-gray-700 shadow focus:ring-2 focus:ring-indigo-300 text-base"
+              className="py-2 px-4 rounded-xl border focus:outline-none border-gray-200 bg-white text-gray-700 shadow cursor-pointer text-base"
             >
               {SORT_OPTIONS.map((opt) => (
                 <option value={opt.value} key={opt.value}>
@@ -179,7 +189,7 @@ const Fanart = () => {
                 key={tab.name}
                 className={({ selected }) =>
                   classNames(
-                    "px-5 py-2.5 rounded-2xl transition-all text-lg font-semibold focus:outline-none",
+                    "px-5 py-1.5 rounded-xl transition-all text-lg font-semibold focus:outline-none cursor-pointer",
                     selected
                       ? "bg-gradient-to-r from-indigo-600 to-pink-500 text-white shadow-lg"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
