@@ -255,7 +255,7 @@ const Fanart = () => {
           </div>
         </div>
         {/* Show select page size */}
-        <div className="flex justify-center items-center gap-2 mb-6">
+        <div className="flex justify-center items-center gap-2 mb-4">
           <span className="mr-2 text-sm text-gray-500">Show:</span>
           <select
             className="border rounded px-2 py-1 text-sm focus:outline-none cursor-pointer"
@@ -274,7 +274,7 @@ const Fanart = () => {
         </div>
         {/* Tabs for asset type */}
         <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>
-          <Tab.List className="flex space-x-2 justify-center mb-10">
+          <Tab.List className="flex space-x-2 justify-center mb-8">
             {FANART_TABS.map((tab) => (
               <Tab
                 key={tab.name}
