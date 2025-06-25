@@ -15,11 +15,13 @@ import ModelingGalleryTable from "./Dashboard/ModelingGallery/ModelingGalleryTab
 import UgcGallery from "./Dashboard/UgcGallery/UgcGallery";
 import AdminBookingData from "./AdminUpdate/AdminBookingData";
 import AdminUpdateArticles from "./AdminUpdate/AdminUpdateArticles";
+import Fanart from "./Fanart/Fanart";
 
 const AppLayout = () => {
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
+      <Route path="/fanart" element={<Fanart />} />
       <Route path="/gallery/:title" element={<Gallery />} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route
