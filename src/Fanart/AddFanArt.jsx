@@ -6,46 +6,53 @@ import {
   FiImage,
   FiVideo,
   FiUser,
-  FiTag,
-  FiType,
+  FiSmile,
 } from "react-icons/fi";
 import { useMutation } from "@tanstack/react-query";
 import { useAxiospublic } from "../Hooks/useAxiospublic";
 import Swal from "sweetalert2";
 
-const MAX_IMAGES = 10;
-const MAX_VIDEOS = 2;
-
 const AddFanArt = () => {
   const axiospublic = useAxiospublic();
-  const [title, setTitle] = useState("");
   const [user, setUser] = useState("");
-  const [tags, setTags] = useState("");
-  const [images, setImages] = useState([]);
-  const [videos, setVideos] = useState([]);
+  const [fanArt, setFanArt] = useState([]); // images
+  const [vitiligoDance, setVitiligoDance] = useState([]); // videos
+  const [vitiligoFace, setVitiligoFace] = useState([]); // 1 image
   const [message, setMessage] = useState(null);
 
-  // Image/video handlers
-  const handleImages = (e) => {
-    let files = Array.from(e.target.files).slice(0, MAX_IMAGES - images.length);
-    setImages([...images, ...files]);
+  // Handlers for fan art (images)
+  const handleFanArt = (e) => {
+    let files = Array.from(e.target.files);
+    setFanArt([...fanArt, ...files]);
   };
-  const handleVideos = (e) => {
-    let files = Array.from(e.target.files).slice(0, MAX_VIDEOS - videos.length);
-    setVideos([...videos, ...files]);
+  const removeFanArt = (idx) => setFanArt(fanArt.filter((_, i) => i !== idx));
+
+  // Handlers for vitiligo dance (videos)
+  const handleDance = (e) => {
+    let files = Array.from(e.target.files);
+    setVitiligoDance([...vitiligoDance, ...files]);
   };
-  const removeImage = (idx) => setImages(images.filter((_, i) => i !== idx));
-  const removeVideo = (idx) => setVideos(videos.filter((_, i) => i !== idx));
+  const removeDance = (idx) =>
+    setVitiligoDance(vitiligoDance.filter((_, i) => i !== idx));
+
+  // Handler for vitiligo face (image)
+  const handleFace = (e) => {
+    let file = e.target.files[0];
+    if (file) setVitiligoFace([file]);
+  };
+  const removeFace = () => setVitiligoFace([]);
 
   // Mutation for upload with react-query
   const { mutate: uploadFanArt, isPending } = useMutation({
-    mutationFn: async ({ title, user, tags, images, videos }) => {
+    mutationFn: async ({ user, fanArt, vitiligoDance, vitiligoFace }) => {
       const form = new FormData();
-      form.append("title", title);
       form.append("user", user);
-      form.append("tags", tags);
-      images.forEach((file) => form.append("images", file));
-      videos.forEach((file) => form.append("videos", file));
+      // Add images (fan art)
+      fanArt.forEach((file) => form.append("images", file));
+      // Add videos (vitiligo dance)
+      vitiligoDance.forEach((file) => form.append("videos", file));
+      // Add vitiligo face image
+      if (vitiligoFace[0]) form.append("vitiligoFace", vitiligoFace[0]);
       const res = await axiospublic.post("/api/fan-art", form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -59,11 +66,10 @@ const AddFanArt = () => {
         confirmButtonColor: "#6366f1",
       });
       setMessage(null);
-      setTitle("");
       setUser("");
-      setTags("");
-      setImages([]);
-      setVideos([]);
+      setFanArt([]);
+      setVitiligoDance([]);
+      setVitiligoFace([]);
     },
     onError: (err) => {
       Swal.fire({
@@ -79,33 +85,30 @@ const AddFanArt = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessage(null);
-    if (!title || !user) {
+    if (!user) {
       Swal.fire({
         icon: "warning",
-        title: "Missing Fields",
-        text: "Title and your name are required.",
+        title: "Missing Field",
+        text: "Your name is required.",
         confirmButtonColor: "#f59e42",
       });
       return;
     }
-    if (images.length === 0 && videos.length === 0) {
+    if (fanArt.length === 0 && vitiligoDance.length === 0) {
       Swal.fire({
         icon: "warning",
         title: "No Media",
-        text: "Please add at least 1 image or video.",
+        text: "Please add at least a fan art image or vitiligo dance video.",
         confirmButtonColor: "#f59e42",
       });
       return;
     }
-    uploadFanArt({ title, user, tags, images, videos });
+    uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace });
   };
 
   return (
     <div className="bg-white p-3">
       <div className="max-w-2xl mx-auto p-4 lg:p-6 rounded-3xl shadow-2xl my-10 bg-white">
-        <h2 className="text-2xl lg:text-3xl font-extrabold text-gray-900 mb-5 text-center tracking-tight">
-          Add Your Fan Art
-        </h2>
         <p className="text-base text-gray-500 mb-6 text-center">
           Share your best creations! Upload your art or videos. Our team will
           review your submission before it appears in the gallery.
@@ -122,20 +125,7 @@ const AddFanArt = () => {
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="font-semibold text-gray-700 flex items-center gap-2">
-              <FiType className="text-indigo-500" /> Title{" "}
-              <span className="text-pink-600">*</span>
-            </label>
-            <input
-              type="text"
-              className="block w-full mt-1 px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-300 text-gray-800 bg-gray-50"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Fan art title"
-              required
-            />
-          </div>
+          {/* Name */}
           <div>
             <label className="font-semibold text-gray-700 flex items-center gap-2">
               <FiUser className="text-indigo-500" /> Your Name{" "}
@@ -150,31 +140,13 @@ const AddFanArt = () => {
               required
             />
           </div>
+          {/* Fan Art (Images) */}
           <div>
             <label className="font-semibold text-gray-700 flex items-center gap-2">
-              <FiTag className="text-indigo-500" /> Tags
-              <span className="text-gray-400 font-normal text-xs ml-1">
-                (comma separated)
-              </span>
-            </label>
-            <input
-              type="text"
-              className="block w-full mt-1 px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-300 text-gray-800 bg-gray-50"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="eg. nature, character, digital"
-            />
-          </div>
-          {/* Image upload */}
-          <div>
-            <label className="font-semibold text-gray-700 flex items-center gap-2">
-              <FiImage className="text-indigo-500" /> Images{" "}
-              <span className="text-gray-400 font-normal text-xs">
-                max {MAX_IMAGES}
-              </span>
+              <FiImage className="text-indigo-500" /> Fan Art
             </label>
             <div className="flex flex-wrap gap-3 mt-2">
-              {images.map((img, i) => (
+              {fanArt.map((img, i) => (
                 <div key={i} className="relative group">
                   <img
                     src={URL.createObjectURL(img)}
@@ -184,7 +156,7 @@ const AddFanArt = () => {
                   <button
                     type="button"
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 text-xs shadow"
-                    onClick={() => removeImage(i)}
+                    onClick={() => removeFanArt(i)}
                     tabIndex={-1}
                     title="Remove"
                   >
@@ -192,32 +164,26 @@ const AddFanArt = () => {
                   </button>
                 </div>
               ))}
-              {images.length < MAX_IMAGES && (
-                <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed rounded-xl text-gray-400 cursor-pointer hover:border-indigo-400 transition">
-                  <FiImage size={28} />
-                  <span className="text-xs font-medium">Add</span>
-                  <input
-                    multiple
-                    accept="image/*"
-                    type="file"
-                    className="hidden"
-                    onChange={handleImages}
-                    disabled={images.length >= MAX_IMAGES}
-                  />
-                </label>
-              )}
+              <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed rounded-xl text-gray-400 cursor-pointer hover:border-indigo-400 transition">
+                <FiImage size={28} />
+                <span className="text-xs font-medium">Add</span>
+                <input
+                  multiple
+                  accept="image/*"
+                  type="file"
+                  className="hidden"
+                  onChange={handleFanArt}
+                />
+              </label>
             </div>
           </div>
-          {/* Video upload */}
+          {/* Vitiligo Dance (Videos) */}
           <div>
             <label className="font-semibold text-gray-700 flex items-center gap-2">
-              <FiVideo className="text-indigo-500" /> Videos{" "}
-              <span className="text-gray-400 font-normal text-xs">
-                max {MAX_VIDEOS}
-              </span>
+              <FiVideo className="text-pink-500" /> Vitiligo Dance
             </label>
             <div className="flex flex-wrap gap-3 mt-2">
-              {videos.map((vid, i) => (
+              {vitiligoDance.map((vid, i) => (
                 <div key={i} className="relative group">
                   <video
                     src={URL.createObjectURL(vid)}
@@ -227,7 +193,7 @@ const AddFanArt = () => {
                   <button
                     type="button"
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 text-xs shadow"
-                    onClick={() => removeVideo(i)}
+                    onClick={() => removeDance(i)}
                     tabIndex={-1}
                     title="Remove"
                   >
@@ -235,17 +201,52 @@ const AddFanArt = () => {
                   </button>
                 </div>
               ))}
-              {videos.length < MAX_VIDEOS && (
-                <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed rounded-xl text-gray-400 cursor-pointer hover:border-indigo-400 transition">
-                  <FiVideo size={28} />
+              <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed rounded-xl text-gray-400 cursor-pointer hover:border-pink-400 transition">
+                <FiVideo size={28} />
+                <span className="text-xs font-medium">Add</span>
+                <input
+                  multiple
+                  accept="video/*"
+                  type="file"
+                  className="hidden"
+                  onChange={handleDance}
+                />
+              </label>
+            </div>
+          </div>
+          {/* Vitiligo Face (Image) */}
+          <div>
+            <label className="font-semibold text-gray-700 flex items-center gap-2">
+              <FiSmile className="text-yellow-400" /> Vitiligo Face
+            </label>
+            <div className="flex flex-wrap gap-3 mt-2">
+              {vitiligoFace[0] && (
+                <div className="relative group">
+                  <img
+                    src={URL.createObjectURL(vitiligoFace[0])}
+                    alt=""
+                    className="w-20 h-20 object-cover rounded-xl border border-gray-200"
+                  />
+                  <button
+                    type="button"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 text-xs shadow"
+                    onClick={removeFace}
+                    tabIndex={-1}
+                    title="Remove"
+                  >
+                    <FiX size={16} />
+                  </button>
+                </div>
+              )}
+              {!vitiligoFace[0] && (
+                <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed rounded-xl text-gray-400 cursor-pointer hover:border-yellow-400 transition">
+                  <FiSmile size={28} />
                   <span className="text-xs font-medium">Add</span>
                   <input
-                    multiple
-                    accept="video/*"
+                    accept="image/*"
                     type="file"
                     className="hidden"
-                    onChange={handleVideos}
-                    disabled={videos.length >= MAX_VIDEOS}
+                    onChange={handleFace}
                   />
                 </label>
               )}
@@ -257,7 +258,7 @@ const AddFanArt = () => {
             disabled={isPending}
           >
             {isPending ? <FiUpload className="animate-bounce" /> : <FiPlus />}
-            {isPending ? "Uploading..." : "Submit Fan Art"}
+            {isPending ? "Uploading..." : "Submit"}
           </button>
         </form>
       </div>

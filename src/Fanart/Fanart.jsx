@@ -208,24 +208,13 @@ const Fanart = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-4 py-10">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div>
-          <div className="w-full sm:w-auto flex flex-col items-center text-center">
-            <h1 className="text-2xl lg:text-3xl font-semibold tracking-tight">
-              Fan Art Gallery
-            </h1>
-            <p className="text-lg text-gray-500 my-1">
-              Search, view and download premium fan art curated by our team.
-            </p>
-          </div>
-        </div>
         <div className="flex w-full sm:w-auto justify-center">
           <Link
             to="/add-fanart"
             className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-pink-500 hover:from-indigo-700 hover:to-pink-600 text-white px-4 py-1.5 rounded-lg font-semibold text-lg transition-all duration-200"
           >
             <Plus className="w-5 h-5" />
-            Add Fanart
+            Upload Your Work
           </Link>
         </div>
         {/* Search + Sort */}
@@ -233,7 +222,7 @@ const Fanart = () => {
           <div className="relative flex-1">
             <input
               type="text"
-              placeholder="Search by fan name, title, or tag..."
+              placeholder="Search name"
               className="w-full py-2.5 px-5 pl-12 rounded-xl shadow-lg border border-gray-200 bg-white text-gray-800 text-lg outline-none"
               value={query}
               onChange={(e) => setQuery(e.target.value)}

@@ -132,7 +132,7 @@ export default function AdminFanArt() {
   }, [lastPage, page]);
 
   return (
-    <div className="p-2 max-w-7xl mx-auto">
+    <div className="p-3">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Fan Art Approvals</h2>
         <div className="flex items-center gap-2">

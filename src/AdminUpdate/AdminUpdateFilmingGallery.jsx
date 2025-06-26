@@ -188,7 +188,7 @@ export default function AdminUpdateFilmingGallery() {
   };
 
   return (
-    <div className="p-2 max-w-7xl mx-auto">
+    <div className="p-3">
       <div className="flex justify-between mb-4">
         <h1 className="text-xl font-bold">Manage Filming Gallery</h1>
         <button
