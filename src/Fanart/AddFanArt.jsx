@@ -128,8 +128,8 @@ const AddFanArt = () => {
   };
 
   return (
-    <div className="bg-white p-3">
-      <div className="max-w-2xl mx-auto p-4 lg:p-6 rounded-3xl shadow-2xl my-10 bg-white">
+    <div className="bg-white p-2 lg:p-3">
+      <div className="max-w-2xl mx-auto p-4 lg:p-6 rounded-3xl shadow-2xl lg:my-2 bg-white">
         <p className="text-base text-gray-500 mb-6 text-center">
           Share your best creations! Upload your fan art, vitiligo dance, or
           vitiligo face photo. Our team will review your submission before it

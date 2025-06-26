@@ -157,7 +157,7 @@ const Fanart = () => {
   }, [items, normalizedQuery, sortBy]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-2 lg:p-4 py-10">
       <div className="max-w-5xl mx-auto">
         <div className="flex w-full sm:w-auto justify-center">
           <Link
@@ -387,7 +387,12 @@ const Fanart = () => {
                       key={item.id}
                       className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
                     >
-                      <div className="relative cursor-pointer">
+                      <div
+                        className="relative cursor-pointer"
+                        onClick={() =>
+                          setModalItem({ ...item, index: 0, mode: "face" })
+                        }
+                      >
                         <img
                           src={item.vitiligoFace[0]}
                           alt={item.user}
@@ -451,6 +456,11 @@ const Fanart = () => {
             className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-3xl w-full relative"
             onClick={(e) => e.stopPropagation()}
           >
+            <style>{`
+              @media (max-width: 740px) {
+                .fanart-modal-media { height: 60vh !important; max-height: 60vh !important; }
+              }
+            `}</style>
             {modalItem.mode === "photo" && modalItem.images.length > 1 ? (
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -461,7 +471,9 @@ const Fanart = () => {
               >
                 {modalItem.images.map((imgUrl) => (
                   <SwiperSlide key={imgUrl}>
-                    <div className="relative flex items-center justify-center bg-white h-[80vh]">
+                    <div
+                      className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                    >
                       <img
                         src={imgUrl}
                         alt={modalItem.user}
@@ -487,7 +499,7 @@ const Fanart = () => {
                 ))}
               </Swiper>
             ) : modalItem.mode === "photo" ? (
-              <div className="relative flex items-center justify-center bg-white h-[80vh]">
+              <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
                 <img
                   src={modalItem.images[0]}
                   alt={modalItem.user}
@@ -519,7 +531,9 @@ const Fanart = () => {
               >
                 {modalItem.videos.map((vidUrl) => (
                   <SwiperSlide key={vidUrl}>
-                    <div className="relative flex items-center justify-center bg-white h-[80vh]">
+                    <div
+                      className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                    >
                       <video
                         src={vidUrl}
                         className="object-contain max-h-full max-w-full mx-auto"
@@ -557,7 +571,9 @@ const Fanart = () => {
               >
                 {modalItem.vitiligoFace.map((imgUrl) => (
                   <SwiperSlide key={imgUrl}>
-                    <div className="relative flex items-center justify-center bg-white h-[80vh]">
+                    <div
+                      className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                    >
                       <img
                         src={imgUrl}
                         alt={modalItem.user}
@@ -583,7 +599,7 @@ const Fanart = () => {
                 ))}
               </Swiper>
             ) : modalItem.mode === "face" ? (
-              <div className="relative flex items-center justify-center bg-white h-[80vh]">
+              <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
                 <img
                   src={modalItem.vitiligoFace[0]}
                   alt={modalItem.user}
@@ -606,7 +622,7 @@ const Fanart = () => {
                 </div>
               </div>
             ) : (
-              <div className="relative flex items-center justify-center bg-white h-[80vh]">
+              <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
                 <video
                   src={modalItem.videos[0]}
                   className="object-contain max-h-full max-w-full mx-auto"
