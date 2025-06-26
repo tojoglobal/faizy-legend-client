@@ -169,7 +169,7 @@ const Fanart = () => {
           </Link>
         </div>
         {/* Search + Sort */}
-        <div className="flex flex-col mt-3 sm:flex-row sm:items-center gap-4 w-full max-w-xl mx-auto mb-5">
+        <div className="flex flex-col mt-4 sm:flex-row sm:items-center gap-4 w-full max-w-xl mx-auto mb-5">
           <div className="relative flex-1">
             <input
               type="text"
@@ -196,7 +196,7 @@ const Fanart = () => {
         </div>
         {/* Tabs for asset type */}
         <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>
-          <Tab.List className="flex space-x-2 justify-center mb-8">
+          <Tab.List className="flex space-x-2 justify-center mb-7">
             {FANART_TABS.map((tab) => (
               <Tab
                 key={tab.name}
@@ -250,7 +250,7 @@ const Fanart = () => {
                         />
                         <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
                           <button
-                            className="bg-white/80 rounded-full p-2 hover:bg-indigo-100 shadow"
+                            className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
                             onClick={(e) => {
                               e.stopPropagation();
                               setModalItem({
@@ -396,7 +396,7 @@ const Fanart = () => {
                         />
                         <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
                           <button
-                            className="bg-white/80 rounded-full p-2 hover:bg-indigo-100 shadow"
+                            className="bg-white/80 rounded-full cursor-pointer p-2 hover:bg-indigo-100 shadow"
                             onClick={(e) => {
                               e.stopPropagation();
                               setModalItem({
@@ -461,35 +461,37 @@ const Fanart = () => {
               >
                 {modalItem.images.map((imgUrl) => (
                   <SwiperSlide key={imgUrl}>
-                    <img
-                      src={imgUrl}
-                      alt={modalItem.user}
-                      className="w-full max-h-[80vh] object-contain"
-                    />
-                    <div className="absolute top-4 right-4 flex gap-2 z-10">
-                      <a
-                        href={imgUrl}
-                        download
-                        className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                      >
-                        <FiDownload className="inline mr-2 -mt-1" /> Download
-                      </a>
-                      <button
-                        className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                        onClick={() => setModalItem(null)}
-                      >
-                        Close
-                      </button>
+                    <div className="relative flex items-center justify-center bg-white h-[80vh]">
+                      <img
+                        src={imgUrl}
+                        alt={modalItem.user}
+                        className="object-contain max-h-full max-w-full mx-auto"
+                      />
+                      <div className="absolute top-4 right-4 flex gap-2 z-10">
+                        <a
+                          href={imgUrl}
+                          download
+                          className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                        >
+                          <FiDownload className="inline mr-2 -mt-1" /> Download
+                        </a>
+                        <button
+                          className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                          onClick={() => setModalItem(null)}
+                        >
+                          Close
+                        </button>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
             ) : modalItem.mode === "photo" ? (
-              <>
+              <div className="relative flex items-center justify-center bg-white h-[80vh]">
                 <img
                   src={modalItem.images[0]}
                   alt={modalItem.user}
-                  className="w-full max-h-[80vh] object-contain"
+                  className="object-contain max-h-full max-w-full mx-auto"
                 />
                 <div className="absolute top-4 right-4 flex gap-2 z-10">
                   <a
@@ -506,7 +508,7 @@ const Fanart = () => {
                     Close
                   </button>
                 </div>
-              </>
+              </div>
             ) : modalItem.mode === "video" && modalItem.videos.length > 1 ? (
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -517,27 +519,29 @@ const Fanart = () => {
               >
                 {modalItem.videos.map((vidUrl) => (
                   <SwiperSlide key={vidUrl}>
-                    <video
-                      src={vidUrl}
-                      className="w-full max-h-[80vh] object-contain"
-                      controls
-                      preload="metadata"
-                      style={{ background: "#000" }}
-                    />
-                    <div className="absolute top-4 right-4 flex gap-2 z-10">
-                      <a
-                        href={vidUrl}
-                        download
-                        className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                      >
-                        <FiDownload className="inline mr-2 -mt-1" /> Download
-                      </a>
-                      <button
-                        className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                        onClick={() => setModalItem(null)}
-                      >
-                        Close
-                      </button>
+                    <div className="relative flex items-center justify-center bg-white h-[80vh]">
+                      <video
+                        src={vidUrl}
+                        className="object-contain max-h-full max-w-full mx-auto"
+                        controls
+                        preload="metadata"
+                        style={{ background: "#000" }}
+                      />
+                      <div className="absolute top-4 right-4 flex gap-2 z-10">
+                        <a
+                          href={vidUrl}
+                          download
+                          className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                        >
+                          <FiDownload className="inline mr-2 -mt-1" /> Download
+                        </a>
+                        <button
+                          className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                          onClick={() => setModalItem(null)}
+                        >
+                          Close
+                        </button>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
@@ -553,41 +557,43 @@ const Fanart = () => {
               >
                 {modalItem.vitiligoFace.map((imgUrl) => (
                   <SwiperSlide key={imgUrl}>
-                    <img
-                      src={imgUrl}
-                      alt={modalItem.user}
-                      className="w-full max-h-[80vh] object-contain"
-                    />
-                    <div className="absolute top-4 right-4 flex gap-2 z-10">
-                      <a
-                        href={imgUrl}
-                        download
-                        className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                      >
-                        <FiDownload className="inline mr-2 -mt-1" /> Download
-                      </a>
-                      <button
-                        className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                        onClick={() => setModalItem(null)}
-                      >
-                        Close
-                      </button>
+                    <div className="relative flex items-center justify-center bg-white h-[80vh]">
+                      <img
+                        src={imgUrl}
+                        alt={modalItem.user}
+                        className="object-contain max-h-full max-w-full mx-auto"
+                      />
+                      <div className="absolute top-4 right-4 flex gap-2 z-10">
+                        <a
+                          href={imgUrl}
+                          download
+                          className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                        >
+                          <FiDownload className="inline mr-2 -mt-1" /> Download
+                        </a>
+                        <button
+                          className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                          onClick={() => setModalItem(null)}
+                        >
+                          Close
+                        </button>
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
             ) : modalItem.mode === "face" ? (
-              <>
+              <div className="relative flex items-center justify-center bg-white h-[80vh]">
                 <img
                   src={modalItem.vitiligoFace[0]}
                   alt={modalItem.user}
-                  className="w-full max-h-[80vh] object-contain"
+                  className="object-contain max-h-full max-w-full mx-auto"
                 />
                 <div className="absolute top-4 right-4 flex gap-2 z-10">
                   <a
                     href={modalItem.vitiligoFace[0]}
                     download
-                    className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                    className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow cursor-pointer flex items-center"
                   >
                     <FiDownload className="inline mr-2 -mt-1" /> Download
                   </a>
@@ -598,12 +604,12 @@ const Fanart = () => {
                     Close
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
-              <>
+              <div className="relative flex items-center justify-center bg-white h-[80vh]">
                 <video
                   src={modalItem.videos[0]}
-                  className="w-full max-h-[80vh] object-contain"
+                  className="object-contain max-h-full max-w-full mx-auto"
                   controls
                   preload="metadata"
                   style={{ background: "#000" }}
@@ -623,7 +629,7 @@ const Fanart = () => {
                     Close
                   </button>
                 </div>
-              </>
+              </div>
             )}
           </div>
         </div>
