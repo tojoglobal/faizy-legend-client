@@ -12,6 +12,13 @@ export default function FanArtDetailsModal({
 }) {
   if (!open || !art) return null;
 
+  // Detect agreed state: Try to support boolean or int or string "true"
+  const agreed =
+    art.agreed === true ||
+    art.agreed === 1 ||
+    art.agreed === "1" ||
+    art.agreed === "true";
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
@@ -41,6 +48,19 @@ export default function FanArtDetailsModal({
           <span>
             <span className="font-semibold text-white">Date:</span>{" "}
             {art.created_at ? new Date(art.created_at).toLocaleString() : ""}
+          </span>
+          <span className="mx-2 text-gray-600">|</span>
+          <span className="flex items-center gap-1">
+            <span className="font-semibold text-white">Permission Agreed:</span>{" "}
+            {agreed ? (
+              <span className="inline-flex items-center gap-1 font-semibold text-green-400">
+                <CheckCircle2 className="w-4 h-4" /> Yes
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 font-semibold text-gray-400">
+                <XCircle className="w-4 h-4" /> No
+              </span>
+            )}
           </span>
         </div>
         <div className="mb-4 flex flex-wrap gap-2">
@@ -94,7 +114,7 @@ export default function FanArtDetailsModal({
             <>
               <button
                 className={clsx(
-                  "flex items-center gap-1 px-5 py-2 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 text-white font-semibold hover:from-green-700 hover:to-emerald-600 shadow transition"
+                  "flex items-center gap-1 px-5 py-2 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 cursor-pointer text-white font-semibold hover:from-green-700 hover:to-emerald-600 shadow transition"
                 )}
                 onClick={() => {
                   onApprove?.(art.id);
@@ -106,7 +126,7 @@ export default function FanArtDetailsModal({
               </button>
               <button
                 className={clsx(
-                  "flex items-center gap-1 px-5 py-2 rounded-xl bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold hover:from-red-700 hover:to-pink-700 shadow transition"
+                  "flex items-center gap-1 px-5 py-2 rounded-xl bg-gradient-to-r from-red-600 to-pink-600 cursor-pointer text-white font-semibold hover:from-red-700 hover:to-pink-700 shadow transition"
                 )}
                 onClick={() => {
                   onReject?.(art.id);
@@ -120,7 +140,7 @@ export default function FanArtDetailsModal({
           )}
           <button
             className={clsx(
-              "flex items-center gap-1 px-5 py-2 rounded-xl bg-gradient-to-r from-gray-800 to-gray-700 text-white font-semibold hover:from-gray-900 hover:to-gray-800 shadow transition"
+              "flex items-center gap-1 px-5 cursor-pointer py-2 rounded-xl bg-gradient-to-r from-gray-800 to-gray-700 text-white font-semibold hover:from-gray-900 hover:to-gray-800 shadow transition"
             )}
             onClick={() => {
               onDelete?.(art.id);

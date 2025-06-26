@@ -45,9 +45,19 @@ const AddFanArt = () => {
 
   // Mutation for upload with react-query
   const { mutate: uploadFanArt, isPending } = useMutation({
-    mutationFn: async ({ user, fanArt, vitiligoDance, vitiligoFace }) => {
+    mutationFn: async ({
+      user,
+      fanArt,
+      vitiligoDance,
+      vitiligoFace,
+      agreed,
+    }) => {
       const form = new FormData();
       form.append("user", user);
+      // You can send as "1"/"0" or true/false. Here is both:
+      form.append("agreed", agreed ? 1 : 0); // will be 1 or 0 in database
+      // If you want to send as boolean as well: form.append("agreedBool", agreed);
+
       // Add images (fan art)
       fanArt.forEach((file) => form.append("images", file));
       // Add videos (vitiligo dance)
@@ -114,7 +124,7 @@ const AddFanArt = () => {
     //   });
     //   return;
     // }
-    uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace });
+    uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace, agreed });
   };
 
   return (

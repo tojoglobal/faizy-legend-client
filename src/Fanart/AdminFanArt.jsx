@@ -15,11 +15,16 @@ export default function AdminFanArt() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(9);
 
-  const { data, isLoading, error, refetch } = useDataQuery(
+  const {
+    data = {},
+    isLoading,
+    error,
+    refetch,
+  } = useDataQuery(
     ["fanArtAdmin", page, perPage],
     `/api/fan-art/admin?page=${page}&limit=${perPage}`
   );
-
+  
   // Parse images/tags (since stored as JSON/text in DB)
   const arts = Array.isArray(data?.rows)
     ? data.rows.map((a) => ({
@@ -132,7 +137,7 @@ export default function AdminFanArt() {
   }, [lastPage, page]);
 
   return (
-    <div className="p-3">
+    <div className="p-2 lg:p-3">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Fan Art Approvals</h2>
         <div className="flex items-center gap-2">
@@ -169,6 +174,7 @@ export default function AdminFanArt() {
                   <th className="p-2 text-left w-40">Fan Name</th>
                   <th className="p-2 text-left w-28">Date</th>
                   <th className="p-2 text-left w-32">Status</th>
+                  <th className="p-2 text-left w-36">Permission Agreed</th>
                   <th className="p-2 text-center w-44">Actions</th>
                 </tr>
               </thead>
@@ -239,42 +245,53 @@ export default function AdminFanArt() {
                         </span>
                       )}
                     </td>
+                    <td className="p-2 align-middle">
+                      {a.agreed === true || a.agreed === 1 ? (
+                        <span className="inline-flex items-center text-green-700 font-semibold gap-1">
+                          <CheckCircle2 className="w-4 h-4" /> Yes
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center text-gray-400 font-semibold gap-1">
+                          <XCircle className="w-4 h-4" /> No
+                        </span>
+                      )}
+                    </td>
                     <td className="p-2 align-middle text-center">
                       <div className="inline-flex items-center justify-center gap-2">
                         <button
                           onClick={() => setSelected(a)}
-                          className="p-1 cursor-pointer rounded hover:bg-blue-100"
+                          className="p-1 cursor-pointer rounded"
                           title="View Details"
                         >
-                          <Eye className="w-5 h-5 text-blue-600" />
+                          <Eye className="w-5 h-5 text-blue-600 hover:text-blue-700" />
                         </button>
                         {a.approved === null && (
                           <>
                             <button
                               onClick={() => handleApprove(a.id)}
-                              className="p-1 cursor-pointer rounded hover:bg-green-100"
+                              className="p-1 cursor-pointer rounded"
                               title="Approve"
                               disabled={approveMutation.isPending}
                             >
-                              <CheckCircle2 className="w-5 h-5 text-green-600" />
+                              <CheckCircle2 className="w-5 h-5 text-green-600 hover:text-green-700" />
                             </button>
                             <button
                               onClick={() => handleReject(a.id)}
-                              className="p-1 cursor-pointer rounded hover:bg-red-100"
+                              className="p-1 cursor-pointer rounded"
                               title="Reject"
                               disabled={rejectMutation.isPending}
                             >
-                              <XCircle className="w-5 h-5 text-red-500" />
+                              <XCircle className="w-5 h-5 text-red-500 hover:text-red-600" />
                             </button>
                           </>
                         )}
                         <button
                           onClick={() => handleDelete(a.id)}
-                          className="p-1 cursor-pointer rounded hover:bg-gray-800"
+                          className="p-1 cursor-pointer rounded"
                           title="Delete"
                           disabled={deleteMutation.isPending}
                         >
-                          <TrashIcon className="w-5 h-5 text-red-400" />
+                          <TrashIcon className="w-5 h-5 text-red-400 hover:text-red-500" />
                         </button>
                       </div>
                     </td>
@@ -282,7 +299,7 @@ export default function AdminFanArt() {
                 ))}
                 {arts.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="text-center py-8 text-gray-400">
+                    <td colSpan={6} className="text-center py-8 text-gray-400">
                       No fan art submissions found.
                     </td>
                   </tr>

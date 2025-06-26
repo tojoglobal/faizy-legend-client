@@ -93,7 +93,7 @@ const AdminUpdateArticles = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="p-2 lg:p-3">
       <h1 className="text-2xl font-bold mb-4">Manage Articles</h1>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Articles</h2>
