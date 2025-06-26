@@ -19,6 +19,7 @@ const AddFanArt = () => {
   const [vitiligoDance, setVitiligoDance] = useState([]); // videos
   const [vitiligoFace, setVitiligoFace] = useState([]); // 1 image
   const [message, setMessage] = useState(null);
+  const [agreed, setAgreed] = useState(false);
 
   // Handlers for fan art (images)
   const handleFanArt = (e) => {
@@ -70,6 +71,7 @@ const AddFanArt = () => {
       setFanArt([]);
       setVitiligoDance([]);
       setVitiligoFace([]);
+      setAgreed(false);
     },
     onError: (err) => {
       Swal.fire({
@@ -103,6 +105,15 @@ const AddFanArt = () => {
       });
       return;
     }
+    if (!agreed) {
+      Swal.fire({
+        icon: "warning",
+        title: "Permission Required",
+        text: "You must agree to the permission statement before submitting.",
+        confirmButtonColor: "#f59e42",
+      });
+      return;
+    }
     uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace });
   };
 
@@ -110,8 +121,9 @@ const AddFanArt = () => {
     <div className="bg-white p-3">
       <div className="max-w-2xl mx-auto p-4 lg:p-6 rounded-3xl shadow-2xl my-10 bg-white">
         <p className="text-base text-gray-500 mb-6 text-center">
-          Share your best creations! Upload your art or videos. Our team will
-          review your submission before it appears in the gallery.
+          Share your best creations! Upload your fan art, vitiligo dance, or
+          vitiligo face photo. Our team will review your submission before it
+          appears in the gallery.
         </p>
         {message && (
           <div
@@ -251,6 +263,24 @@ const AddFanArt = () => {
                 </label>
               )}
             </div>
+          </div>
+          {/* Permission Checkbox */}
+          <div className="flex items-start gap-2">
+            <input
+              type="checkbox"
+              id="agree"
+              className="mt-1 cursor-pointer"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              required
+            />
+            <label
+              htmlFor="agree"
+              className="text-sm text-gray-700 select-none"
+            >
+              Do you agree to grant permission for this content to be uploaded
+              and made publicly available online for everyone to view?
+            </label>
           </div>
           <button
             type="submit"
