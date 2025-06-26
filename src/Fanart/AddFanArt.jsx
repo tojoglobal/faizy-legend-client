@@ -20,6 +20,8 @@ const AddFanArt = () => {
   const [vitiligoFace, setVitiligoFace] = useState([]); // 1 image
   const [message, setMessage] = useState(null);
   const [agreed, setAgreed] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   // Handlers for fan art (images)
   const handleFanArt = (e) => {
@@ -43,7 +45,7 @@ const AddFanArt = () => {
   };
   const removeFace = () => setVitiligoFace([]);
 
-  // Mutation for upload with react-query
+  // Mutation for upload with react-query and progress bar
   const { mutate: uploadFanArt, isPending } = useMutation({
     mutationFn: async ({
       user,
@@ -52,24 +54,33 @@ const AddFanArt = () => {
       vitiligoFace,
       agreed,
     }) => {
+      setUploading(true);
+      setUploadProgress(0);
       const form = new FormData();
       form.append("user", user);
-      // You can send as "1"/"0" or true/false. Here is both:
-      form.append("agreed", agreed ? 1 : 0); // will be 1 or 0 in database
-      // If you want to send as boolean as well: form.append("agreedBool", agreed);
-
-      // Add images (fan art)
+      form.append("agreed", agreed ? 1 : 0);
       fanArt.forEach((file) => form.append("images", file));
-      // Add videos (vitiligo dance)
       vitiligoDance.forEach((file) => form.append("videos", file));
-      // Add vitiligo face image
       if (vitiligoFace[0]) form.append("vitiligoFace", vitiligoFace[0]);
-      const res = await axiospublic.post("/api/fan-art", form, {
+      // Use axios directly to track progress
+      const config = {
         headers: { "Content-Type": "multipart/form-data" },
-      });
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total) {
+            const percent = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percent);
+          }
+        },
+      };
+      // Use axios instance from useAxiospublic()
+      const res = await axiospublic.post("/api/fan-art", form, config);
       return res.data;
     },
     onSuccess: () => {
+      setUploading(false);
+      setUploadProgress(0);
       Swal.fire({
         icon: "success",
         title: "Submitted!",
@@ -84,6 +95,8 @@ const AddFanArt = () => {
       setAgreed(false);
     },
     onError: (err) => {
+      setUploading(false);
+      setUploadProgress(0);
       Swal.fire({
         icon: "error",
         title: "Upload failed",
@@ -291,13 +304,32 @@ const AddFanArt = () => {
               and made publicly available online for everyone to view?
             </label>
           </div>
+          {/* Upload Progress Bar */}
+          {uploading && (
+            <div className="mb-4">
+              <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                <div
+                  className="bg-gradient-to-r from-indigo-500 to-pink-500 h-4 transition-all"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+              <div className="text-sm text-gray-700 mt-2 text-center font-semibold">
+                Uploading {uploadProgress}%{" "}
+                {uploadProgress < 100 ? "..." : "Processing..."}
+              </div>
+            </div>
+          )}
           <button
             type="submit"
             className="w-full py-2.5 cursor-pointer rounded-lg bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-lg disabled:opacity-60 transition"
-            disabled={isPending}
+            disabled={isPending || uploading}
           >
-            {isPending ? <FiUpload className="animate-bounce" /> : <FiPlus />}
-            {isPending ? "Uploading..." : "Submit"}
+            {isPending || uploading ? (
+              <FiUpload className="animate-bounce" />
+            ) : (
+              <FiPlus />
+            )}
+            {isPending || uploading ? "Uploading..." : "Submit"}
           </button>
         </form>
       </div>
