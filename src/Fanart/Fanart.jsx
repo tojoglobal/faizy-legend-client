@@ -158,7 +158,7 @@ const Fanart = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-2 lg:p-4 py-10">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto lg:mt-5">
         <div className="flex w-full sm:w-auto justify-center">
           <Link
             to="/add-fanart"

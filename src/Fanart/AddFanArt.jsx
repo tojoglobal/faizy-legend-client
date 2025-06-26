@@ -11,8 +11,10 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useAxiospublic } from "../Hooks/useAxiospublic";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const AddFanArt = () => {
+  const navigate = useNavigate();
   const axiospublic = useAxiospublic();
   const [user, setUser] = useState("");
   const [fanArt, setFanArt] = useState([]); // images
@@ -93,6 +95,7 @@ const AddFanArt = () => {
       setVitiligoDance([]);
       setVitiligoFace([]);
       setAgreed(false);
+      navigate(-1);
     },
     onError: (err) => {
       setUploading(false);
@@ -298,7 +301,7 @@ const AddFanArt = () => {
             />
             <label
               htmlFor="agree"
-              className="text-sm text-gray-700 select-none"
+              className="text-sm cursor-pointer text-gray-700 select-none"
             >
               Do you agree to grant permission for this content to be uploaded
               and made publicly available online for everyone to view?
