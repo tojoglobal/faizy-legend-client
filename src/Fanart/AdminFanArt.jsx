@@ -165,13 +165,11 @@ export default function AdminFanArt() {
             <table className="w-full table-auto border-collapse text-sm">
               <thead>
                 <tr className="bg-gray-800 text-white">
-                  <th className="p-2 text-left">Thumbnail</th>
-                  <th className="p-2 text-left">Title</th>
-                  <th className="p-2 text-left">Fan Name</th>
-                  <th className="p-2 text-left">Tags</th>
-                  <th className="p-2 text-left">Date</th>
-                  <th className="p-2 text-left">Status</th>
-                  <th className="p-2 text-left">Actions</th>
+                  <th className="p-2 text-left w-32">Thumbnail</th>
+                  <th className="p-2 text-left w-40">Fan Name</th>
+                  <th className="p-2 text-left w-28">Date</th>
+                  <th className="p-2 text-left w-32">Status</th>
+                  <th className="p-2 text-center w-44">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -180,8 +178,8 @@ export default function AdminFanArt() {
                     key={a.id}
                     className="border-b border-gray-700 hover:bg-gray-900"
                   >
-                    <td className="p-2">
-                      {a.images?.[0] && (
+                    <td className="p-2 align-middle">
+                      {a.images?.[0] ? (
                         <img
                           src={
                             a.images[0].startsWith("http")
@@ -190,29 +188,43 @@ export default function AdminFanArt() {
                                   a.images[0]
                                 }`
                           }
-                          alt={a.title}
+                          alt={a.user}
                           className="w-16 h-16 object-cover rounded"
                         />
-                      )}
+                      ) : a.videos?.[0] ? (
+                        <video
+                          src={
+                            a.videos[0].startsWith("http")
+                              ? a.videos[0]
+                              : `${import.meta.env.VITE_OPEN_APIURL}${
+                                  a.videos[0]
+                                }`
+                          }
+                          className="w-16 h-16 object-cover rounded"
+                          muted
+                          controls={false}
+                        />
+                      ) : a.vitiligoFace?.[0] ? (
+                        <img
+                          src={
+                            a.vitiligoFace[0].startsWith("http")
+                              ? a.vitiligoFace[0]
+                              : `${import.meta.env.VITE_OPEN_APIURL}${
+                                  a.vitiligoFace[0]
+                                }`
+                          }
+                          alt={a.user}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                      ) : null}
                     </td>
-                    <td className="p-2">{a.title}</td>
-                    <td className="p-2">{a.user}</td>
-                    <td className="p-2">
-                      {a.tags?.map((tag) => (
-                        <span
-                          key={tag}
-                          className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs mr-1"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </td>
-                    <td className="p-2">
+                    <td className="p-2 align-middle">{a.user}</td>
+                    <td className="p-2 align-middle">
                       {a.created_at
                         ? new Date(a.created_at).toLocaleDateString()
                         : ""}
                     </td>
-                    <td className="p-2">
+                    <td className="p-2 align-middle">
                       {a.approved === 1 ? (
                         <span className="inline-flex items-center text-green-600 font-semibold gap-1">
                           <CheckCircle2 className="w-4 h-4" /> Approved
@@ -227,48 +239,50 @@ export default function AdminFanArt() {
                         </span>
                       )}
                     </td>
-                    <td className="p-2 flex gap-2">
-                      <button
-                        onClick={() => setSelected(a)}
-                        className="p-1 cursor-pointer rounded hover:bg-blue-100"
-                        title="View Details"
-                      >
-                        <Eye className="w-5 h-5 text-blue-600" />
-                      </button>
-                      {a.approved === null && (
-                        <>
-                          <button
-                            onClick={() => handleApprove(a.id)}
-                            className="p-1 cursor-pointer rounded hover:bg-green-100"
-                            title="Approve"
-                            disabled={approveMutation.isPending}
-                          >
-                            <CheckCircle2 className="w-5 h-5 text-green-600" />
-                          </button>
-                          <button
-                            onClick={() => handleReject(a.id)}
-                            className="p-1 cursor-pointer rounded hover:bg-red-100"
-                            title="Reject"
-                            disabled={rejectMutation.isPending}
-                          >
-                            <XCircle className="w-5 h-5 text-red-500" />
-                          </button>
-                        </>
-                      )}
-                      <button
-                        onClick={() => handleDelete(a.id)}
-                        className="p-1 cursor-pointer rounded hover:bg-gray-800"
-                        title="Delete"
-                        disabled={deleteMutation.isPending}
-                      >
-                        <TrashIcon className="w-5 h-5 text-red-400" />
-                      </button>
+                    <td className="p-2 align-middle text-center">
+                      <div className="inline-flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => setSelected(a)}
+                          className="p-1 cursor-pointer rounded hover:bg-blue-100"
+                          title="View Details"
+                        >
+                          <Eye className="w-5 h-5 text-blue-600" />
+                        </button>
+                        {a.approved === null && (
+                          <>
+                            <button
+                              onClick={() => handleApprove(a.id)}
+                              className="p-1 cursor-pointer rounded hover:bg-green-100"
+                              title="Approve"
+                              disabled={approveMutation.isPending}
+                            >
+                              <CheckCircle2 className="w-5 h-5 text-green-600" />
+                            </button>
+                            <button
+                              onClick={() => handleReject(a.id)}
+                              className="p-1 cursor-pointer rounded hover:bg-red-100"
+                              title="Reject"
+                              disabled={rejectMutation.isPending}
+                            >
+                              <XCircle className="w-5 h-5 text-red-500" />
+                            </button>
+                          </>
+                        )}
+                        <button
+                          onClick={() => handleDelete(a.id)}
+                          className="p-1 cursor-pointer rounded hover:bg-gray-800"
+                          title="Delete"
+                          disabled={deleteMutation.isPending}
+                        >
+                          <TrashIcon className="w-5 h-5 text-red-400" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
                 {arts.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="text-center py-8 text-gray-400">
+                    <td colSpan={5} className="text-center py-8 text-gray-400">
                       No fan art submissions found.
                     </td>
                   </tr>

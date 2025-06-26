@@ -105,15 +105,15 @@ const AddFanArt = () => {
       });
       return;
     }
-    if (!agreed) {
-      Swal.fire({
-        icon: "warning",
-        title: "Permission Required",
-        text: "You must agree to the permission statement before submitting.",
-        confirmButtonColor: "#f59e42",
-      });
-      return;
-    }
+    // if (!agreed) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "Permission Required",
+    //     text: "You must agree to the permission statement before submitting.",
+    //     confirmButtonColor: "#f59e42",
+    //   });
+    //   return;
+    // }
     uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace });
   };
 
@@ -272,7 +272,6 @@ const AddFanArt = () => {
               className="mt-1 cursor-pointer"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              required
             />
             <label
               htmlFor="agree"
