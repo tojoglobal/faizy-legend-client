@@ -88,6 +88,7 @@ const AddFanArt = () => {
         title: "Submitted!",
         text: "Awaiting admin approval.",
         confirmButtonColor: "#6366f1",
+        timer: 5000,
       });
       setMessage(null);
       setUser("");
@@ -105,6 +106,7 @@ const AddFanArt = () => {
         title: "Upload failed",
         text: err?.response?.data?.error || "Upload failed.",
         confirmButtonColor: "#ef4444",
+        timer: 4000,
       });
       setMessage(null);
     },
@@ -113,15 +115,18 @@ const AddFanArt = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setMessage(null);
+
     if (!user) {
       Swal.fire({
         icon: "warning",
         title: "Missing Field",
         text: "Your name is required.",
         confirmButtonColor: "#f59e42",
+        timer: 4000,
       });
       return;
     }
+
     if (fanArt.length === 0 && vitiligoDance.length === 0) {
       Swal.fire({
         icon: "warning",
@@ -131,15 +136,18 @@ const AddFanArt = () => {
       });
       return;
     }
-    // if (!agreed) {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title: "Permission Required",
-    //     text: "You must agree to the permission statement before submitting.",
-    //     confirmButtonColor: "#f59e42",
-    //   });
-    //   return;
-    // }
+
+    if (!agreed) {
+      Swal.fire({
+        icon: "warning",
+        title: "Permission Required",
+        text: "You must accept the terms to grant permission for public posting.",
+        confirmButtonColor: "#f59e42",
+        timer: 4000,
+      });
+      return;
+    }
+
     uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace, agreed });
   };
 
