@@ -96,7 +96,7 @@ const AddFanArt = () => {
       setVitiligoDance([]);
       setVitiligoFace([]);
       setAgreed(false);
-      navigate(-1);
+      navigate("/fanart");
     },
     onError: (err) => {
       setUploading(false);
