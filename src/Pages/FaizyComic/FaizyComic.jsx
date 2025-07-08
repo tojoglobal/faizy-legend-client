@@ -64,13 +64,11 @@ const FaizyComic = () => {
       </div>
       <div className="w-full lg:w-1/2">
         {/* Right Section */}
-        <div className="space-y-4">
-          <img
-            src="https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg"
-            alt="Ad Banner"
-            className="w-full md:h-80 lg:h-52 object-cover rounded"
-          />
-        </div>
+        <img
+          src="https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg"
+          alt="Ad Banner"
+          className="w-full md:h-80 lg:h-52 object-cover rounded"
+        />
 
         {/* Swiper Slider */}
         <div className="w-full mt-4">
