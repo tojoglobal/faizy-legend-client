@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAxiospublic } from "../Hooks/useAxiospublic";
+import { useAxiospublic } from "../../Hooks/useAxiospublic";
 
 const useDataQuery = (key, url, enabled = true, normalizer = null) => {
   const axiospublic = useAxiospublic();

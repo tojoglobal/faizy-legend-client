@@ -6,9 +6,9 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import useDataQuery from "../utils/useDataQuery"; // Adjust if needed
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
+import useDataQuery from "../../Components/utils/useDataQuery";
 
 const FANART_TABS = [{ name: "Fan Art" }, { name: "Dance" }, { name: "Face" }];
 

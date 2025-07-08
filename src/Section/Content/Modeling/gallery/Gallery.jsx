@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Navbar from "../../../../Navbar/Navbar";
+import Navbar from "../../../../Pages/Navbar/Navbar";
 import { FiX } from "react-icons/fi";
-import { useScroll } from "../../../../context/ScrollContext";
+import { useScroll } from "../../../../Components/context/ScrollContext";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 

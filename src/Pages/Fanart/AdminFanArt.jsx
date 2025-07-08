@@ -1,10 +1,10 @@
 import { TrashIcon, CheckCircle2, XCircle, Eye } from "lucide-react";
 import Swal from "sweetalert2";
-import { useAxiospublic } from "../Hooks/useAxiospublic";
 import { useMutation } from "@tanstack/react-query";
-import useDataQuery from "../utils/useDataQuery";
 import { useState, useEffect } from "react";
 import FanArtDetailsModal from "./FanArtDetailsModal";
+import { useAxiospublic } from "../../Hooks/useAxiospublic";
+import useDataQuery from "../../Components/utils/useDataQuery";
 
 const PAGE_SIZES = [5, 10, 15, 20];
 

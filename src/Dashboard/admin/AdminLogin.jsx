@@ -5,8 +5,8 @@ import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import "./adminlogin.css";
-import { useAxiospublic } from "./../Hooks/useAxiospublic";
-import { usePasswordToggle } from "./../utils/usePasswordToggle";
+import { useAxiospublic } from "../../Hooks/useAxiospublic";
+import { usePasswordToggle } from "../../Components/utils/usePasswordToggle";
 
 const AdminLogin = () => {
   const axiosPublicUrl = useAxiospublic();
