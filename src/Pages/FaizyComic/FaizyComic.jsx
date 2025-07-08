@@ -1,16 +1,37 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { CiPlay1 } from "react-icons/ci";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 const FaizyComic = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const swiperRef = useRef(null);
+
+  const images = [
+    "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+    "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+    "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+    "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+    "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+  ];
 
   const handleNext = () => {
-    setCurrentPage((prev) => prev + 1);
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideNext();
+    }
   };
 
   const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slidePrev();
+    }
+  };
+
+  const onSlideChange = (swiper) => {
+    setCurrentPage(swiper.realIndex + 1);
   };
 
   return (
@@ -47,20 +68,45 @@ const FaizyComic = () => {
           <img
             src="https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg"
             alt="Ad Banner"
-            className="w-full h-52 object-cover rounded"
+            className="w-full md:h-80 lg:h-52 object-cover rounded"
           />
         </div>
-        <div className="w-full mt-4 grid grid-cols-2 gap-3">
-          <img
-            src="https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp"
-            alt="Comic 1"
-            className="w-full h-36 object-cover rounded-md"
-          />
-          <img
-            src="https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp"
-            alt="Comic 2"
-            className="w-full h-36 object-cover rounded-md"
-          />
+
+        {/* Swiper Slider */}
+        <div className="w-full mt-4">
+          <Swiper
+            ref={swiperRef}
+            slidesPerView={1.5}
+            spaceBetween={12}
+            loop={false}
+            modules={[Navigation]}
+            className="mySwiper"
+            onSlideChange={onSlideChange}
+            breakpoints={{
+              640: {
+                slidesPerView: 1.5,
+                spaceBetween: 12,
+              },
+              768: {
+                slidesPerView: 1.5,
+                spaceBetween: 12,
+              },
+              1024: {
+                slidesPerView: 1.5,
+                spaceBetween: 12,
+              },
+            }}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={image}
+                  alt={`Comic ${index + 1}`}
+                  className="w-full md:h-64 lg:h-44 object-cover rounded-md"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
 
         {/* Pagination */}
