@@ -24,7 +24,7 @@ export default function AdminFanArt() {
     ["fanArtAdmin", page, perPage],
     `/api/fan-art/admin?page=${page}&limit=${perPage}`
   );
-  
+
   // Parse images/tags (since stored as JSON/text in DB)
   const arts = Array.isArray(data?.rows)
     ? data.rows.map((a) => ({
@@ -194,7 +194,7 @@ export default function AdminFanArt() {
                                 }`
                           }
                           alt={a.user}
-                          className="w-16 h-16 object-cover rounded"
+                          className="w-20 h-16 object-cover rounded"
                         />
                       ) : a.videos?.[0] ? (
                         <video
@@ -205,7 +205,7 @@ export default function AdminFanArt() {
                                   a.videos[0]
                                 }`
                           }
-                          className="w-16 h-16 object-cover rounded"
+                          className="w-20 h-16 object-cover rounded"
                           muted
                           controls={false}
                         />
@@ -219,7 +219,7 @@ export default function AdminFanArt() {
                                 }`
                           }
                           alt={a.user}
-                          className="w-16 h-16 object-cover rounded"
+                          className="w-20 h-16 object-cover rounded"
                         />
                       ) : null}
                     </td>
