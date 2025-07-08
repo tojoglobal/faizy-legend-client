@@ -18,6 +18,7 @@ import {
   Newspaper,
   Palette,
 } from "lucide-react";
+import { MdOutlineAutoStories } from "react-icons/md";
 
 const logo = "/icon.webp";
 const smallLogo = "/icon.webp";
@@ -32,6 +33,11 @@ const menuItems = [
     label: "Fan Art",
     icon: <Palette size={20} />,
     to: "/dashboard/fanart",
+  },
+  {
+    label: "Faizy Comic",
+    icon: <MdOutlineAutoStories size={20} />,
+    to: "/dashboard/faizycomic",
   },
   {
     label: "Modeling Gallery",

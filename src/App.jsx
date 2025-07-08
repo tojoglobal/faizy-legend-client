@@ -18,6 +18,7 @@ import AdminBookingData from "./Dashboard/AdminUpdate/AdminBookingData";
 import AdminUpdateArticles from "./Dashboard/AdminUpdate/AdminUpdateArticles";
 import ErrorPage from "./Pages/Err/Error";
 import { ScrollProvider } from "./Components/context/ScrollContext";
+import AdminFaizyComic from "./Pages/FaizyComic/AdminFaizyComic";
 
 const AppLayout = () => {
   return (
@@ -39,6 +40,7 @@ const AppLayout = () => {
         <Route index element={<Dashboard />} />
         <Route path="filming-gallery" element={<AdminUpdateFilmingGallery />} />
         <Route path="fanart" element={<AdminFanArt />} />
+        <Route path="faizycomic" element={<AdminFaizyComic />} />
         <Route path="modeling-gallery" element={<ModelingGalleryTable />} />
         <Route path="ugc-gallery" element={<UgcGallery />} />
         <Route path="shopping" element={<AdminUpdateShopping />} />

@@ -1,7 +1,7 @@
 const FaizyComic = () => {
     return (
         <div>
-            aa
+          
         </div>
     );
 };
