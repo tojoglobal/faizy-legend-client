@@ -25,14 +25,12 @@ const AddFanArt = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
 
-  // Handlers for fan art (images)
   const handleFanArt = (e) => {
     let files = Array.from(e.target.files);
     setFanArt([...fanArt, ...files]);
   };
   const removeFanArt = (idx) => setFanArt(fanArt.filter((_, i) => i !== idx));
 
-  // Handlers for vitiligo dance (videos)
   const handleDance = (e) => {
     let files = Array.from(e.target.files);
     setVitiligoDance([...vitiligoDance, ...files]);
@@ -40,31 +38,22 @@ const AddFanArt = () => {
   const removeDance = (idx) =>
     setVitiligoDance(vitiligoDance.filter((_, i) => i !== idx));
 
-  // Handler for vitiligo face (image)
   const handleFace = (e) => {
     let file = e.target.files[0];
     if (file) setVitiligoFace([file]);
   };
   const removeFace = () => setVitiligoFace([]);
 
-  // Mutation for upload with react-query and progress bar
   const { mutate: uploadFanArt, isPending } = useMutation({
-    mutationFn: async ({
-      user,
-      fanArt,
-      vitiligoDance,
-      vitiligoFace,
-      agreed,
-    }) => {
+    mutationFn: async ({ user, fanArt, vitiligoDance, vitiligoFace }) => {
       setUploading(true);
       setUploadProgress(0);
       const form = new FormData();
       form.append("user", user);
-      form.append("agreed", agreed ? 1 : 0);
       fanArt.forEach((file) => form.append("images", file));
       vitiligoDance.forEach((file) => form.append("videos", file));
       if (vitiligoFace[0]) form.append("vitiligoFace", vitiligoFace[0]);
-      // Use axios directly to track progress
+
       const config = {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
@@ -76,7 +65,7 @@ const AddFanArt = () => {
           }
         },
       };
-      // Use axios instance from useAxiospublic()
+
       const res = await axiospublic.post("/api/fan-art", form, config);
       return res.data;
     },
@@ -95,7 +84,6 @@ const AddFanArt = () => {
       setFanArt([]);
       setVitiligoDance([]);
       setVitiligoFace([]);
-      setAgreed(false);
       navigate("/fanart");
     },
     onError: (err) => {
@@ -147,12 +135,11 @@ const AddFanArt = () => {
       });
       return;
     }
-
-    uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace, agreed });
+    uploadFanArt({ user, fanArt, vitiligoDance, vitiligoFace });
   };
 
   return (
-    <div className="bg-white p-2 lg:p-3">
+    <div className="bg-white min-h-screen p-2 lg:p-3">
       <div className="max-w-2xl mx-auto p-4 lg:p-6 rounded-3xl shadow-2xl lg:my-2 bg-white">
         <p className="text-base text-gray-500 mb-6 text-center">
           Share your best creations! Upload your fan art, vitiligo dance, or
@@ -186,6 +173,7 @@ const AddFanArt = () => {
               required
             />
           </div>
+
           {/* Fan Art (Images) */}
           <div>
             <label className="font-semibold text-gray-700 flex items-center gap-2">
@@ -223,6 +211,7 @@ const AddFanArt = () => {
               </label>
             </div>
           </div>
+
           {/* Vitiligo Dance (Videos) */}
           <div>
             <label className="font-semibold text-gray-700 flex items-center gap-2">
@@ -260,6 +249,7 @@ const AddFanArt = () => {
               </label>
             </div>
           </div>
+
           {/* Vitiligo Face (Image) */}
           <div>
             <label className="font-semibold text-gray-700 flex items-center gap-2">
@@ -315,7 +305,7 @@ const AddFanArt = () => {
               and made publicly available online for everyone to view?
             </label>
           </div>
-          {/* Upload Progress Bar */}
+          {/* Upload Progress */}
           {uploading && (
             <div className="mb-4">
               <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
@@ -330,6 +320,7 @@ const AddFanArt = () => {
               </div>
             </div>
           )}
+
           <button
             type="submit"
             className="w-full py-2.5 cursor-pointer rounded-lg bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-lg flex items-center justify-center gap-2 shadow-lg disabled:opacity-60 transition"

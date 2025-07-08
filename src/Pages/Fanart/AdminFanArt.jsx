@@ -174,7 +174,6 @@ export default function AdminFanArt() {
                   <th className="p-2 text-left w-40">Fan Name</th>
                   <th className="p-2 text-left w-28">Date</th>
                   <th className="p-2 text-left w-32">Status</th>
-                  <th className="p-2 text-left w-36">Permission Agreed</th>
                   <th className="p-2 text-center w-44">Actions</th>
                 </tr>
               </thead>
@@ -242,17 +241,6 @@ export default function AdminFanArt() {
                       ) : (
                         <span className="inline-flex items-center text-yellow-500 font-semibold gap-1">
                           Pending
-                        </span>
-                      )}
-                    </td>
-                    <td className="p-2 align-middle">
-                      {a.agreed === true || a.agreed === 1 ? (
-                        <span className="inline-flex items-center text-green-700 font-semibold gap-1">
-                          <CheckCircle2 className="w-4 h-4" /> Yes
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center text-gray-400 font-semibold gap-1">
-                          <XCircle className="w-4 h-4" /> No
                         </span>
                       )}
                     </td>

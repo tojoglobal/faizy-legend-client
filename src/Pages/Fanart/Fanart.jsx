@@ -228,7 +228,7 @@ const Fanart = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
                   {filteredPhotos.length === 0 && (
                     <div className="col-span-full text-center text-gray-400 py-16 text-xl">
-                      No fan art found matching your search.
+                      No fan art found.
                     </div>
                   )}
                   {filteredPhotos.map((item) => (

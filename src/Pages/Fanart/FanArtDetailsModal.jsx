@@ -12,13 +12,6 @@ export default function FanArtDetailsModal({
 }) {
   if (!open || !art) return null;
 
-  // Detect agreed state: Try to support boolean or int or string "true"
-  const agreed =
-    art.agreed === true ||
-    art.agreed === 1 ||
-    art.agreed === "1" ||
-    art.agreed === "true";
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
@@ -48,19 +41,6 @@ export default function FanArtDetailsModal({
           <span>
             <span className="font-semibold text-white">Date:</span>{" "}
             {art.created_at ? new Date(art.created_at).toLocaleString() : ""}
-          </span>
-          <span className="mx-2 text-gray-600">|</span>
-          <span className="flex items-center gap-1">
-            <span className="font-semibold text-white">Permission Agreed:</span>{" "}
-            {agreed ? (
-              <span className="inline-flex items-center gap-1 font-semibold text-green-400">
-                <CheckCircle2 className="w-4 h-4" /> Yes
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 font-semibold text-gray-400">
-                <XCircle className="w-4 h-4" /> No
-              </span>
-            )}
           </span>
         </div>
         <div className="mb-4 flex flex-wrap gap-2">
