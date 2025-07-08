@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs, FreeMode } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import "swiper/css/free-mode";
 
 const AllComics = () => {
   const instagramPosts = [
@@ -34,6 +32,35 @@ const AllComics = () => {
         "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
       ],
     },
+    {
+      id: 4,
+      image:
+        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+      additionalImages: [
+        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+      ],
+    },
+    {
+      id: 5,
+      image: "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+      additionalImages: [
+        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+      ],
+    },
+    {
+      id: 6,
+      image:
+        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+      additionalImages: [
+        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
+        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
+      ],
+    },
   ];
 
   const [selectedPost, setSelectedPost] = useState(null);
@@ -47,7 +74,6 @@ const AllComics = () => {
     setSelectedPost(null);
   };
 
-  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -95,27 +121,28 @@ const AllComics = () => {
             ref={modalRef}
             className="w-full max-w-2xl bg-black rounded-md shadow-lg relative"
           >
-            {/* Close button */}
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-xl text-gray-600 hover:text-red-500"
+              className="absolute top-2 right-2 text-xl text-gray-600 hover:text-red-500 z-10"
             >
               &times;
             </button>
 
-            {/* Main Swiper */}
+            {/* Swiper with custom small arrows */}
             <Swiper
               spaceBetween={10}
-              navigation={true}
+              navigation={{
+                nextEl: ".custom-next",
+                prevEl: ".custom-prev",
+              }}
               modules={[Navigation]}
-              className="mb-4 swiper-custom-nav"
+              className="mb-4 relative"
             >
-              {/* Main image */}
               <SwiperSlide>
                 <img
                   src={selectedPost.image}
                   alt="Main Comic"
-                  className="w-full max-h-[60vh] object-contain mx-auto"
+                  className="w-full max-h-[70vh] object-contain mx-auto"
                 />
               </SwiperSlide>
               {selectedPost.additionalImages.map((img, idx) => (
@@ -123,10 +150,44 @@ const AllComics = () => {
                   <img
                     src={img}
                     alt={`Extra ${idx}`}
-                    className="w-full max-h-[60vh] object-contain mx-auto"
+                    className="w-full max-h-[70vh] object-contain mx-auto"
                   />
                 </SwiperSlide>
               ))}
+
+              {/* Small custom nav arrows */}
+              <div className="custom-prev absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-50 rounded-full p-2 cursor-pointer hover:bg-opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </div>
+              <div className="custom-next absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black bg-opacity-50 rounded-full p-2 cursor-pointer hover:bg-opacity-70">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
             </Swiper>
           </div>
         </div>
