@@ -2,6 +2,13 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
+/* for faizy comic font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+.roboto-condensed {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
 @import "tailwindcss";
 @plugin "daisyui";
 @import "tw-animate-css";
@@ -17,6 +24,7 @@
 .dashboard body {
   font-family: var(--font-lato);
 }
+
 /* new added */
 
 body {
@@ -155,6 +163,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
