@@ -27,69 +27,62 @@ const FaizyComic = () => {
           Denji is forced by the yakuza into killing devils in order to pay off
           his crushing debts. Using his pet devil Pochita as a...
         </p>
-        <div className="flex gap-4">
+        <div className="flex gap-2">
           <a
             href="https://www.instagram.com/faizycomic"
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white text-sm"
+            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md text-white text-sm"
             target="_blank"
             rel="noopener noreferrer"
           >
             <CiPlay1 /> Follow
           </a>
-          <button className="border border-lime-400 px-4 py-2 rounded-lg text-sm hover:bg-lime-500 hover:text-black">
+          <button className="border border-lime-400 px-4 py-2 rounded-md text-sm hover:bg-lime-500 hover:text-black">
             Read More
           </button>
         </div>
       </div>
-
       <div className="w-full lg:w-1/2">
         {/* Right Section */}
         <div className="space-y-4">
           <img
-            src="https://cdn.silverpush.co/wp-content/uploads/2023/12/Trends-to-watch-in-2025.webp"
+            src="https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg"
             alt="Ad Banner"
-            className="w-full h-40 object-cover rounded"
+            className="w-full h-52 object-cover rounded"
           />
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-gray-800 rounded p-2">
-              <h3 className="text-center text-yellow-400 text-sm font-bold mb-2">
-                FAÏZY COMIC
-              </h3>
-              <img
-                src="https://i.ibb.co/wW4D32B/comic1.png"
-                alt="Comic 1"
-                className="w-full h-28 object-contain"
-              />
-            </div>
-            <div className="bg-gray-800 rounded p-2">
-              <h3 className="text-center text-yellow-400 text-sm font-bold mb-2">
-                FAÏZY COMIC
-              </h3>
-              <img
-                src="https://i.ibb.co/02TVBmn/comic2.png"
-                alt="Comic 2"
-                className="w-full h-28 object-contain"
-              />
-            </div>
-          </div>
+        </div>
+        <div className="w-full mt-4 grid grid-cols-2 gap-3">
+          <img
+            src="https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp"
+            alt="Comic 1"
+            className="w-full h-36 object-cover rounded-md"
+          />
+          <img
+            src="https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp"
+            alt="Comic 2"
+            className="w-full h-36 object-cover rounded-md"
+          />
         </div>
 
         {/* Pagination */}
-        <div className="col-span-1 md:col-span-2 mt-10 flex justify-start items-center gap-4">
+        <div className="col-span-1 md:col-span-2 mt-10 flex items-center gap-4">
+          {/* Left Arrow */}
           <button
             onClick={handlePrev}
-            className="p-7 border border-gray-400 rounded-full hover:bg-gray-700"
+            className="p-7 cursor-pointer border border-gray-400 rounded-full hover:bg-gray-700"
           >
             <FaArrowLeft size={10} />
           </button>
+          {/* Right Arrow */}
           <button
             onClick={handleNext}
-            className="p-7 border border-gray-400 rounded-full hover:bg-gray-700"
+            className="p-7 cursor-pointer border border-gray-400 rounded-full hover:bg-gray-700"
           >
             <FaArrowRight size={10} />
           </button>
-          <span className="text-sm text-lime-300">
+          {/* Line Separator */}
+          <div className="flex-grow h-px bg-gray-400 opacity-50"></div>
+          {/* Page Number */}
+          <span className="text-xl text-lime-300 font-semibold roboto-condensed">
             {currentPage.toString().padStart(2, "0")}
           </span>
         </div>
