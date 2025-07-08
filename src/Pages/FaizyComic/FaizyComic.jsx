@@ -64,7 +64,7 @@ const FaizyComic = () => {
         </div>
 
         {/* Pagination */}
-        <div className="col-span-1 md:col-span-2 mt-10 flex items-center gap-4">
+        <div className="col-span-1 md:col-span-2 mt-5 flex items-center gap-4">
           {/* Left Arrow */}
           <button
             onClick={handlePrev}
