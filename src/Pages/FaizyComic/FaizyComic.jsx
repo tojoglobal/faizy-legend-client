@@ -81,7 +81,7 @@ const FaizyComic = () => {
           </a>
           <button
             onClick={() => setShowFullDescription(!showFullDescription)}
-            className="border border-lime-400 px-4 py-2 rounded-md text-sm hover:bg-lime-500 hover:text-black"
+            className="border cursor-pointer border-lime-400 px-4 py-2 rounded-md text-sm hover:bg-lime-500 hover:text-black"
           >
             {showFullDescription ? "Show Less" : "Read More"}
           </button>
