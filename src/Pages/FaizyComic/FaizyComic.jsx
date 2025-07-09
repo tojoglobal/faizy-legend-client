@@ -8,7 +8,7 @@ import { Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiospublic } from "../../Hooks/useAxiospublic";
 
-// Google AdSense banner (unchanged)
+// Google AdSense banner
 const AdBanner = () => {
   useEffect(() => {
     if (window.location.hostname !== "localhost") {
@@ -34,6 +34,7 @@ const AdBanner = () => {
 
 const FaizyComic = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const swiperRef = useRef(null);
   const axiosPublic = useAxiospublic();
 
@@ -41,17 +42,12 @@ const FaizyComic = () => {
     queryKey: ["faizy-comics"],
     queryFn: async () => {
       const res = await axiosPublic.get("/api/faizy-comic");
-      return res.data;
+      return res.data?.[0];
     },
   });
 
-  const handleNext = () => {
-    swiperRef.current?.swiper?.slideNext();
-  };
-
-  const handlePrev = () => {
-    swiperRef.current?.swiper?.slidePrev();
-  };
+  const handleNext = () => swiperRef.current?.swiper?.slideNext();
+  const handlePrev = () => swiperRef.current?.swiper?.slidePrev();
 
   const onSlideChange = (swiper) => {
     setCurrentPage(swiper.realIndex + 1);
@@ -69,7 +65,11 @@ const FaizyComic = () => {
         <h2 className="text-5xl font-bold mb-4 roboto-condensed">
           {comic.title}
         </h2>
-        <p className="text-gray-300 mb-6">{comic.description}</p>
+        <p className="text-gray-300 mb-6">
+          {comic.description.length > 200 && !showFullDescription
+            ? `${comic.description.slice(0, 200)}...`
+            : comic.description}
+        </p>
         <div className="flex gap-2">
           <a
             href={comic.follow_url}
@@ -79,22 +79,18 @@ const FaizyComic = () => {
           >
             <CiPlay1 /> Follow
           </a>
-          <a
-            href={comic.read_more_url}
+          <button
+            onClick={() => setShowFullDescription(!showFullDescription)}
             className="border border-lime-400 px-4 py-2 rounded-md text-sm hover:bg-lime-500 hover:text-black"
-            target="_blank"
-            rel="noopener noreferrer"
           >
-            Read More
-          </a>
+            {showFullDescription ? "Show Less" : "Read More"}
+          </button>
         </div>
       </div>
 
       {/* Right Section */}
       <div className="w-full lg:w-1/2">
-        <div>
-          <AdBanner />
-        </div>
+        <AdBanner />
 
         {/* Swiper Slider */}
         <div className="w-full mt-6">
@@ -104,29 +100,20 @@ const FaizyComic = () => {
             spaceBetween={12}
             loop={false}
             modules={[Navigation]}
-            className="mySwiper"
             onSlideChange={onSlideChange}
+            className="mySwiper"
             breakpoints={{
-              640: {
-                slidesPerView: 1.5,
-                spaceBetween: 12,
-              },
-              768: {
-                slidesPerView: 1.5,
-                spaceBetween: 12,
-              },
-              1024: {
-                slidesPerView: 1.5,
-                spaceBetween: 12,
-              },
+              640: { slidesPerView: 1.5, spaceBetween: 12 },
+              768: { slidesPerView: 1.5, spaceBetween: 12 },
+              1024: { slidesPerView: 1.5, spaceBetween: 12 },
             }}
           >
             {images.map((image, index) => (
               <SwiperSlide key={index}>
                 <img
-                  src={image}
+                  src={`${import.meta.env.VITE_OPEN_APIURL}${image}`}
                   alt={`Comic ${index + 1}`}
-                  className="w-full md:h-64 lg:h-44 object-cover rounded-md"
+                  className="w-full h-56 md:h-72 lg:h-56 rounded-md"
                 />
               </SwiperSlide>
             ))}
@@ -134,7 +121,7 @@ const FaizyComic = () => {
         </div>
 
         {/* Pagination */}
-        <div className="col-span-1 md:col-span-2 mt-5 flex items-center gap-4">
+        <div className="mt-5 flex items-center gap-4">
           <button
             onClick={handlePrev}
             className="p-7 cursor-pointer border border-gray-400 rounded-full hover:bg-gray-700"

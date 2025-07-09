@@ -92,55 +92,101 @@ const AdminFaizyComic = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6">
-        {comic ? "Edit" : "Upload"} Faizy Comic
+    <div className="p-1 lg:p-3">
+      <h2 className="text-xl font-bold mb-2">
+        {comic ? "Edit" : "Upload"} Faizy Comic (HomePage)
       </h2>
-
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-1 gap-4 bg-gray-900 p-6 rounded-lg"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-900 p-1 lg:p-3 rounded-lg"
       >
-        <input
-          {...register("title", { required: true })}
-          placeholder="Title"
-          className="input input-bordered"
-        />
-        <input
-          {...register("subtitle")}
-          placeholder="Subtitle"
-          className="input input-bordered"
-        />
-        <input
-          {...register("follow_url")}
-          placeholder="Follow URL"
-          className="input input-bordered"
-        />
-        <textarea
-          {...register("description")}
-          placeholder="Description"
-          className="textarea textarea-bordered"
-        />
-        <input
-          type="file"
-          {...register("images")}
-          accept="image/*"
-          multiple
-          className="file-input file-input-bordered"
-        />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {comic?.images &&
-            JSON.parse(comic.images).map((img, i) => (
-              <div key={i} className="relative mt-2 w-full h-52">
+        {/* Title */}
+        <div className="flex flex-col">
+          <label htmlFor="title" className="label text-white font-semibold">
+            Title <span className="text-red-500">*</span>
+          </label>
+          <input
+            id="title"
+            {...register("title", { required: true })}
+            placeholder="Enter title"
+            className="input input-bordered w-full"
+          />
+        </div>
+
+        {/* Subtitle */}
+        <div className="flex flex-col">
+          <label htmlFor="subtitle" className="label text-white font-semibold">
+            Subtitle
+          </label>
+          <input
+            id="subtitle"
+            {...register("subtitle")}
+            placeholder="Enter subtitle"
+            className="input input-bordered w-full"
+          />
+        </div>
+
+        {/* Follow URL */}
+        <div className="flex flex-col">
+          <label
+            htmlFor="follow_url"
+            className="label text-white font-semibold"
+          >
+            Follow URL
+          </label>
+          <input
+            id="follow_url"
+            {...register("follow_url")}
+            placeholder="https://instagram.com/faizycomic"
+            className="input input-bordered w-full"
+          />
+        </div>
+
+        {/* File Upload */}
+        <div className="flex flex-col">
+          <label htmlFor="images" className="label text-white font-semibold">
+            Upload Images
+          </label>
+          <input
+            type="file"
+            id="images"
+            {...register("images")}
+            accept="image/*"
+            multiple
+            className="file-input file-input-bordered w-full"
+          />
+        </div>
+
+        {/* Description */}
+        <div className="md:col-span-2 flex flex-col">
+          <label
+            htmlFor="description"
+            className="label text-white font-semibold"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            {...register("description")}
+            placeholder="Enter comic description"
+            className="textarea textarea-bordered w-full"
+            rows={6}
+          />
+        </div>
+
+        {/* Preview Images with Delete Button */}
+        {comic?.images && (
+          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {JSON.parse(comic.images).map((img, i) => (
+              <div key={i} className="relative h-40 w-full">
                 <img
                   src={`${import.meta.env.VITE_OPEN_APIURL}${img}`}
                   alt={`Comic Image ${i + 1}`}
-                  className="rounded w-full h-full object-cover"
+                  className="rounded object-cover w-full h-full"
                 />
                 <button
                   type="button"
                   onClick={async () => {
-                    if (!comic?.id && !comic?._id) return;
                     const confirm = await Swal.fire({
                       title: "Delete Image?",
                       text: "This will remove this image from the comic.",
@@ -153,9 +199,7 @@ const AdminFaizyComic = () => {
                       try {
                         await axiosPublicUrl.delete(
                           `/api/faizy-comic/${comic.id || comic._id}/image`,
-                          {
-                            data: { image: img }, // send image path in body
-                          }
+                          { data: { image: img } }
                         );
                         Swal.fire(
                           "Deleted!",
@@ -173,16 +217,17 @@ const AdminFaizyComic = () => {
                       }
                     }
                   }}
-                  className="absolute top-1 right-1 bg-red-600 cursor-pointer rounded-full px-2 text-white hover:bg-red-800 z-10"
-                  aria-label="Delete image"
-                  title="Delete Image"
+                  className="absolute top-1 right-1 bg-red-600 text-white rounded-full px-2 hover:bg-red-800"
                 >
                   &times;
                 </button>
               </div>
             ))}
-        </div>
-        <div className="flex gap-4">
+          </div>
+        )}
+
+        {/* Buttons */}
+        <div className="md:col-span-2 flex gap-4 mt-4">
           <button
             type="submit"
             disabled={uploading}
