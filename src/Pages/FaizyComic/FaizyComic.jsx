@@ -61,18 +61,18 @@ const FaizyComic = () => {
     <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
       {/* Left Section */}
       <div className="w-full lg:w-1/2">
-        <p className="text-sm text-lime-400 mb-2">{comic.subtitle}</p>
+        <p className="text-sm text-lime-400 mb-2">{comic?.subtitle}</p>
         <h2 className="text-5xl font-bold mb-4 roboto-condensed">
-          {comic.title}
+          {comic?.title}
         </h2>
         <p className="text-gray-300 mb-6">
-          {comic.description.length > 200 && !showFullDescription
+          {comic?.description.length > 200 && !showFullDescription
             ? `${comic.description.slice(0, 200)}...`
             : comic.description}
         </p>
         <div className="flex gap-2">
           <a
-            href={comic.follow_url}
+            href={comic?.follow_url}
             className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-md text-white text-sm"
             target="_blank"
             rel="noopener noreferrer"

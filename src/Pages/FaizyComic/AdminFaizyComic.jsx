@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useAxiospublic } from "../../Hooks/useAxiospublic";
+import { Link } from "react-router-dom";
 
 const AdminFaizyComic = () => {
   const queryClient = useQueryClient();
@@ -71,7 +72,7 @@ const AdminFaizyComic = () => {
 
     setUploading(true);
     saveComic.mutate(formData);
-  };  
+  };
 
   const handleDelete = async () => {
     const id = comic?._id || comic?.id;
@@ -93,9 +94,17 @@ const AdminFaizyComic = () => {
 
   return (
     <div className="p-1 lg:p-3">
-      <h2 className="text-xl font-bold mb-2">
-        {comic ? "Edit" : "Upload"} Faizy Comic (HomePage)
-      </h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-bold mb-2">
+          {comic ? "Edit" : "Upload"} Faizy Comic (HomePage)
+        </h2>
+        <Link
+          to="/dashboard/faizy/ig-comics"
+          className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white px-4 py-1.5 rounded font-medium transition"
+        >
+          IG Comics
+        </Link>
+      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-900 p-1 lg:p-3 rounded-lg"

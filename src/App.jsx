@@ -21,6 +21,7 @@ import { ScrollProvider } from "./Components/context/ScrollContext";
 import AdminFaizyComic from "./Pages/FaizyComic/AdminFaizyComic";
 import AllComics from "./Pages/FaizyComic/AllComics";
 import ComicLayout from "./Pages/FaizyComic/ComicLayout";
+import AdminIGComics from "./Pages/FaizyComic/AdminIGComics";
 
 const AppLayout = () => {
   return (
@@ -46,6 +47,7 @@ const AppLayout = () => {
         <Route path="filming-gallery" element={<AdminUpdateFilmingGallery />} />
         <Route path="fanart" element={<AdminFanArt />} />
         <Route path="faizycomic" element={<AdminFaizyComic />} />
+        <Route path="faizy/ig-comics" element={<AdminIGComics />} />
         <Route path="modeling-gallery" element={<ModelingGalleryTable />} />
         <Route path="ugc-gallery" element={<UgcGallery />} />
         <Route path="shopping" element={<AdminUpdateShopping />} />
