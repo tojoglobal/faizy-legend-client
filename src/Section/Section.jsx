@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import "./Section.css";
 import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
@@ -56,9 +56,22 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
   const [open, setOpen] = useState(false);
   const contentPartRef = useRef(null);
 
+  const [bgAttachment, setBgAttachment] = useState("fixed");
+
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  // const isMobile = window.innerWidth < 1024;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+  useEffect(() => {
+    if (isIOS || isMobile) {
+      setBgAttachment("scroll");
+    } else {
+      setBgAttachment("fixed");
+    }
+  }, []);
+
   const bg = sectionBackgrounds[section.id] || "#191919";
   const content = sectionContents[section.id];
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
 
   if (section.id === "hero") {
     return (
@@ -71,12 +84,12 @@ const Section = forwardRef(({ section, scrollToSection }, ref) => {
             : "full-section section-background"
         }
         style={{
-          // backgroundImage: "url('./Images/sectionHero.jpg')",
           backgroundImage: bg,
           backgroundSize: "cover",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
-          backgroundAttachment: isMobile ? "scroll" : "fixed",
+          // backgroundAttachment: isMobile ? "scroll" : "fixed",
+          backgroundAttachment: bgAttachment,
         }}
       >
         <div className="bg-overlay" />
