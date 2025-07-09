@@ -52,7 +52,7 @@ const TopMenuBar = ({ toggleMobileSidebar, collapsed, toggleSidebar }) => {
         {/* Notification Icon */}
         <button className="relative cursor-pointer text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-white">
           <Bell size={22} />
-          <span className="absolute top-0 right-0 inline-block w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+          {/* <span className="absolute top-0 right-0 inline-block w-2.5 h-2.5 bg-red-500 rounded-full"></span> */}
         </button>
         {/* Fullscreen Icon */}
         <button
