@@ -19,7 +19,7 @@ import AdminUpdateArticles from "./Dashboard/AdminUpdate/AdminUpdateArticles";
 import ErrorPage from "./Pages/Err/Error";
 import { ScrollProvider } from "./Components/context/ScrollContext";
 import AdminFaizyComic from "./Pages/FaizyComic/AdminFaizyComic";
-import AllComics from "./Pages/FaizyComic/AllComics";
+import InstaComics from "./Pages/FaizyComic/InstaComics";
 import ComicLayout from "./Pages/FaizyComic/ComicLayout";
 import AdminIGComics from "./Pages/FaizyComic/AdminIGComics";
 
@@ -33,7 +33,7 @@ const AppLayout = () => {
       <Route path="/gallery/:title" element={<Gallery />} />
       <Route path="/faizycomic" element={<ComicLayout />}>
         <Route path="/faizycomic" element={<FaizyComic />} />
-        <Route path="comics" element={<AllComics />} />
+        <Route path="comics" element={<InstaComics />} />
       </Route>
       <Route
         path="/dashboard/*"

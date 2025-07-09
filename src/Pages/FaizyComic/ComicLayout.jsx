@@ -1,6 +1,17 @@
 import { Link, Outlet } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useAxiospublic } from "../../Hooks/useAxiospublic";
 
 const ComicLayout = () => {
+  const axiosPublicUrl = useAxiospublic();
+  const { data: comic } = useQuery({
+    queryKey: ["faizy-comics"],
+    queryFn: async () => {
+      const res = await axiosPublicUrl.get("/api/faizy-comic");
+      return res.data?.[0];
+    },
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[BAC1C8] to-[DEE6EF] text-white p-6">
       <div className="max-w-6xl mx-auto 2xl:max-w-[1360px] font-sans">
@@ -12,7 +23,7 @@ const ComicLayout = () => {
             Comic
           </Link>
           <a
-            href="https://www.tojoglobal.com/"
+            href={comic?.shop_url}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white"

@@ -11,7 +11,6 @@ const AdminFaizyComic = () => {
   const [uploading, setUploading] = useState(false);
   const { register, handleSubmit, reset, setValue } = useForm();
 
-  // GET existing comic (assuming only one)
   const { data: comic } = useQuery({
     queryKey: ["faizy-comics"],
     queryFn: async () => {
@@ -27,6 +26,7 @@ const AdminFaizyComic = () => {
       setValue("subtitle", comic.subtitle);
       setValue("description", comic.description);
       setValue("follow_url", comic.follow_url);
+      setValue("shop_url", comic.shop_url);
     }
   }, [comic, setValue]);
 
@@ -66,6 +66,7 @@ const AdminFaizyComic = () => {
     formData.append("subtitle", data.subtitle);
     formData.append("description", data.description);
     formData.append("follow_url", data.follow_url);
+    formData.append("shop_url", data.shop_url);
     if (data.images?.length > 0) {
       Array.from(data.images).forEach((img) => formData.append("images", img));
     }
@@ -147,6 +148,18 @@ const AdminFaizyComic = () => {
             id="follow_url"
             {...register("follow_url")}
             placeholder="https://instagram.com/faizycomic"
+            className="input input-bordered w-full"
+          />
+        </div>
+        {/* Shop URL */}
+        <div className="flex flex-col">
+          <label htmlFor="shop_url" className="label text-white font-semibold">
+            Shop URL
+          </label>
+          <input
+            id="shop_url"
+            {...register("shop_url")}
+            placeholder=""
             className="input input-bordered w-full"
           />
         </div>

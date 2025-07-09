@@ -1,7 +1,5 @@
 const AdminIGComics = () => {
-  return <div>
-    
-  </div>;
+  return <div></div>;
 };
 
 export default AdminIGComics;

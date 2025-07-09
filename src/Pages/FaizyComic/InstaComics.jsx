@@ -4,7 +4,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const AllComics = () => {
+const InstaComics = () => {
   const instagramPosts = [
     {
       id: 1,
@@ -196,4 +196,4 @@ const AllComics = () => {
   );
 };
 
-export default AllComics;
+export default InstaComics;
