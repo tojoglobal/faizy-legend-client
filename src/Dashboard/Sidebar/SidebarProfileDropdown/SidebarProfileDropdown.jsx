@@ -1,15 +1,6 @@
 import { useState } from "react";
-import {
-  ChevronDown,
-  ChevronUp,
-  User,
-  MessageSquare,
-  CreditCard,
-  Settings,
-  Lock,
-  LogOut,
-} from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { ChevronDown, ChevronUp, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const handleLogout = async (navigate) => {
@@ -43,11 +34,11 @@ const SidebarProfileDropdown = () => {
       >
         <div className="flex items-center gap-2">
           <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
+            src="https://faizylegend.com/Images/modelingHero.webp"
             alt="avatar"
-            className={`w-8 h-8 rounded-full`}
+            className="w-8 h-8 rounded-full object-cover"
           />
-          <span className="font-semibold text-sm">Steven Deese</span>
+          <span className="font-semibold text-sm">admin</span>
         </div>
         {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
       </button>
@@ -55,10 +46,10 @@ const SidebarProfileDropdown = () => {
       {open && (
         <div className="absolute bottom-14 left-3 w-56 md:w-60 bg-white shadow-lg rounded-lg z-50">
           <div className="p-2">
-            <Link to="/dashboard/viewprofile">
+            {/* <Link to="/dashboard/viewprofile">
               <DropdownItem icon={<User size={16} />} label="Profile" />
             </Link>
-            <DropdownItem icon={<MessageSquare size={16} />} label="Messages" />
+            <DropdownItem icon={<MessageSquare size={16} />} label="Messages" /> */}
             {/* <DropdownItem icon={<HelpCircle size={16} />} label="Help" /> */}
 
             <DropdownItem
@@ -69,7 +60,7 @@ const SidebarProfileDropdown = () => {
           </div>
           {/* <div className="border-t" />
           <div className="p-2"> */}
-            {/* <DropdownItem
+          {/* <DropdownItem
               icon={<CreditCard size={16} />}
               label={
                 <span>
@@ -77,7 +68,7 @@ const SidebarProfileDropdown = () => {
                 </span>
               }
             /> */}
-            {/* <DropdownItem
+          {/* <DropdownItem
               icon={<Settings size={16} />}
               label={
                 <span className="flex items-center gap-1">
@@ -88,7 +79,7 @@ const SidebarProfileDropdown = () => {
                 </span>
               }
             /> */}
-            {/* <DropdownItem icon={<Lock size={16} />} label="Lock screen" /> */}
+          {/* <DropdownItem icon={<Lock size={16} />} label="Lock screen" /> */}
           {/* </div> */}
         </div>
       )}

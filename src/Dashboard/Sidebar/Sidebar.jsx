@@ -69,11 +69,11 @@ const menuItems = [
     icon: <Users size={20} />,
     to: "/dashboard/ugc-gallery",
   },
-  {
-    label: "Layouts",
-    icon: <Layers size={20} />,
-    to: "/dashboard/layouts",
-  },
+  // {
+  //   label: "Layouts",
+  //   icon: <Layers size={20} />,
+  //   to: "/dashboard/layouts",
+  // },
 ];
 
 const Sidebar = ({
