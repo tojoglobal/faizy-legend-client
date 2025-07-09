@@ -1,0 +1,385 @@
+// /* =================START================ */
+// /* hero part */
+// .hero-full-section {
+//     width: 100vw;
+//     height: 100vh;
+//     min-height: 100vh;
+//     display: flex;
+//     justify-content: center;
+//     position: relative;
+//     scroll-snap-align: start;
+//     background: #222;
+//     color: #fff;
+//     transition: background 0.6s;
+//     overflow: hidden;
+//   }
+  
+//   .hero_subtitle {
+//     font-size: 1.5rem;
+//     font-weight: 200;
+//     margin-top: 3.5rem;
+//     letter-spacing: 2px;
+//   }
+  
+//   .hero-scroll-down {
+//     margin-top: 2rem;
+//     font-size: 2rem;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     cursor: pointer;
+//     color: #fff;
+//     animation: bounce 1.5s infinite alternate;
+//   }
+  
+//   @keyframes bounce {
+//     to {
+//       transform: translateY(10px);
+//     }
+//   }
+  
+//   .full-section {
+//     width: 100vw;
+//     min-height: 100vh;
+//     position: relative;
+//     scroll-snap-align: start;
+//     background: #222;
+//     color: #fff;
+//     transition: background 0.6s;
+//     overflow: hidden;
+//     opacity: 0.9;
+//   }
+  
+//   /* =================END================ */
+//   /* backgound image overlay */
+//   /* =================START================ */
+//   .section-background {
+//     position: relative;
+//     overflow: hidden;
+//   }
+  
+//   .section-background .bg-overlay {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background: rgba(0, 0, 0, 0.342);
+//     /* Color and opacity */
+//     z-index: 1;
+//     pointer-events: none;
+//   }
+  
+//   .section-background .section-content {
+//     position: relative;
+//     z-index: 2;
+//   }
+  
+//   /* ================== END =============== */
+//   /* other section style */
+//   /* ================== START ============= */
+//   .text_full_section {
+//     height: 100vh;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     position: relative;
+//     z-index: 5;
+//   }
+  
+//   /* .background-video {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100vw;
+//     height: 100vh;
+//     object-fit: cover;
+//     z-index: 0;
+//     pointer-events: none;
+//   } */
+//   .background-video {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+//     /* iOS specific fix */
+//     -webkit-transform: translateZ(0);
+//     transform: translateZ(0);
+//   }
+  
+//   .section-content {
+//     text-align: center;
+//     width: 100%;
+//     z-index: 1;
+//     position: relative;
+//   }
+  
+//   .big-title {
+//     font-size: 165px;
+//     font-weight: 400;
+//     letter-spacing: 8px;
+//     margin: 0;
+//     text-transform: uppercase;
+//     color: #fff;
+//     line-height: 1.05;
+//   }
+  
+//   .subtitle {
+//     font-size: 1.5rem;
+//     font-weight: 400;
+//     margin-top: 1rem;
+//     letter-spacing: 2px;
+//   }
+  
+//   .section-title {
+//     font-size: 150px;
+//     font-weight: 400;
+//     letter-spacing: 6px;
+//     line-height: 1;
+//     margin: 0;
+//     text-transform: uppercase;
+//     color: #fff;
+//   }
+  
+//   .section-plus-btn {
+//     position: absolute;
+//     bottom: 10%;
+//     font-size: 2.80rem;
+//     cursor: pointer;
+//     color: #fff;
+//     transition: color 0.2s;
+//   }
+  
+//   /* plus minus button hover effect */
+//   .section-plus-btn,
+//   .scroll_minus_btn {
+//     transition: transform 0.2s ease-in-out;
+//     cursor: pointer;
+//   }
+  
+//   .section-plus-btn:hover,
+//   .scroll_minus_btn:hover {
+//     transform: scale(1.1);
+//   }
+  
+//   .section-plus-btn:hover {
+//     color: #fff;
+//   }
+//   /* .content-part {
+//     width: 100vw;
+//     min-height: 100vh;
+//     max-width: 100vw;
+//     background: rgb(25, 25, 25);
+//     position: relative;
+//     z-index: 4;
+//     transition: all 0.45s cubic-bezier(0.62, 0.28, 0.23, 0.99);
+//     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.22);
+//     padding-top: 6rem;
+//     padding-bottom: 3rem;
+//     display: none;
+//     overflow-y: auto;
+//   }
+  
+//   .content-part.open {
+//     display: block;
+//   } */
+  
+//   /* updated both 17 june */
+//   .content-part {
+//     width: 100vw;
+//     overflow: hidden;
+//     background: rgb(25, 25, 25);
+//     position: relative;
+//     z-index: 4;
+//     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.22);
+//     padding-top: 0;
+//     padding-bottom: 0;
+//     max-height: 0;
+//     opacity: 0;
+//     transition: all 0.6s ease;
+//   }
+  
+//   .content-part.open {
+//     padding-top: 6rem;
+//     padding-bottom: 3rem;
+//     max-height: 2000px;
+//     opacity: 1;
+//     transition: all 0.6s ease;
+//   }
+  
+//   .scroll_minus_btn {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-size: 2.80rem;
+//     font-weight: 900;
+//     color: #fff;
+//     cursor: pointer;
+//     margin-bottom: 5rem;
+//   }
+  
+//   .scroll_minus_btn:hover {
+//     color: #fff;
+//   }
+  
+//   .content-inner {
+//     margin: 0 auto;
+//     padding: 0 1.25rem 2.5rem 1.25rem;
+//   }
+  
+//   .content-title {
+//     font-size: 1.75rem;
+//     font-weight: 600;
+//     text-transform: uppercase;
+//     margin-bottom: 1rem;
+//     letter-spacing: 1.5px;
+//     color: #fff;
+//   }
+  
+//   .content-text {
+//     font-size: 1.18rem;
+//     font-weight: 300;
+//     color: #eee;
+//     letter-spacing: 0.5px;
+//     line-height: 1.7;
+//   }
+  
+//   .section-background {
+//     position: relative;
+//     overflow: hidden;
+//     background-size: cover;
+//     background-position: center center;
+//     background-repeat: no-repeat;
+//     background-attachment: fixed;
+//   }
+  
+//   @keyframes fadeInUp {
+//     from {
+//       opacity: 0;
+//       /* transform: translateY(40px); */
+//     }
+  
+//     to {
+//       opacity: 1;
+//       /* transform: translateY(0); */
+//     }
+//   }
+  
+//   .hero-fade-in {
+//     animation: fadeInUp 1s cubic-bezier(0.62, 0.28, 0.23, 0.99) 0.2s both;
+//   }
+  
+//   /* for section top mobile video play */
+//   @media (max-width: 768px) {
+//     .background-video {
+//       /* position: fixed; */
+//       /* Critical for iOS */
+//       top: 0;
+//       left: 0;
+//       width: 100vw !important;
+//       height: 100vh !important;
+//       object-fit: cover;
+//     }
+  
+//     .hero-full-section {
+//       position: relative;
+//       overflow: hidden;
+//     }
+//   }
+  
+//   @media (max-width: 1024px) {
+//     .section-background {
+//       background-attachment: scroll;
+//       /* Prevents mobile jank */
+//       background-position: center top;
+//     }
+//   }
+  
+//   @media (max-width: 900px) {
+  
+//     .big-title,
+//     .section-title {
+//       font-size: 10vw;
+//     }
+  
+//     .section-content-transp {
+//       padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+//     }
+  
+//     .content-title {
+//       font-size: 1.2rem;
+//     }
+  
+//     .section-background {
+//       background-size: cover;
+//       background-position: center top;
+//       background-attachment: scroll;
+//       min-height: 70vh;
+//     }
+//   }
+  
+//   @media (max-width: 600px) {
+//     .section-background {
+//       background-size: cover;
+//       background-position: 60% top;
+//       min-height: 100vh;
+//       padding-top: 2.5rem;
+//       padding-bottom: 2.5rem;
+//     }
+  
+//     .section-plus-btn {
+//       bottom: 20%;
+//       font-size: 2rem;
+//     }
+  
+//     .scroll_minus_btn {
+//       font-size: 2rem;
+//       margin-bottom: 3rem;
+//     }
+  
+//     .content-part {
+//       padding-top: 3rem;
+//       padding-bottom: 2rem;
+//     }
+//   }
+  
+//   /* added 17 june */
+//   @media (pointer: coarse),
+//   (hover: none) {
+//     .section-background {
+//       background-attachment: scroll !important;
+//     }
+//   }
+  
+//   @supports (-webkit-touch-callout: none) {
+//     .section-background {
+//       background-attachment: scroll !important;
+//     }
+//   }
+  
+//   /* added 17 june */
+  
+//   @media (max-width: 480px) {
+//     .section-background {
+//       background-size: cover;
+//       background-position: 65% top;
+//       min-height: 100vh;
+//       padding-top: 1.5rem;
+//       padding-bottom: 0rem;
+//     }
+  
+//     #book {
+//       background-position: 70% top !important;
+//     }
+  
+//     #shop {
+//       background-position: 78% top !important;
+//     }
+  
+//     .section-title {
+//       font-size: 15vw;
+//     }
+//   }

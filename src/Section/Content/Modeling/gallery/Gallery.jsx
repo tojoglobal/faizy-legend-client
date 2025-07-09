@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Navbar from "../../../../Navbar/Navbar";
+import Navbar from "../../../../Pages/Navbar/Navbar";
 import { FiX } from "react-icons/fi";
-import { useScroll } from "../../../../context/ScrollContext";
+import { useScroll } from "../../../../Components/context/ScrollContext";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
@@ -42,6 +42,11 @@ const Gallery = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const navigate = useNavigate();
   const { setScrollToSection } = useScroll();
+  // 👇 Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   // 👇 Scroll to top on mount
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -98,12 +103,12 @@ const Gallery = () => {
         onNavClick={handleNavClick}
       />
       <div className="max-w-7xl mx-auto min-h-screen py-10 px-4">
-        <h1 className="text-[32px]  text-center font-bold text-white mb-2 uppercase pt-32">
+        <h1 className="text-[32px] text-center font-bold text-white mb-2 uppercase pt-32">
           {gallery?.name || title?.replace(/-/g, " ")}
         </h1>
         <div className="text-center text-white text-[18px] mb-8">
           {gallery?.location}
-          {gallery?.photographer ? ` |  @ ${gallery.photographer}` : ""}
+          {gallery?.photographer ? ` |  @${gallery.photographer}` : ""}
         </div>
         {isLoading ? (
           <div className="text-center text-gray-300 py-16">Loading...</div>
@@ -120,7 +125,7 @@ const Gallery = () => {
             No images in this gallery.
           </div>
         ) : (
-          <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 space-y-4 gap-4  w-full  mx-auto">
+          <div className="columns-1 sm:columns-2 md:columns-3 xl:columns-4 space-y-4 gap-4 w-full mx-auto">
             {images.map((img, idx) => (
               <div
                 key={img + idx}
@@ -153,11 +158,11 @@ const Gallery = () => {
         )}
         {selectedIndex !== null && gallery && (
           <div
-            className="fixed inset-0 z-[9999] hero-overlay bg-opacity-0 flex items-start justify-center pt-10"
+            className="fixed inset-0 z-[9999] hero-overlay bg-opacity-0 flex items-center justify-center"
             onClick={closeModal}
           >
             <div
-              className="relative max-w-[90vw]"
+              className="relative max-w-[90vw] w-full h-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -165,7 +170,6 @@ const Gallery = () => {
                 className="fixed left-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white hover:text-gray-300 z-[10000] cursor-pointer rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
                 aria-label="Previous image"
               >
-                {/* <IoIosArrowBack size={24} /> */}
                 <svg
                   width="60"
                   height="48"
@@ -174,15 +178,14 @@ const Gallery = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <g>
-                    {/* <!-- Three leftward dashes --> */}
                     <line
                       x1="51"
                       y1="24"
                       x2="43"
                       y2="24"
                       stroke="white"
-                      stroke-width="3"
-                      stroke-linecap="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                     />
                     <line
                       x1="39"
@@ -190,8 +193,8 @@ const Gallery = () => {
                       x2="31"
                       y2="24"
                       stroke="white"
-                      stroke-width="3"
-                      stroke-linecap="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                     />
                     <line
                       x1="27"
@@ -199,17 +202,16 @@ const Gallery = () => {
                       x2="19"
                       y2="24"
                       stroke="white"
-                      stroke-width="3"
-                      stroke-linecap="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                     />
-                    {/* <!-- Left arrowhead --> */}
                     <polyline
                       points="13,16 3,24 13,32"
                       fill="none"
                       stroke="white"
-                      stroke-width="4"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </g>
                 </svg>
@@ -219,7 +221,6 @@ const Gallery = () => {
                 className="fixed right-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white hover:text-gray-300 z-[10000] cursor-pointer rounded-full flex items-center justify-center hover:bg-opacity-75 transition-all duration-200"
                 aria-label="Next image"
               >
-                {/* <IoIosArrowForward size={24} /> */}
                 <svg
                   width="60"
                   height="48"
@@ -234,18 +235,17 @@ const Gallery = () => {
                       x2="17"
                       y2="24"
                       stroke="white"
-                      stroke-width="3"
-                      stroke-linecap="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                     />
-                    {/* <!-- Second dash --> */}
                     <line
                       x1="21"
                       y1="24"
                       x2="29"
                       y2="24"
                       stroke="white"
-                      stroke-width="3"
-                      stroke-linecap="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                     />
                     <line
                       x1="33"
@@ -253,16 +253,16 @@ const Gallery = () => {
                       x2="41"
                       y2="24"
                       stroke="white"
-                      stroke-width="3"
-                      stroke-linecap="round"
+                      strokeWidth="3"
+                      strokeLinecap="round"
                     />
                     <polyline
                       points="47,16 57,24 47,32"
                       fill="none"
                       stroke="white"
-                      stroke-width="4"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </g>
                 </svg>
@@ -274,14 +274,16 @@ const Gallery = () => {
               >
                 <FiX />
               </button>
-              <img
-                src={getImageUrl(images[selectedIndex])}
-                alt={gallery.name}
-                className="w-full max-h-[calc(100vh-130px)] my-[30px] object-contain"
-                style={{
-                  borderRadius: "1rem",
-                }}
-              />
+              <div className="flex items-center justify-center w-full h-full">
+                <img
+                  src={getImageUrl(images[selectedIndex])}
+                  alt={gallery.name}
+                  className="max-h-[calc(100vh-130px)] max-w-full object-contain mx-auto my-auto"
+                  style={{
+                    borderRadius: "1rem",
+                  }}
+                />
+              </div>
             </div>
           </div>
         )}

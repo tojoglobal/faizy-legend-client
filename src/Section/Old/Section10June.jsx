@@ -2,13 +2,13 @@ import { forwardRef, useRef, useState } from "react";
 import "./Section.css";
 import { FaRegArrowAltCircleDown } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle } from "react-icons/fi";
-import AboutContent from "./Content/About/AboutContent";
-import ModelingGallery from "./Content/Modeling/ModelingGallery";
-import FilmingGallery from "./Content/Filming/FilmingGallery";
-import Ugc from "./Content/UGC/Ugc";
-import ArticleGrid from "./Content/ArticleGrid/ArticleGrid";
-import BookForm from "./Content/BookForm/BookForm";
-import Shopping from "./Content/Shop/Shopping";
+import AboutContent from "../Content/About/AboutContent";
+import ModelingGallery from "../Content/Modeling/ModelingGallery";
+import FilmingGallery from "../Content/Filming/FilmingGallery";
+import Ugc from "../Content/UGC/Ugc";
+import ArticleGrid from "../Content/ArticleGrid/ArticleGrid";
+import BookForm from "../Content/BookForm/BookForm";
+import Shopping from "../Content/Shop/Shopping";
 
 const sectionBackgrounds = {
   about: "url('./Images/abouthero.webp')",

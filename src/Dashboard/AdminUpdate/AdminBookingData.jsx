@@ -11,7 +11,7 @@ const getImageUrl = (imageUrl) => {
   return `${API.replace(/\/$/, "")}${imageUrl}`;
 };
 
-const AdminBookData = () => {
+const AdminBookingData = () => {
   const [forms, setForms] = useState([]);
   useEffect(() => {
     fetchData();
@@ -50,7 +50,7 @@ const AdminBookData = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="p-2 lg:p-3">
       <h1 className="text-2xl font-bold mb-6">Book Form Submissions</h1>
       <div className="overflow-x-auto bg-gray-900 rounded shadow">
         <table className="min-w-full table-auto border border-gray-700">
@@ -125,4 +125,4 @@ const AdminBookData = () => {
   );
 };
 
-export default AdminBookData;
+export default AdminBookingData;

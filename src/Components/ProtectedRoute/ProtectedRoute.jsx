@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useAxiospublic } from "../Hooks/useAxiospublic";
+import { useAxiospublic } from "../../Hooks/useAxiospublic";
 
 const ProtectedRoute = ({ children }) => {
   const axiosPublicUrl = useAxiospublic();

@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState } from "react";
+import { useAppContext } from "../../Components/context/useAppContext";
+import { useScroll } from "../../Components/context/ScrollContext";
+import VideoModal from "../../Section/Content/Filming/VideoModal";
 import Navbar from "../Navbar/Navbar";
-import Section from "../Section/Section";
-import { useScroll } from "../context/ScrollContext";
-import { useAppContext } from "../context/useAppContext";
-import VideoModal from "./../Section/Content/Filming/VideoModal";
+import Section from "../../Section/Section";
 
 const sections = [
   { id: "hero", label: "" },

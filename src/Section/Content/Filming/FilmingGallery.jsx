@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import FilmingCard from "./FilmingCard";
 import { useEffect } from "react";
-import { useAppContext } from "./../../../context/useAppContext";
+import { useAppContext } from "../../../Components/context/useAppContext";
 
 export default function FilmingGallery() {
   const { apiUrl, openVideo, setOpenVideo, setSelectedCard } = useAppContext();

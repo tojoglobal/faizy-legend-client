@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FaEdit, FaTrash, FaPlus, FaSave, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTrash, FaSave, FaTimes } from "react-icons/fa";
 
 const API = import.meta.env.VITE_OPEN_APIURL;
 
@@ -93,15 +93,15 @@ const AdminUpdateArticles = () => {
   };
 
   return (
-    <div className="p-3">
+    <div className="p-2 lg:p-3">
       <h1 className="text-2xl font-bold mb-4">Manage Articles</h1>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Articles</h2>
         <button
-          className="bg-teal-700 cursor-pointer flex items-center gap-1 text-white px-3 py-1 rounded"
+          className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white px-4 py-1.5 rounded font-medium transition"
           onClick={() => setAddRow(true)}
         >
-          <FaPlus /> Add Article
+          + Add Article
         </button>
       </div>
       <div className="overflow-x-auto shadow bg-gray-900 rounded">

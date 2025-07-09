@@ -2,7 +2,7 @@ import "./aboutcontent.css";
 
 const AboutContent = () => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 mx-2 md:mx-0">
       <p>
         Meet Faizy Legend, a dynamic social media influencer and advocate who
         has captured the hearts of over 300,000 followers worldwide. Born with

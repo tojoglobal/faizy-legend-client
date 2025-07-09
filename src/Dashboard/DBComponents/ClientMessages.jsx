@@ -1,6 +1,6 @@
 import { Eye, Trash } from "lucide-react";
 import { useAxiospublic } from "../../Hooks/useAxiospublic";
-import useDataQuery from "../../utils/useDataQuery";
+import useDataQuery from "../../Components/utils/useDataQuery";
 import Swal from "sweetalert2";
 
 const ClientMessages = () => {
