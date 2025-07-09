@@ -8,7 +8,6 @@ import { Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiospublic } from "../../Hooks/useAxiospublic";
 
-// Google AdSense banner
 const AdBanner = () => {
   useEffect(() => {
     if (window.location.hostname !== "localhost") {
@@ -25,7 +24,7 @@ const AdBanner = () => {
       className="adsbygoogle block rounded"
       style={{ display: "block", width: "100%", height: "190px" }}
       data-ad-client="ca-pub-3713767832812238"
-      data-ad-slot="PUT_AD_SLOT_ID_HERE"
+      data-ad-slot="9448608399"
       data-ad-format="auto"
       data-full-width-responsive="true"
     ></ins>
