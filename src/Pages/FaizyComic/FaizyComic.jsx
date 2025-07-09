@@ -1,10 +1,33 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { CiPlay1 } from "react-icons/ci";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
+
+const AdBanner = () => {
+  useEffect(() => {
+    if (window.location.hostname !== "localhost") {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error("Adsense error", e);
+      }
+    }
+  }, []);
+
+  return (
+    <ins
+      className="adsbygoogle block rounded"
+      style={{ display: "block", width: "100%", height: "190px" }}
+      data-ad-client="ca-pub-3713767832812238"
+      data-ad-slot="PUT_AD_SLOT_ID_HERE"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+  );
+};
 
 const FaizyComic = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,14 +87,11 @@ const FaizyComic = () => {
       </div>
       <div className="w-full lg:w-1/2">
         {/* Right Section */}
-        <img
-          src="https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg"
-          alt="Ad Banner"
-          className="w-full md:h-80 lg:h-52 object-cover rounded"
-        />
-
+        <div>
+          <AdBanner />
+        </div>
         {/* Swiper Slider */}
-        <div className="w-full mt-4">
+        <div className="w-full mt-6">
           <Swiper
             ref={swiperRef}
             slidesPerView={1.5}
@@ -106,7 +126,6 @@ const FaizyComic = () => {
             ))}
           </Swiper>
         </div>
-
         {/* Pagination */}
         <div className="col-span-1 md:col-span-2 mt-5 flex items-center gap-4">
           {/* Left Arrow */}

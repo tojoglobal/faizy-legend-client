@@ -20,7 +20,7 @@ const ComicLayout = () => {
             Shop
           </a>
         </nav>
-        <h1 className="text-center text-3xl roboto-condensed text-lime-400 font-bold mb-8">
+        <h1 className="text-center text-xl lg:text-2xl roboto-condensed text-lime-400 font-bold mb-6">
           FAÏZY COMIC
         </h1>
         <Outlet />
