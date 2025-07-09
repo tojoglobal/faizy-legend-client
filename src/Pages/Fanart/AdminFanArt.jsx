@@ -135,28 +135,30 @@ export default function AdminFanArt() {
   useEffect(() => {
     if (page > lastPage) setPage(lastPage);
   }, [lastPage, page]);
-
+  
   return (
     <div className="p-2 lg:p-3">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Fan Art Approvals</h2>
-        <div className="flex items-center gap-2">
-          <span className="mr-2 text-sm">Show:</span>
-          <select
-            className="border rounded px-2 py-1 text-sm bg-gray-900 focus:outline-none cursor-pointer"
-            value={perPage}
-            onChange={(e) => {
-              setPerPage(Number(e.target.value));
-              setPage(1);
-            }}
-          >
-            {PAGE_SIZES.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </div>
+        {total > 5 && (
+          <div className="flex items-center gap-2">
+            <span className="mr-1 text-sm">Show:</span>
+            <select
+              className="border border-gray-600 rounded px-2 py-1 text-sm bg-gray-900 focus:outline-none cursor-pointer"
+              value={perPage}
+              onChange={(e) => {
+                setPerPage(Number(e.target.value));
+                setPage(1);
+              }}
+            >
+              {PAGE_SIZES.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
       {isLoading ? (
         <div className="text-center py-8 text-gray-400">Loading...</div>
