@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { XMarkIcon, PhotoIcon } from "@heroicons/react/24/solid";
 import { FaSpinner } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const API = import.meta.env.VITE_OPEN_APIURL;
 
@@ -44,7 +45,7 @@ export default function IGComicsForm({ initial = {}, onClose, afterSave }) {
 
   const handleAddImages = (files) => {
     if (galleryImgs.length + files.length > 40) {
-      alert("You can upload up to 40 images.");
+      Swal.fire("Limit Reached", "You can upload up to 40 images.", "warning");
       return;
     }
     const newImgs = files.map((file) => ({
@@ -68,18 +69,18 @@ export default function IGComicsForm({ initial = {}, onClose, afterSave }) {
     setShowLoader(true);
     const formData = new FormData();
 
-    // Always append thumbnail — fallback to empty if missing
     if (data.thumbnail instanceof File) {
       formData.append("thumbnail", data.thumbnail);
     }
 
-    // Filter and append only new files
     const newImages = galleryImgs.filter((img) => !img.isOld && img.file);
-
     if (newImages.length === 0) {
-      alert("Please upload at least one image.");
       setShowLoader(false);
-      return;
+      return Swal.fire(
+        "No Images",
+        "Please upload at least one image.",
+        "error"
+      );
     }
 
     newImages.forEach((img) => formData.append("images", img.file));
@@ -89,16 +90,27 @@ export default function IGComicsForm({ initial = {}, onClose, afterSave }) {
       ? `${API}/api/admin/ig-comics/${initial.id}`
       : `${API}/api/admin/ig-comics`;
 
-    const res = await fetch(url, { method, body: formData });
-    setShowLoader(false);
+    try {
+      const res = await fetch(url, { method, body: formData });
+      const result = await res.json();
+      setShowLoader(false);
 
-    if (!res.ok) {
-      const err = await res.json();
-      alert(`Error: ${err?.error || "Unknown error"}`);
-      return;
+      if (!res.ok) {
+        Swal.fire("Error", result?.error || "Upload failed", "error");
+        return;
+      }
+
+      Swal.fire(
+        initial.id ? "Updated!" : "Created!",
+        `Comic ${initial.id ? "updated" : "created"} successfully.`,
+        "success"
+      );
+
+      afterSave && afterSave();
+    } catch (err) {
+      setShowLoader(false);
+      Swal.fire("Error", err.message || "Something went wrong.", "error");
     }
-
-    afterSave && afterSave();
   };
 
   return (

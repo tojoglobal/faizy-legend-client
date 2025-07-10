@@ -21,6 +21,8 @@ export default function AdminIGComicsTable() {
   }, []);
 
   const deleteComic = async (id) => {
+    console.log("Attempting to delete comic id:", id, `URL: ${API}/${id}`);
+
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -29,22 +31,30 @@ export default function AdminIGComicsTable() {
       confirmButtonText: "Yes, delete it!",
     });
 
-    if (result.isConfirmed) {
-      try {
-        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-        if (res.ok) {
-          setComics(comics.filter((c) => c.id !== id));
-          Swal.fire("Deleted!", "Comic has been deleted.", "success");
-        } else {
-          Swal.fire("Error!", "Failed to delete comic.", "error");
-        }
-      } catch (error) {
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+      console.log("Delete response status:", res.status);
+
+      if (res.ok) {
+        setComics((prevComics) => prevComics.filter((c) => c.id !== id));
+        Swal.fire("Deleted!", "Comic has been deleted.", "success");
+      } else {
+        const errorData = await res.json().catch(() => ({}));
         Swal.fire(
           "Error!",
-          error.message || "An unexpected error occurred.",
+          errorData.error || "Failed to delete comic.",
           "error"
         );
       }
+    } catch (error) {
+      console.error("Delete error:", error);
+      Swal.fire(
+        "Error!",
+        error.message || "An unexpected error occurred.",
+        "error"
+      );
     }
   };
 
