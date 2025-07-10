@@ -108,7 +108,7 @@ export default function AdminIGComicsTable() {
     formData.append("existingFiles", JSON.stringify(existingFiles));
 
     saveMutation.mutate({ id, formData });
-  };   
+  };
 
   // Safely parse images JSON
   const parseImages = (imagesStr) => {
