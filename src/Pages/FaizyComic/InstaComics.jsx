@@ -3,68 +3,35 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { useAxiospublic } from "../../Hooks/useAxiospublic";
+import { FaSpinner } from "react-icons/fa";
 
 const InstaComics = () => {
-  const instagramPosts = [
-    {
-      id: 1,
-      image:
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      additionalImages: [
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      ],
-    },
-    {
-      id: 2,
-      image: "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-      additionalImages: [
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      ],
-    },
-    {
-      id: 3,
-      image:
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      additionalImages: [
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-      ],
-    },
-    {
-      id: 4,
-      image:
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      additionalImages: [
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      ],
-    },
-    {
-      id: 5,
-      image: "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-      additionalImages: [
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      ],
-    },
-    {
-      id: 6,
-      image:
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-      additionalImages: [
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-        "https://admin.ts-geosystems.com.bd/uploads/1748697396789-Apple-Watch-Series-10-top-banner-5841.webp",
-        "https://admin.ts-geosystems.com.bd/uploads/1747313731932-a.jpg",
-      ],
-    },
-  ];
-
+  const axiosPublic = useAxiospublic();
   const [selectedPost, setSelectedPost] = useState(null);
   const modalRef = useRef();
+
+  // Fetch comics using TanStack Query
+  const {
+    data: instagramPosts = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["ig-comics"],
+    queryFn: async () => {
+      const { data } = await axiosPublic.get("/api/admin/ig-comics");
+      return data.map((comic) => ({
+        id: comic.id,
+        image: `${import.meta.env.VITE_OPEN_APIURL}/uploads/${
+          JSON.parse(comic.images || "[]")[0]
+        }`,
+        additionalImages: JSON.parse(comic.images || "[]")
+          .slice(1)
+          .map((img) => `${import.meta.env.VITE_OPEN_APIURL}/uploads/${img}`),
+      }));
+    },
+  });
 
   const openModal = (post) => {
     setSelectedPost(post);
@@ -88,8 +55,24 @@ const InstaComics = () => {
     };
   }, [selectedPost]);
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <FaSpinner className="animate-spin text-4xl text-blue-500" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center py-8 text-red-500">
+        Failed to load Instagram comics. Please try again later.
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {instagramPosts.map((post) => (
           <div
@@ -104,6 +87,7 @@ const InstaComics = () => {
                 src={post.image}
                 alt="Instagram post"
                 className="w-full h-56 object-cover"
+                loading="lazy"
               />
               {post.additionalImages.length > 0 && (
                 <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded-md text-sm">
