@@ -123,7 +123,7 @@ const InstaComics = () => {
           >
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-xl text-gray-600 hover:text-red-500 z-10"
+              className="absolute top-0 cursor-pointer right-2 text-xl text-gray-600 hover:text-red-500 z-10"
             >
               &times;
             </button>
