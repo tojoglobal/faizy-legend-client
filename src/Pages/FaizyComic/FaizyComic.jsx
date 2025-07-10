@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaSpinner } from "react-icons/fa";
 import { CiPlay1 } from "react-icons/ci";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -37,7 +37,7 @@ const FaizyComic = () => {
   const swiperRef = useRef(null);
   const axiosPublic = useAxiospublic();
 
-  const { data: comic, isLoading } = useQuery({
+  const { data: comic = {}, isLoading } = useQuery({
     queryKey: ["faizy-comics"],
     queryFn: async () => {
       const res = await axiosPublic.get("/api/faizy-comic");
@@ -52,8 +52,14 @@ const FaizyComic = () => {
     setCurrentPage(swiper.realIndex + 1);
   };
 
-  if (isLoading || !comic) return null;
-
+  if (isLoading || !comic){
+    return (
+      <div className="flex justify-center items-center h-64">
+        <FaSpinner className="animate-spin text-4xl text-blue-500" />
+      </div>
+    );
+  }
+   
   const images = JSON.parse(comic.images || "[]");
 
   return (
@@ -65,7 +71,7 @@ const FaizyComic = () => {
           {comic?.title}
         </h2>
         <p className="text-gray-300 mb-6">
-          {comic?.description.length > 200 && !showFullDescription
+          {comic?.description?.length > 200 && !showFullDescription
             ? `${comic.description.slice(0, 200)}...`
             : comic.description}
         </p>

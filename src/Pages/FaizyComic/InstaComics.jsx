@@ -6,11 +6,19 @@ import "swiper/css/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiospublic } from "../../Hooks/useAxiospublic";
 import { FaSpinner } from "react-icons/fa";
+import ReactPlayer from "react-player";
 
 const InstaComics = () => {
   const axiosPublic = useAxiospublic();
   const [selectedPost, setSelectedPost] = useState(null);
   const modalRef = useRef();
+
+  // Function to check if a URL points to a video file
+  const isVideoFile = (url) => {
+    if (!url) return false;
+    const videoExtensions = [".mp4", ".webm", ".ogg", ".mov"];
+    return videoExtensions.some((ext) => url.toLowerCase().endsWith(ext));
+  };
 
   // Fetch comics using TanStack Query
   const {
@@ -83,12 +91,25 @@ const InstaComics = () => {
               className="relative cursor-pointer"
               onClick={() => openModal(post)}
             >
-              <img
-                src={post.image}
-                alt="Instagram post"
-                className="w-full h-56 object-cover"
-                loading="lazy"
-              />
+              {isVideoFile(post.image) ? (
+                <div className="w-full h-56 flex items-center justify-center bg-black">
+                  <ReactPlayer
+                    url={post.image}
+                    width="100%"
+                    height="100%"
+                    controls={false}
+                    light={true}
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              ) : (
+                <img
+                  src={post.image}
+                  alt="Instagram post"
+                  className="w-full h-56 object-cover"
+                  loading="lazy"
+                />
+              )}
               {post.additionalImages.length > 0 && (
                 <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded-md text-sm">
                   +{post.additionalImages.length}
@@ -123,19 +144,43 @@ const InstaComics = () => {
               className="mb-4 relative"
             >
               <SwiperSlide>
-                <img
-                  src={selectedPost.image}
-                  alt="Main Comic"
-                  className="w-full max-h-[70vh] object-contain mx-auto"
-                />
+                {isVideoFile(selectedPost.image) ? (
+                  <div className="w-full h-[70vh] flex items-center justify-center">
+                    <ReactPlayer
+                      url={selectedPost.image}
+                      width="100%"
+                      height="100%"
+                      controls={true}
+                      style={{ maxHeight: "70vh" }}
+                    />
+                  </div>
+                ) : (
+                  <img
+                    src={selectedPost.image}
+                    alt="Main Comic"
+                    className="w-full max-h-[70vh] object-contain mx-auto"
+                  />
+                )}
               </SwiperSlide>
               {selectedPost.additionalImages.map((img, idx) => (
                 <SwiperSlide key={idx}>
-                  <img
-                    src={img}
-                    alt={`Extra ${idx}`}
-                    className="w-full max-h-[70vh] object-contain mx-auto"
-                  />
+                  {isVideoFile(img) ? (
+                    <div className="w-full h-[70vh] flex items-center justify-center">
+                      <ReactPlayer
+                        url={img}
+                        width="100%"
+                        height="100%"
+                        controls={true}
+                        style={{ maxHeight: "70vh" }}
+                      />
+                    </div>
+                  ) : (
+                    <img
+                      src={img}
+                      alt={`Extra ${idx}`}
+                      className="w-full max-h-[70vh] object-contain mx-auto"
+                    />
+                  )}
                 </SwiperSlide>
               ))}
 
