@@ -12,25 +12,13 @@ export default function IGComicsForm({
   onSave,
   isSubmitting,
 }) {
-  // initial: { id, images: [ filenames ] }
-
-  const {
-    handleSubmit,
-    formState: { isSubmitting: formSubmitting },
-  } = useForm();
-
-  // galleryMedia structure:
-  // { src: string, file?: File, isExisting: boolean }
+  const { handleSubmit } = useForm();
   const [galleryMedia, setGalleryMedia] = useState([]);
-
   const fileInputRef = useRef();
 
-  const [showLoader, setShowLoader] = useState(false);
-
-  // Load existing images/videos into galleryMedia when editing
+  // Load existing media on edit
   useEffect(() => {
-    if (initial && initial.images && initial.images.length > 0) {
-      // Map existing filenames to objects with src and isExisting flag
+    if (initial && initial.images?.length > 0) {
       const existingMedia = initial.images.map((filename) => ({
         src: filename,
         isExisting: true,
@@ -59,24 +47,41 @@ export default function IGComicsForm({
   const handleMediaInput = (e) => {
     const files = Array.from(e.target.files);
     handleAddMedia(files);
-    // Reset input so user can select the same file again if needed
     e.target.value = null;
   };
 
   const handleRemoveMedia = (index) => {
-    setGalleryMedia((prev) => prev.filter((_, i) => i !== index));
+    const media = galleryMedia[index];
+    if (media.isExisting) {
+      // Mark existing files for removal instead of immediately removing
+      setGalleryMedia((prev) =>
+        prev.map((item, i) =>
+          i === index ? { ...item, markedForRemoval: true } : item
+        )
+      );
+    } else {
+      // For new files, just remove them
+      setGalleryMedia((prev) => prev.filter((_, i) => i !== index));
+    }
   };
 
-  const onSubmit = async () => {
+  const undoRemoveMedia = (index) => {
+    setGalleryMedia((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, markedForRemoval: false } : item
+      )
+    );
+  };
+
+  const onSubmit = () => {
     if (galleryMedia.length === 0) {
       return Swal.fire(
         "No Files",
-        "Please upload at least one image or video.",
+        "Please upload at least one media.",
         "error"
       );
     }
 
-    // Instead of sending full data here, call onSave to delegate actual API call
     onSave({
       id: initial?.id,
       galleryMedia,
@@ -96,7 +101,7 @@ export default function IGComicsForm({
           type="button"
           className="absolute top-4 right-4 text-gray-300 hover:text-white"
           onClick={onClose}
-          disabled={showLoader || isSubmitting}
+          disabled={isSubmitting}
           aria-label="Close form"
         >
           <XMarkIcon className="w-6 h-6" />
@@ -116,13 +121,15 @@ export default function IGComicsForm({
               multiple
               onChange={handleMediaInput}
               ref={fileInputRef}
-              disabled={showLoader || isSubmitting}
+              disabled={isSubmitting}
             />
             <div className="flex flex-wrap gap-4 mt-4">
               {galleryMedia.map((media, idx) => (
                 <div
                   key={idx}
-                  className="relative group shadow rounded border overflow-hidden"
+                  className={`relative group shadow rounded border overflow-hidden ${
+                    media.markedForRemoval ? "opacity-50 border-red-500" : ""
+                  }`}
                 >
                   {media.file ? (
                     media.file.type.startsWith("video") ? (
@@ -138,8 +145,7 @@ export default function IGComicsForm({
                         className="w-20 h-20 object-cover rounded"
                       />
                     )
-                  ) : // For existing media (just filename), build full URL for display
-                  media.src.toLowerCase().endsWith(".mp4") ? (
+                  ) : media.src.toLowerCase().endsWith(".mp4") ? (
                     <video
                       src={`${API}/uploads/${media.src}`}
                       className="w-20 h-20 object-cover rounded"
@@ -154,12 +160,22 @@ export default function IGComicsForm({
                   )}
                   <button
                     type="button"
-                    onClick={() => handleRemoveMedia(idx)}
+                    onClick={() =>
+                      media.markedForRemoval
+                        ? undoRemoveMedia(idx)
+                        : handleRemoveMedia(idx)
+                    }
                     className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-red-600"
-                    disabled={showLoader || isSubmitting}
-                    aria-label="Remove media"
+                    disabled={isSubmitting}
+                    aria-label={
+                      media.markedForRemoval ? "Undo remove" : "Remove media"
+                    }
                   >
-                    <XMarkIcon className="w-4 h-4" />
+                    {media.markedForRemoval ? (
+                      <span className="text-xs">Undo</span>
+                    ) : (
+                      <XMarkIcon className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
               ))}
@@ -168,10 +184,10 @@ export default function IGComicsForm({
 
           <button
             type="submit"
-            disabled={isSubmitting || showLoader}
+            disabled={isSubmitting}
             className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold flex justify-center items-center gap-3"
           >
-            {showLoader || isSubmitting ? (
+            {isSubmitting ? (
               <>
                 <FaSpinner className="animate-spin" />
                 {initial?.id ? "Saving..." : "Creating..."}

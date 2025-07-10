@@ -92,21 +92,23 @@ export default function AdminIGComicsTable() {
     }
 
     const formData = new FormData();
+
+    // Add new files
     galleryMedia.forEach((media) => {
-      // media.file exists for new uploads
       if (media.file) {
         formData.append("mediaFiles", media.file);
       }
-      // For existing media with no file, send its filename (handled in backend)
-      else if (media.src) {
-        // To support existing files, send their filenames in a separate field
-        // We'll add a field "existingFiles" which backend can handle (optional)
-        formData.append("existingFiles[]", media.src);
-      }
     });
 
+    // Add existing files that haven't been removed
+    const existingFiles = galleryMedia
+      .filter((media) => media.isExisting && !media.markedForRemoval)
+      .map((media) => media.src);
+
+    formData.append("existingFiles", JSON.stringify(existingFiles));
+
     saveMutation.mutate({ id, formData });
-  };
+  };   
 
   // Safely parse images JSON
   const parseImages = (imagesStr) => {
