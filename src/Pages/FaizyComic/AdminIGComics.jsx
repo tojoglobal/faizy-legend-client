@@ -126,12 +126,12 @@ export default function AdminIGComicsTable() {
   if (isError) return <div className="p-4">Error loading comics</div>;
 
   return (
-    <div className="p-4">
+    <div className="p-1 lg:p-3">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Instagram Comics</h2>
         <button
           onClick={() => setEditComic({})}
-          className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded"
+          className="bg-teal-600 cursor-pointer hover:bg-teal-700 text-white px-4 py-1.5 rounded"
         >
           + Add Comic
         </button>
@@ -157,7 +157,7 @@ export default function AdminIGComicsTable() {
       <div className="overflow-x-auto">
         <table className="w-full table-auto border-collapse text-sm">
           <thead>
-            <tr className="bg-gray-800 text-white">
+            <tr className="bg-gray-800 text-left text-white">
               <th className="p-2">Thumbnail</th>
               <th className="p-2">Total Images/Videos</th>
               <th className="p-2">Created At</th>
@@ -189,14 +189,14 @@ export default function AdminIGComicsTable() {
                               import.meta.env.VITE_OPEN_APIURL
                             }/uploads/${firstMedia}`}
                             alt="thumbnail"
-                            className="w-16 h-16 object-cover rounded"
+                            className="w-20 h-16 object-cover rounded"
                           />
                         ) : (
                           <video
                             src={`${
                               import.meta.env.VITE_OPEN_APIURL
                             }/uploads/${firstMedia}`}
-                            className="w-16 h-16 object-cover rounded"
+                            className="w-20 h-16 object-cover rounded"
                             muted
                             loop
                             playsInline
@@ -213,7 +213,7 @@ export default function AdminIGComicsTable() {
                     {/* Details button */}
                     <button
                       onClick={() => setModalItem({ images, id: comic.id })}
-                      className="p-1 rounded hover:bg-gray-800"
+                      className="p-1 cursor-pointer rounded hover:bg-gray-800"
                       title="View Details"
                     >
                       <EyeIcon className="w-5 h-5 text-green-400" />
@@ -222,7 +222,7 @@ export default function AdminIGComicsTable() {
                     {/* Edit */}
                     <button
                       onClick={() => setEditComic(comic)}
-                      className="p-1 rounded hover:bg-gray-800"
+                      className="p-1 cursor-pointer rounded hover:bg-gray-800"
                       title="Edit"
                     >
                       <PencilIcon className="w-5 h-5 text-blue-400" />
@@ -231,7 +231,7 @@ export default function AdminIGComicsTable() {
                     {/* Delete */}
                     <button
                       onClick={() => deleteComic(comic.id)}
-                      className="p-1 rounded hover:bg-gray-800"
+                      className="p-1 cursor-pointer rounded hover:bg-gray-800"
                       title="Delete"
                     >
                       <TrashIcon className="w-5 h-5 text-red-400" />
@@ -253,12 +253,12 @@ export default function AdminIGComicsTable() {
           aria-modal="true"
         >
           <div
-            className="bg-white rounded-3xl shadow-2xl overflow-auto max-w-4xl w-full max-h-[90vh] p-6 relative"
+            className="bg-gray-400 rounded-3xl shadow-2xl overflow-auto max-w-4xl w-full max-h-[90vh] p-6 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setModalItem(null)}
-              className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 font-bold text-xl"
+              className="absolute top-3 cursor-pointer right-3 text-gray-600 hover:text-gray-900 font-bold text-xl"
               aria-label="Close modal"
             >
               &times;

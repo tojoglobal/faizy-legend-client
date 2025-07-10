@@ -5,7 +5,6 @@ import { FaSpinner } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const API = import.meta.env.VITE_OPEN_APIURL;
-
 export default function IGComicsForm({
   initial = null,
   onClose,
@@ -99,7 +98,7 @@ export default function IGComicsForm({
       >
         <button
           type="button"
-          className="absolute top-4 right-4 text-gray-300 hover:text-white"
+          className="absolute cursor-pointer top-4 right-4 text-gray-300 hover:text-white"
           onClick={onClose}
           disabled={isSubmitting}
           aria-label="Close form"
@@ -119,6 +118,7 @@ export default function IGComicsForm({
               type="file"
               accept="image/*,video/*"
               multiple
+              className="border border-gray-600 rounded px-3 py-1 cursor-pointer"
               onChange={handleMediaInput}
               ref={fileInputRef}
               disabled={isSubmitting}
@@ -185,7 +185,7 @@ export default function IGComicsForm({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold flex justify-center items-center gap-3"
+            className="w-full cursor-pointer bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold flex justify-center items-center gap-3"
           >
             {isSubmitting ? (
               <>
