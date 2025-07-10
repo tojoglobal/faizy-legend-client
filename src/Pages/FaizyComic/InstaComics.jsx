@@ -119,7 +119,7 @@ const InstaComics = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4">
           <div
             ref={modalRef}
-            className="w-full max-w-2xl bg-black rounded-md shadow-lg relative"
+            className="w-full max-w-3xl bg-black rounded-md shadow-lg relative"
           >
             <button
               onClick={closeModal}
