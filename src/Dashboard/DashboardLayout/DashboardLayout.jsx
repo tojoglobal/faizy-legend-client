@@ -44,7 +44,7 @@ const DashboardLayout = () => {
         {/* Footer - Sticky at bottom */}
         <footer className="sticky bottom-0 bg-gray-800 text-center text-sm py-3 text-gray-400">
           <div className="px-4">
-            &copy; {new Date().getFullYear()} Tocly. All rights reserved.
+            &copy; {new Date().getFullYear()} Faizy Legend. All rights reserved.
           </div>
         </footer>
       </div>

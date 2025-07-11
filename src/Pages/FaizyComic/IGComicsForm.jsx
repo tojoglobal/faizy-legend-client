@@ -256,7 +256,7 @@ export default function IGComicsForm({ initial = null, onClose, onSave }) {
             {isUploading ? (
               <>
                 <FaSpinner className="animate-spin" />
-                {initial?.id ? "Saving..." : "Creating..."} {uploadProgress}%
+                {initial?.id ? "Saving..." : "Creating..."}
               </>
             ) : initial?.id ? (
               "Save Changes"

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   XMarkIcon,
   CameraIcon,
@@ -10,12 +11,22 @@ import { FaSpinner } from "react-icons/fa";
 const API = import.meta.env.VITE_OPEN_APIURL;
 
 export default function GalleryForm({ initial = {}, onClose, afterSave }) {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm({ defaultValues: initial });
+
   // Helper: Get full URL for stored images
   const getImageSrc = (src) => {
     if (!src) return "";
     if (src.startsWith("blob:")) return src;
+    // Remove starting slash for consistency
     const cleanSrc = src.replace(/^(\/+)/, "");
+    // If already absolute (e.g., https://), return as is
     if (/^https?:\/\//.test(src)) return src;
+    // For /uploads/xxx or uploads/xxx, join with API
     return `${API}/${cleanSrc}`;
   };
 
@@ -26,49 +37,30 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
     initial.images
       ? initial.images.map((src) => ({
           src: src.replace("\\", "/"),
-          file: null,
+          file: null, // old (from DB)
           isOld: true,
         }))
       : []
   );
   const fileInputRef = useRef();
 
-  // Loader & progress states
+  // Loader state
   const [showLoader, setShowLoader] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-
-  // Form fields with manual state for progress
-  const [fields, setFields] = useState({
-    name: initial.name || "",
-    location: initial.location || "",
-    photographer: initial.photographer || "",
-  });
-  const [thumbFile, setThumbFile] = useState(null);
 
   useEffect(() => {
-    setFields({
-      name: initial.name || "",
-      location: initial.location || "",
-      photographer: initial.photographer || "",
-    });
-    setThumbFile(null);
-  }, [initial]);
+    register("thumbnail");
+    register("images");
+  }, [register]);
 
   const onThumbChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setPreviewThumb(URL.createObjectURL(file));
-      setThumbFile(file);
+      setValue("thumbnail", file);
     }
   };
 
-  const handleField = (e) => {
-    setFields((f) => ({
-      ...f,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
+  // Drag and Drop handler for images
   const handleDrop = (e) => {
     e.preventDefault();
     const files = Array.from(e.dataTransfer.files);
@@ -93,6 +85,50 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
     setGalleryImgs((imgs) => imgs.filter((_, i) => i !== idx));
   };
 
+  const onSubmit = async (data) => {
+    setShowLoader(true);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("location", data.location);
+    formData.append("photographer", data.photographer);
+
+    if (typeof data.thumbnail === "object") {
+      formData.append("thumbnail", data.thumbnail);
+    }
+
+    // Only new images to upload
+    galleryImgs.forEach((img) => {
+      if (!img.isOld && img.file) formData.append("images", img.file);
+    });
+
+    // For update: send images to keep (for backend to not delete them)
+    if (initial.id) {
+      formData.append(
+        "keepImages",
+        JSON.stringify(
+          galleryImgs
+            .filter((i) => i.isOld)
+            .map(
+              (i) => i.src.replace(/^(\/+)/, "") // remove leading slash
+            )
+        )
+      );
+    }
+
+    const method = initial.id ? "PUT" : "POST";
+    const url = initial.id
+      ? `${API}/api/modeling-gallery/${initial.id}`
+      : `${API}/api/modeling-gallery`;
+
+    const res = await fetch(url, { method, body: formData });
+    setShowLoader(false);
+    if (!res.ok) {
+      alert("Failed to save!");
+      return;
+    }
+    afterSave && afterSave();
+  };
+
   // Remove old image (calls backend)
   const removeOldImg = async (idx) => {
     const img = galleryImgs[idx];
@@ -113,6 +149,9 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
     }
   };
 
+  // ---- Modal handling for close on backdrop click & ESC ----
+  const modalContentRef = useRef();
+
   // ESC key closes modal
   useEffect(() => {
     function onEsc(e) {
@@ -121,69 +160,6 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
     window.addEventListener("keydown", onEsc);
     return () => window.removeEventListener("keydown", onEsc);
   }, [onClose]);
-
-  // Form submission with upload progress
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setShowLoader(true);
-    setUploadProgress(0);
-
-    const formData = new FormData();
-    formData.append("name", fields.name);
-    formData.append("location", fields.location);
-    formData.append("photographer", fields.photographer);
-
-    if (thumbFile) {
-      formData.append("thumbnail", thumbFile);
-    }
-
-    // Only new images to upload
-    galleryImgs.forEach((img) => {
-      if (!img.isOld && img.file) formData.append("images", img.file);
-    });
-
-    // For update: send images to keep (for backend to not delete them)
-    if (initial.id) {
-      formData.append(
-        "keepImages",
-        JSON.stringify(
-          galleryImgs
-            .filter((i) => i.isOld)
-            .map((i) => i.src.replace(/^(\/+)/, ""))
-        )
-      );
-    }
-
-    const method = initial.id ? "PUT" : "POST";
-    const url = initial.id
-      ? `${API}/api/modeling-gallery/${initial.id}`
-      : `${API}/api/modeling-gallery`;
-
-    // Use XMLHttpRequest for upload progress
-    const xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        setUploadProgress(Math.round((event.loaded / event.total) * 100));
-      }
-    };
-    xhr.onload = () => {
-      setShowLoader(false);
-      setUploadProgress(100);
-      if (xhr.status >= 200 && xhr.status < 300) {
-        afterSave && afterSave();
-      } else {
-        alert("Failed to save!");
-      }
-    };
-    xhr.onerror = () => {
-      setShowLoader(false);
-      alert("Failed to save!");
-    };
-    xhr.send(formData);
-  };
-
-  const modalContentRef = useRef();
 
   return (
     <div
@@ -209,7 +185,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
           {initial.id ? "Edit Gallery" : "Create Gallery"}
         </h2>
         <form
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="space-y-7"
           encType="multipart/form-data"
         >
@@ -219,9 +195,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               Name
             </label>
             <input
-              name="name"
-              value={fields.name}
-              onChange={handleField}
+              {...register("name", { required: true })}
               className="bg-[#232334] border-2 border-[#2e2e44] focus:border-pink-400 text-white rounded-lg px-3 py-2 mt-1 w-full outline-none transition shadow"
               placeholder="Gallery name"
               required
@@ -233,9 +207,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               Location
             </label>
             <input
-              name="location"
-              value={fields.location}
-              onChange={handleField}
+              {...register("location")}
               className="bg-[#232334] border-2 border-[#2e2e44] focus:border-emerald-400 text-white rounded-lg px-3 py-2 mt-1 w-full outline-none transition shadow"
               placeholder="City, Country"
             />
@@ -246,9 +218,7 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               Photographer
             </label>
             <input
-              name="photographer"
-              value={fields.photographer}
-              onChange={handleField}
+              {...register("photographer")}
               className="bg-[#232334] border-2 border-[#2e2e44] focus:border-yellow-400 text-white rounded-lg px-3 py-2 mt-1 w-full outline-none transition shadow"
               placeholder="@photographer"
             />
@@ -327,33 +297,15 @@ export default function GalleryForm({ initial = {}, onClose, afterSave }) {
               ))}
             </div>
           </div>
-
-          {/* Loader/progress */}
-          {showLoader && (
-            <div className="w-full mb-2">
-              <div className="h-3 bg-gray-700 rounded">
-                <div
-                  className="h-3 bg-gradient-to-r from-pink-500 to-purple-600 rounded transition-all"
-                  style={{
-                    width: `${uploadProgress}%`,
-                  }}
-                />
-              </div>
-              <div className="text-center text-xs text-white mt-1">
-                {uploadProgress}%
-              </div>
-            </div>
-          )}
-
           <button
             type="submit"
-            disabled={showLoader}
+            disabled={isSubmitting || showLoader}
             className="w-full cursor-pointer bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-700 hover:to-blue-700 text-white py-3 rounded-xl font-bold text-lg tracking-wide shadow-xl transition flex items-center justify-center gap-3"
           >
             {showLoader ? (
               <>
                 <FaSpinner className="animate-spin" />
-                {initial.id ? "Updating..." : "Creating..."} {uploadProgress}%
+                {initial.id ? "Updating..." : "Creating..."}
               </>
             ) : initial.id ? (
               "Update Gallery"
