@@ -4,6 +4,7 @@ import { CiPlay1 } from "react-icons/ci";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Helmet } from "react-helmet";
 import { Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiospublic } from "../../Hooks/useAxiospublic";
@@ -42,6 +43,18 @@ const FaizyComic = () => {
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mx-2 lg:mx-0 mb-2 lg:mb-0">
+      <Helmet>
+        <title>Faizy Comic | Faizy Legend</title>
+        <meta
+          name="description"
+          content="Read the latest Faizy Comic by Faizy Legend. Explore stories, updates, and exclusive visuals now!"
+        />
+        <meta
+          name="keywords"
+          content="faizy comic, faizy legend, comics, influencer comics, faizy comic website"
+        />
+        <link rel="canonical" href="https://faizylegend.com/faizycomic" />
+      </Helmet>
       {/* Left Section */}
       <div className="w-full lg:w-1/2">
         <p className="text-sm text-lime-400 mb-2">{comic?.subtitle}</p>
