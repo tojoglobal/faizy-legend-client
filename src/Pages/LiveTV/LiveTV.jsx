@@ -28,39 +28,6 @@ const channels = [
     backup:
       "https://amdlive-ch01-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/chunklist_b2592000_sleng.m3u8",
   },
-  {
-    name: "France 24 (English)",
-    stream: "https://static.france24.com/live/F24_EN_LO_HLS/live_web.m3u8",
-    backup: "https://france24-eng-live.srf.ch/playlist.m3u8",
-  },
-  {
-    name: "TRT World",
-    stream: "https://tv-trtworld.live.trt.com.tr/master.m3u8",
-    backup:
-      "https://trtworldlive-lh.akamaihd.net/i/TRTWORLD_1@321282/master.m3u8",
-  },
-  {
-    name: "CGTN (English)",
-    stream: "https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",
-    backup: "https://live.cgtn.com/1000/prog_index.m3u8",
-  },
-  {
-    name: "NASA TV Public",
-    stream:
-      "https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",
-    backup: "https://nasatv-lh.akamaihd.net/i/NASA_101@319270/master.m3u8",
-  },
-  {
-    name: "C-SPAN",
-    stream: "https://c-span.org/cspan1.m3u8",
-    backup: "https://c-spanlive-lh.akamaihd.net/i/cspan1_1@304728/master.m3u8",
-  },
-  {
-    name: "NHK World Japan",
-    stream:
-      "https://nhkwlive-xjp.akamaized.net/hls/live/2003458/nhkwlive-xjp-en/index.m3u8",
-    backup: "https://nhkwlive-lh.akamaihd.net/i/nhkworld_en@333465/master.m3u8",
-  },
 ];
 
 const LiveTV = () => {
