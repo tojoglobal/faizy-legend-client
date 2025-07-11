@@ -41,11 +41,11 @@ const FaizyComic = () => {
   const images = JSON.parse(comic.images || "[]");
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+    <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mx-2 lg:mx-0 mb-2 lg:mb-0">
       {/* Left Section */}
       <div className="w-full lg:w-1/2">
         <p className="text-sm text-lime-400 mb-2">{comic?.subtitle}</p>
-        <h2 className="text-5xl font-bold mb-4 roboto-condensed">
+        <h2 className="text-4xl lg:text-5xl font-bold mb-4 roboto-condensed">
           {comic?.title}
         </h2>
         <p className="text-gray-300 mb-6">
@@ -96,7 +96,7 @@ const FaizyComic = () => {
                 <img
                   src={`${import.meta.env.VITE_OPEN_APIURL}${image}`}
                   alt={`Comic ${index + 1}`}
-                  className="w-full h-56 md:h-72 lg:h-56 rounded-md"
+                  className="w-full h-52 md:h-72 lg:h-56 rounded-md"
                 />
               </SwiperSlide>
             ))}

@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
 import Swal from "sweetalert2";
@@ -26,51 +26,7 @@ export default function AdminIGComicsTable() {
     },
   });
 
-  // Delete comic mutation
-  const deleteMutation = useMutation({
-    mutationFn: (id) => axiosPublicUrl.delete(`${API}/${id}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["ig-comics"]);
-      Swal.fire("Deleted!", "Comic has been deleted.", "success");
-    },
-    onError: (error) => {
-      Swal.fire(
-        "Error!",
-        error.response?.data?.error || "Failed to delete comic.",
-        "error"
-      );
-    },
-  });
-
-  // Create/Update comic mutation
-  const saveMutation = useMutation({
-    mutationFn: ({ id, formData }) => {
-      if (id) {
-        // Update existing comic
-        return axiosPublicUrl.put(`${API}/${id}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      } else {
-        // Create new comic
-        return axiosPublicUrl.post(API, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["ig-comics"]);
-      setEditComic(null);
-      Swal.fire("Success!", "Comic saved successfully.", "success");
-    },
-    onError: (error) => {
-      Swal.fire(
-        "Error!",
-        error.response?.data?.error || "Failed to save comic.",
-        "error"
-      );
-    },
-  });
-
+  // Delete comic
   const deleteComic = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -80,34 +36,18 @@ export default function AdminIGComicsTable() {
       confirmButtonText: "Yes, delete it!",
     });
     if (result.isConfirmed) {
-      deleteMutation.mutate(id);
-    }
-  };
-
-  // Wrap handleSave to pass correct params
-  const handleSave = ({ id, galleryMedia }) => {
-    if (!galleryMedia || galleryMedia.length === 0) {
-      Swal.fire("Error", "At least one image or video is required.", "error");
-      return;
-    }
-
-    const formData = new FormData();
-
-    // Add new files
-    galleryMedia.forEach((media) => {
-      if (media.file) {
-        formData.append("mediaFiles", media.file);
+      try {
+        await axiosPublicUrl.delete(`${API}/${id}`);
+        queryClient.invalidateQueries(["ig-comics"]);
+        Swal.fire("Deleted!", "Comic has been deleted.", "success");
+      } catch (error) {
+        Swal.fire(
+          "Error!",
+          error.response?.data?.error || "Failed to delete comic.",
+          "error"
+        );
       }
-    });
-
-    // Add existing files that haven't been removed
-    const existingFiles = galleryMedia
-      .filter((media) => media.isExisting && !media.markedForRemoval)
-      .map((media) => media.src);
-
-    formData.append("existingFiles", JSON.stringify(existingFiles));
-
-    saveMutation.mutate({ id, formData });
+    }
   };
 
   // Safely parse images JSON
@@ -149,8 +89,7 @@ export default function AdminIGComicsTable() {
               : null
           }
           onClose={() => setEditComic(null)}
-          onSave={handleSave}
-          isSubmitting={saveMutation.isLoading}
+          onSave={() => queryClient.invalidateQueries(["ig-comics"])}
         />
       )}
 

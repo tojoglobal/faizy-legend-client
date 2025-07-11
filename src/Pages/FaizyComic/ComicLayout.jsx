@@ -13,9 +13,9 @@ const ComicLayout = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[BAC1C8] to-[DEE6EF] text-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[BAC1C8] to-[DEE6EF] text-white p-2 lg:p-4">
       <div className="max-w-6xl mx-auto 2xl:max-w-[1360px] font-sans">
-        <nav className="flex gap-6 mb-8 text-sm text-gray-300">
+        <nav className="flex gap-6 p-2 mb-8 text-sm text-gray-300">
           <Link to="/" className="hover:text-white">
             Faizy Legend
           </Link>
