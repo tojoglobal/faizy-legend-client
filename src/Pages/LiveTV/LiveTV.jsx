@@ -20,29 +20,10 @@ const channels = [
     stream: "https://live-hls-web-aje.getaj.net/AJE/index.m3u8", // Confirmed working
   },
   {
-    name: "France 24 (English)",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/1/1c/France24.png",
-    stream: "https://static.france24.com/live/F24_EN_LO_HLS/live_web.m3u8", // Often reliable
-  },
-  {
-    name: "Euronews (English)",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Euronews_Logo.svg",
-    stream: "https://rakuten-euronews-1-eu.rakuten.wurl.tv/playlist.m3u8", // This one is common and often works
-  },
-  {
-    name: "TRT World",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/TRT_World_logo.svg",
-    stream: "https://www.trtworld.com/live/trtworld.m3u8", // Their official live stream, generally stable
-  },
-  {
-    name: "NHK World",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/6/6b/NHK_World.svg",
-    stream: "https://nhkwlive-lh.akamaihd.net/i/nhkworld_en@333465/master.m3u8", // This stream is often reliable
-  },
-  {
-    name: "CGTN (English)",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Cgtn_logo.svg",
-    stream: "https://live.cgtn.com/1000/prog_index.m3u8", // This is their common HLS stream
+    name: "Arirang TV",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Arirang_TV_logo.png",
+    stream:
+      "https://amdlive-ch01-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8",
   },
 ];
 
