@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import ReactPlayer from "react-player";
 
 const channels = [
@@ -13,17 +14,6 @@ const channels = [
     stream: "https://nasatv-lh.akamaihd.net/i/NASA_2_101@344016/master.m3u8",
   },
   {
-    name: "Al Jazeera English",
-    logo: "https://upload.wikimedia.org/wikipedia/en/6/6c/Aljazeera_eng.svg",
-    stream: "https://live-hls-web-aje.getaj.net/AJE/index.m3u8",
-  },
-  {
-    name: "DW News",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Deutsche_Welle_logo_2012.svg",
-    stream:
-      "https://dwamdstream103.akamaized.net/hls/live/2015525/dwstream103/index.m3u8",
-  },
-  {
     name: "France 24 (English)",
     logo: "https://upload.wikimedia.org/wikipedia/commons/1/1c/France24.png",
     stream: "https://static.france24.com/live/F24_EN_LO_HLS/live_web.m3u8",
@@ -34,9 +24,20 @@ const channels = [
     stream: "https://rakuten-euronews-1-eu.rakuten.wurl.tv/playlist.m3u8",
   },
   {
+    name: "DW News",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Deutsche_Welle_logo_2012.svg",
+    stream:
+      "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8",
+  },
+  {
     name: "Bloomberg TV",
     logo: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Bloomberg_TV_Asia_Logo.png",
     stream: "https://www.bloomberg.com/media-manifest/streams/asia.m3u8",
+  },
+  {
+    name: "Al Jazeera English",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Bloomberg_TV_Asia_Logo.png",
+    stream: "https://live-hls-web-aje.getaj.net/AJE/index.m3u8",
   },
   {
     name: "ABC News (Australia)",
@@ -82,6 +83,9 @@ const LiveTV = () => {
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-900">
+      <Helmet>
+        <title>TV | Faizy Legend</title>
+      </Helmet>
       {/* Channel list */}
       <aside className="w-full md:w-72 bg-gray-800 p-4 overflow-y-auto">
         <h2 className="text-xl font-bold text-white mb-4">Live Channels</h2>
