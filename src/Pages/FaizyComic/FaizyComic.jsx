@@ -80,15 +80,31 @@ const FaizyComic = () => {
           name="twitter:image"
           content="https://faizylegend.com/og-image.jpg"
         />
+        <script type="application/ld+json">
+          {`
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Faizy Comic",
+  "url": "https://faizylegend.com/faizycomic",
+  "description": "Read the latest Faizy Comic by Faizy Legend, influencer and content creator. Over 300K fans follow his journey.",
+  "author": {
+    "@type": "Person",
+    "name": "Faizy Legend",
+    "url": "https://faizylegend.com"
+  }
+}
+`}
+        </script>
       </Helmet>
 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mx-2 lg:mx-0 mb-2 lg:mb-0">
         {/* Left Section */}
         <div className="w-full lg:w-1/2">
           <p className="text-sm text-lime-400 mb-2">{comic?.subtitle}</p>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4 roboto-condensed">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4 roboto-condensed">
             {comic?.title}
-          </h2>
+          </h1>
           <p className="text-gray-300 mb-6">
             {comic?.description?.length > 200 && !showFullDescription
               ? `${comic.description.slice(0, 200)}...`
