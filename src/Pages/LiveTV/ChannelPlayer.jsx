@@ -122,20 +122,25 @@ const ChannelPlayer = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gray-100">
-      <div className="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto">
+    <div className="min-h-screen p-4">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Player Section */}
         <div className="w-full md:w-2/3">
-          <h2 className="text-3xl font-bold mb-4 text-gray-800">
-            {decodedName}
-          </h2>
+          <div className="mb-4">
+            <Link
+              to="/tv"
+              className="inline-flex items-center text-blue-600 hover:underline text-sm font-medium mb-1"
+            >
+              ← Back to List
+            </Link>
+            <h2 className="text-3xl font-bold text-gray-800">{decodedName}</h2>
+          </div>
           <div className="relative bg-black rounded-lg overflow-hidden aspect-video shadow-lg">
             {isLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80 text-white text-lg z-20">
                 Loading...
               </div>
             )}
-
             {streamError && !isLoading && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-70 text-white z-20 p-6 rounded-lg">
                 <p className="text-red-500 font-semibold mb-2 text-xl">
@@ -154,7 +159,7 @@ const ChannelPlayer = () => {
                     );
                     setCurrentStream(channel?.stream || null);
                   }}
-                  className="px-6 py-2 bg-blue-600 rounded hover:bg-blue-700 transition"
+                  className="px-6 py-2 cursor-pointer bg-blue-600 rounded hover:bg-blue-700 transition"
                 >
                   Retry Stream
                 </button>
@@ -243,22 +248,6 @@ const ChannelPlayer = () => {
           <ul className="text-gray-600 space-y-1 text-sm mb-8">
             {schedule.map((item, idx) => (
               <li key={idx}>{item}</li>
-            ))}
-          </ul>
-
-          <h4 className="font-semibold text-gray-800 mb-3 text-lg">
-            All Channels
-          </h4>
-          <ul className="list-disc list-inside space-y-2 text-blue-600 text-sm">
-            {channels.map((ch) => (
-              <li key={ch.name}>
-                <Link
-                  to={`/tv/${encodeURIComponent(ch.name)}`}
-                  className="hover:underline"
-                >
-                  {ch.name}
-                </Link>
-              </li>
             ))}
           </ul>
         </div>
