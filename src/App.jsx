@@ -22,7 +22,8 @@ import AdminFaizyComic from "./Pages/FaizyComic/AdminFaizyComic";
 import InstaComics from "./Pages/FaizyComic/InstaComics";
 import ComicLayout from "./Pages/FaizyComic/ComicLayout";
 import AdminIGComics from "./Pages/FaizyComic/AdminIGComics";
-import LiveTV from "./Pages/LiveTV/LiveTV";
+import LiveTVList from "./Pages/LiveTV/LiveTVList";
+import ChannelPlayer from "./Pages/LiveTV/ChannelPlayer";
 
 const AppLayout = () => {
   return (
@@ -36,7 +37,8 @@ const AppLayout = () => {
         <Route path="/faizycomic" element={<FaizyComic />} />
         <Route path="comics" element={<InstaComics />} />
       </Route>
-      <Route path="/tv" element={<LiveTV />} />
+      <Route path="/tv" element={<LiveTVList />} />
+      <Route path="/tv/:name" element={<ChannelPlayer />} />
       <Route
         path="/dashboard/*"
         element={
