@@ -24,6 +24,7 @@ import ComicLayout from "./Pages/FaizyComic/ComicLayout";
 import AdminIGComics from "./Pages/FaizyComic/AdminIGComics";
 import LiveTVList from "./Pages/LiveTV/LiveTVList";
 import ChannelPlayer from "./Pages/LiveTV/ChannelPlayer";
+import TVLayout from "./Pages/LiveTV/TVLayout";
 
 const AppLayout = () => {
   return (
@@ -37,8 +38,10 @@ const AppLayout = () => {
         <Route path="/faizycomic" element={<FaizyComic />} />
         <Route path="comics" element={<InstaComics />} />
       </Route>
-      <Route path="/tv" element={<LiveTVList />} />
-      <Route path="/tv/:name" element={<ChannelPlayer />} />
+      <Route path="/tv" element={<TVLayout />}>
+        <Route index element={<LiveTVList />} />
+        <Route path=":name" element={<ChannelPlayer />} />
+      </Route>
       <Route
         path="/dashboard/*"
         element={
