@@ -129,7 +129,7 @@ const ChannelPlayer = () => {
           <div className="mb-4">
             <Link
               to="/tv"
-              className="inline-flex items-center text-blue-600 hover:underline text-sm font-medium mb-1"
+              className="inline-flex items-center text-blue-600 hover:underline text-base font-medium mb-1"
             >
               ← Back to List
             </Link>

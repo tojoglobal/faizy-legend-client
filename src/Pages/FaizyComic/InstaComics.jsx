@@ -124,7 +124,7 @@ const InstaComics = () => {
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4">
           <div
             ref={modalRef}
-            className="w-full max-w-3xl bg-black rounded-md shadow-lg relative"
+            className="w-full max-w-3xl 2xl:max-w-4xl bg-black rounded-md shadow-lg relative"
           >
             <button
               onClick={closeModal}
@@ -145,40 +145,40 @@ const InstaComics = () => {
             >
               <SwiperSlide>
                 {isVideoFile(selectedPost.image) ? (
-                  <div className="w-full h-[70vh] flex items-center justify-center">
+                  <div className="w-full h-[65vh] flex items-center justify-center">
                     <ReactPlayer
                       url={selectedPost.image}
                       width="100%"
                       height="100%"
                       controls={true}
-                      style={{ maxHeight: "70vh" }}
+                      style={{ maxHeight: "65vh" }}
                     />
                   </div>
                 ) : (
                   <img
                     src={selectedPost.image}
                     alt="Main Comic"
-                    className="w-full max-h-[70vh] object-contain mx-auto"
+                    className="w-full max-h-[65vh] object-contain mx-auto"
                   />
                 )}
               </SwiperSlide>
               {selectedPost.additionalImages.map((img, idx) => (
                 <SwiperSlide key={idx}>
                   {isVideoFile(img) ? (
-                    <div className="w-full h-[70vh] flex items-center justify-center">
+                    <div className="w-full h-[65vh] flex items-center justify-center">
                       <ReactPlayer
                         url={img}
                         width="100%"
                         height="100%"
                         controls={true}
-                        style={{ maxHeight: "70vh" }}
+                        style={{ maxHeight: "65vh" }}
                       />
                     </div>
                   ) : (
                     <img
                       src={img}
                       alt={`Extra ${idx}`}
-                      className="w-full max-h-[70vh] object-contain mx-auto"
+                      className="w-full max-h-[65vh] object-contain mx-auto"
                     />
                   )}
                 </SwiperSlide>
