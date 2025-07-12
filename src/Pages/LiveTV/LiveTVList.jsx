@@ -11,7 +11,9 @@ const LiveTVList = () => {
       {/* Navbar */}
       <div className="bg-black text-white">
         <header className="max-w-6xl 2xl:max-w-[1350px] mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">TheTVApp</h1>
+          <Link to="/tv">
+            <h1 className="text-2xl font-bold">TheTVApp</h1>
+          </Link>
           <div className="space-x-4 text-sm">
             <Link to="/">Home</Link>
             <button className="border cursor-pointer px-3 py-1 rounded hover:bg-white hover:text-black transition">
