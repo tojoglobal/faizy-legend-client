@@ -100,28 +100,36 @@ const ChannelPlayer = () => {
   return (
     <div className="min-h-screen bg-gray-100 text-black">
       {/* Navbar */}
-      <header className="bg-black text-white px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">TheTVApp</h1>
-        <div className="space-x-4 text-sm">
-          <Link to="/" className="hover:underline">
-            Home
+      <div className="bg-black text-white">
+        <header className="max-w-6xl 2xl:max-w-[1350px] mx-auto px-6 py-4 flex justify-between items-center">
+          <Link to="/tv">
+            <h1 className="text-2xl font-bold">TheTVApp</h1>
           </Link>
-          <button className="border px-3 py-1 rounded hover:bg-white hover:text-black transition">
-            Contact Us
-          </button>
-          <button className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700">
-            Subscribe Now
-          </button>
-        </div>
-      </header>
+          <div className="space-x-4 text-sm">
+            <Link to="/">Home</Link>
+            <button className="border cursor-pointer px-3 py-1 rounded hover:bg-white hover:text-black transition">
+              Contact Us
+            </button>
+            <button className="bg-blue-600 px-3 cursor-pointer py-1 rounded hover:bg-blue-700">
+              Subscribe Now
+            </button>
+          </div>
+        </header>
+      </div>
 
       {/* Main */}
-      <main className="p-4 max-w-7xl mx-auto">
+      <main className="max-w-6xl mx-auto p-5">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Player */}
           <div className="w-full md:w-[65%]">
             <h2 className="text-2xl font-bold mb-2">{decodedName}</h2>
             <div className="bg-black rounded overflow-hidden relative group aspect-video">
+              {loading && !streamError && (
+                <div className="absolute inset-0 flex items-center justify-center z-10 bg-black bg-opacity-80 text-white text-lg">
+                  Loading...
+                </div>
+              )}
+
               {!streamError ? (
                 <>
                   <ReactPlayer
@@ -143,21 +151,20 @@ const ChannelPlayer = () => {
                       },
                     }}
                     onError={handleError}
+                    onReady={() => setLoading(false)}
                   />
-
-                  {/* Controls */}
                   {showControls && (
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 flex justify-between items-center">
                       <div className="flex items-center space-x-4">
                         <button
                           onClick={handlePlayPause}
-                          className="text-white hover:text-gray-300"
+                          className="text-white cursor-pointer hover:text-gray-300"
                         >
                           {playing ? "⏸" : "▶️"}
                         </button>
                         <button
                           onClick={toggleMute}
-                          className="text-white hover:text-gray-300"
+                          className="text-white cursor-pointer hover:text-gray-300"
                         >
                           {muted || volume === 0 ? "🔇" : "🔊"}
                         </button>
@@ -168,7 +175,7 @@ const ChannelPlayer = () => {
                           step="0.01"
                           value={muted ? 0 : volume}
                           onChange={handleVolumeChange}
-                          className="w-20 accent-white"
+                          className="w-20 accent-white cursor-pointer"
                         />
                       </div>
                       <div className="flex items-center space-x-2">
@@ -177,7 +184,7 @@ const ChannelPlayer = () => {
                         </span>
                         <button
                           onClick={handleFullscreen}
-                          className="text-white hover:text-gray-300"
+                          className="text-white cursor-pointer hover:text-gray-300"
                         >
                           ⛶
                         </button>
