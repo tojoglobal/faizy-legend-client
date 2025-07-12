@@ -15,7 +15,6 @@ const schedule = [
 const ChannelPlayer = () => {
   const { name } = useParams();
   const decodedName = decodeURIComponent(name);
-  const current = channels.find((ch) => ch.name === decodedName);
 
   const [currentStream, setCurrentStream] = useState(null);
   const [playing, setPlaying] = useState(true);
@@ -25,28 +24,42 @@ const ChannelPlayer = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [streamError, setStreamError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-  const [maxRetries] = useState(3);
+  const maxRetries = 3;
 
   const playerRef = useRef(null);
   const retryTimeout = useRef(null);
   const controlsTimeout = useRef(null);
+  const updateTimeout = useRef(null);
 
+  // Debounce stream changes to smooth UX
   useEffect(() => {
-    if (current) {
-      setCurrentStream(current.stream);
-      setIsLoading(true);
-      setStreamError(false);
-      setRetryCount(0);
+    const channel = channels.find((ch) => ch.name === decodedName);
+
+    if (!channel) {
+      setStreamError(true);
+      setIsLoading(false);
+      return;
     }
-  }, [current]);
 
+    setIsLoading(true);
+    setStreamError(false);
+
+    clearTimeout(updateTimeout.current);
+    updateTimeout.current = setTimeout(() => {
+      setCurrentStream(channel.stream);
+      setRetryCount(0);
+    }, 300);
+
+    return () => clearTimeout(updateTimeout.current);
+  }, [decodedName]);
+
+  // Retry and backup stream logic
   const handleError = () => {
-    console.error("Stream error occurred.");
     setIsLoading(false);
+    const channel = channels.find((ch) => ch.name === decodedName);
 
-    if (current?.backup && currentStream !== current.backup) {
-      console.log("Switching to backup stream...");
-      setCurrentStream(current.backup);
+    if (channel?.backup && currentStream !== channel.backup) {
+      setCurrentStream(channel.backup);
       setIsLoading(true);
       setStreamError(false);
       setRetryCount(0);
@@ -55,14 +68,12 @@ const ChannelPlayer = () => {
 
     if (retryCount < maxRetries) {
       const nextRetry = retryCount + 1;
-      console.log(`Retrying stream in 2s... (${nextRetry}/${maxRetries})`);
       retryTimeout.current = setTimeout(() => {
         setIsLoading(true);
         setRetryCount(nextRetry);
         setCurrentStream((prev) => prev);
       }, 2000);
     } else {
-      console.log("All retries failed.");
       setStreamError(true);
     }
   };
@@ -72,6 +83,7 @@ const ChannelPlayer = () => {
     setStreamError(false);
   };
 
+  // Controls visibility timeout
   useEffect(() => {
     const handleMouseMove = () => {
       setShowControls(true);
@@ -86,11 +98,13 @@ const ChannelPlayer = () => {
     return () => {
       clearTimeout(retryTimeout.current);
       clearTimeout(controlsTimeout.current);
+      clearTimeout(updateTimeout.current);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchstart", handleMouseMove);
     };
   }, []);
 
+  // Control handlers
   const handlePlayPause = () => setPlaying(!playing);
   const toggleMute = () => setMuted(!muted);
   const handleVolumeChange = (e) => {
@@ -108,36 +122,42 @@ const ChannelPlayer = () => {
   };
 
   return (
-    <div className="min-h-screen p-4">
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="w-full md:w-[65%]">
-          <h2 className="text-2xl font-bold mb-2">{decodedName}</h2>
-          <div className="bg-black rounded overflow-hidden relative group aspect-video">
+    <div className="min-h-screen p-4 bg-gray-100">
+      <div className="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto">
+        {/* Player Section */}
+        <div className="w-full md:w-2/3">
+          <h2 className="text-3xl font-bold mb-4 text-gray-800">
+            {decodedName}
+          </h2>
+          <div className="relative bg-black rounded-lg overflow-hidden aspect-video shadow-lg">
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center z-10 bg-black bg-opacity-80 text-white text-lg">
+              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80 text-white text-lg z-20">
                 Loading...
               </div>
             )}
 
             {streamError && !isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center text-white bg-black/50">
-                <div className="text-center p-4">
-                  <p className="text-red-500 font-bold mb-2">Stream Error</p>
-                  <p>
-                    Failed to load the video stream after multiple attempts.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setRetryCount(0);
-                      setStreamError(false);
-                      setIsLoading(true);
-                      setCurrentStream(current?.stream);
-                    }}
-                    className="mt-2 bg-blue-600 px-4 py-1 rounded hover:bg-blue-700"
-                  >
-                    Retry Stream
-                  </button>
-                </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-70 text-white z-20 p-6 rounded-lg">
+                <p className="text-red-500 font-semibold mb-2 text-xl">
+                  Stream Error
+                </p>
+                <p className="mb-4">
+                  Failed to load the video stream after multiple attempts.
+                </p>
+                <button
+                  onClick={() => {
+                    setRetryCount(0);
+                    setStreamError(false);
+                    setIsLoading(true);
+                    const channel = channels.find(
+                      (ch) => ch.name === decodedName
+                    );
+                    setCurrentStream(channel?.stream || null);
+                  }}
+                  className="px-6 py-2 bg-blue-600 rounded hover:bg-blue-700 transition"
+                >
+                  Retry Stream
+                </button>
               </div>
             )}
 
@@ -163,23 +183,26 @@ const ChannelPlayer = () => {
               />
             )}
 
+            {/* Controls */}
             {currentStream && !isLoading && !streamError && (
               <div
-                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 flex justify-between items-center transition-opacity duration-300 ${
+                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 flex justify-between items-center transition-opacity duration-300 ${
                   showControls ? "opacity-100" : "opacity-0"
                 }`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-5">
                   <button
                     onClick={handlePlayPause}
-                    className="text-white hover:text-gray-300"
+                    className="text-white cursor-pointer hover:text-gray-300"
+                    aria-label={playing ? "Pause" : "Play"}
                   >
                     {playing ? "⏸" : "▶️"}
                   </button>
                   <button
                     onClick={toggleMute}
-                    className="text-white hover:text-gray-300"
+                    className="text-white cursor-pointer hover:text-gray-300"
+                    aria-label={muted ? "Unmute" : "Mute"}
                   >
                     {muted || volume === 0 ? "🔇" : "🔊"}
                   </button>
@@ -190,16 +213,18 @@ const ChannelPlayer = () => {
                     step="0.01"
                     value={muted ? 0 : volume}
                     onChange={handleVolumeChange}
-                    className="w-20 accent-white"
+                    className="w-28 accent-white cursor-pointer"
+                    aria-label="Volume control"
                   />
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">
+                <div className="flex items-center space-x-4">
+                  <span className="bg-red-600 text-white text-xs px-3 py-1 rounded font-semibold tracking-wide select-none">
                     LIVE
                   </span>
                   <button
                     onClick={handleFullscreen}
-                    className="text-white hover:text-gray-300"
+                    className="text-white hover:text-gray-300 cursor-pointer"
+                    aria-label="Fullscreen"
                   >
                     ⛶
                   </button>
@@ -209,30 +234,33 @@ const ChannelPlayer = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-[35%] bg-white p-4 rounded shadow">
-          <p className="text-sm text-gray-600 mb-4">Saturday, July 12, 2025</p>
-          <h3 className="font-semibold mb-2">TV Schedule</h3>
-          <ul className="text-sm text-gray-700 space-y-1">
+        {/* Sidebar Section */}
+        <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-lg">
+          <p className="text-sm text-gray-500 mb-5">Saturday, July 12, 2025</p>
+          <h3 className="font-semibold text-gray-700 mb-3 text-lg">
+            TV Schedule
+          </h3>
+          <ul className="text-gray-600 space-y-1 text-sm mb-8">
             {schedule.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
 
-          <div className="mt-6">
-            <h4 className="font-semibold mb-2">All Channels</h4>
-            <ul className="text-sm list-disc list-inside space-y-1">
-              {channels.map((ch) => (
-                <li key={ch.name}>
-                  <Link
-                    to={`/tv/${encodeURIComponent(ch.name)}`}
-                    className="text-blue-600 hover:underline"
-                  >
-                    {ch.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <h4 className="font-semibold text-gray-800 mb-3 text-lg">
+            All Channels
+          </h4>
+          <ul className="list-disc list-inside space-y-2 text-blue-600 text-sm">
+            {channels.map((ch) => (
+              <li key={ch.name}>
+                <Link
+                  to={`/tv/${encodeURIComponent(ch.name)}`}
+                  className="hover:underline"
+                >
+                  {ch.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
