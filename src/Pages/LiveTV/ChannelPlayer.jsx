@@ -24,9 +24,11 @@ const ChannelPlayer = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [streamError, setStreamError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const maxRetries = 3;
 
   const playerRef = useRef(null);
+  const playerContainerRef = useRef(null);
   const retryTimeout = useRef(null);
   const controlsTimeout = useRef(null);
   const updateTimeout = useRef(null);
@@ -52,6 +54,18 @@ const ChannelPlayer = () => {
 
     return () => clearTimeout(updateTimeout.current);
   }, [decodedName]);
+
+  // Handle fullscreen change events
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   // Retry and backup stream logic
   const handleError = () => {
@@ -112,30 +126,39 @@ const ChannelPlayer = () => {
     setVolume(newVolume);
     setMuted(newVolume === 0);
   };
-  const handleFullscreen = () => {
-    const wrapper = playerRef.current?.wrapper;
-    if (wrapper) {
-      document.fullscreenElement
-        ? document.exitFullscreen()
-        : wrapper.requestFullscreen();
+
+  const handleFullscreen = async () => {
+    try {
+      if (!playerContainerRef.current) return;
+
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await playerContainerRef.current.requestFullscreen();
+      }
+    } catch (err) {
+      console.error("Fullscreen error:", err);
     }
   };
 
   return (
     <div className="min-h-screen p-4">
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-6 mt-2">
         {/* Player Section */}
         <div className="w-full md:w-2/3">
-          <div className="mb-4">
+          <div className="mb-5">
             <Link
               to="/tv"
               className="inline-flex items-center text-blue-600 hover:underline text-base font-medium mb-1"
             >
-              ← Back to List
+              ← Back to LiveTV
             </Link>
             <h2 className="text-3xl font-bold text-gray-800">{decodedName}</h2>
           </div>
-          <div className="relative bg-black rounded-lg overflow-hidden aspect-video shadow-lg">
+          <div
+            ref={playerContainerRef}
+            className="relative bg-black rounded-lg overflow-hidden aspect-video shadow-lg"
+          >
             {isLoading && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-80 text-white text-lg z-20">
                 Loading...
@@ -191,7 +214,7 @@ const ChannelPlayer = () => {
             {/* Controls */}
             {currentStream && !isLoading && !streamError && (
               <div
-                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 flex justify-between items-center transition-opacity duration-300 ${
+                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 flex justify-between items-center transition-opacity duration-300 ${
                   showControls ? "opacity-100" : "opacity-0"
                 }`}
                 onClick={(e) => e.stopPropagation()}
@@ -229,12 +252,21 @@ const ChannelPlayer = () => {
                   <button
                     onClick={handleFullscreen}
                     className="text-white hover:text-gray-300 cursor-pointer"
-                    aria-label="Fullscreen"
+                    aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
                   >
-                    ⛶
+                    {isFullscreen ? "⛶" : "⛶"}
                   </button>
                 </div>
               </div>
+            )}
+            {isFullscreen && (
+              <button
+                onClick={handleFullscreen}
+                className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full z-30 md:hidden"
+                aria-label="Exit fullscreen"
+              >
+                ✕
+              </button>
             )}
           </div>
         </div>
