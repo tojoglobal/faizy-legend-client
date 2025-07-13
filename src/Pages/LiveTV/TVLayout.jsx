@@ -9,7 +9,7 @@ const TVLayout = () => {
     <div className="min-h-screen bg-white relative">
       {/* Shared Navbar */}
       <div className="bg-black text-white fixed top-0 left-0 right-0 z-50 shadow-md">
-        <header className="max-w-6xl 2xl:max-w-[1350px] mx-auto px-6 py-4 flex justify-between items-center">
+        <header className="max-w-6xl 2xl:max-w-[1350px] mx-auto px-6 py-4 md:py-5 flex justify-between items-center">
           <Link to="/tv" onClick={() => setMobileMenuOpen(false)}>
             <h1 className="text-2xl font-bold">TheTVApp</h1>
           </Link>
