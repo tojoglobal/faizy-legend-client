@@ -1,5 +1,4 @@
 const channels = [
-  // Live channels remain unchanged
   {
     name: "DW News",
     stream:
@@ -30,17 +29,25 @@ const channels = [
     type: "live",
   },
   {
-    name: "Tears of Steel (Demo)",
+    name: "Tears of Steel",
     stream:
       "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
     backup: "",
     type: "recorded",
   },
   {
-    name: "Big Buck Bunny (Recorded)",
+    name: "Big Buck Bunny (Blender Foundation)",
+    stream: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    backup: "",
+    type: "recorded",
+    category: "Animated Short Film",
+  },
+  {
+    name: "Sintel (Blender Foundation)",
     stream: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
     backup: "",
     type: "recorded",
+    category: "Animated Short Film",
   },
 ];
 
