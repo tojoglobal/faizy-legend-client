@@ -374,11 +374,6 @@ const ChannelPlayer = () => {
                     )}
                   </div>
                   <div className="flex items-center space-x-4">
-                    {!isSeekable && ( // Show LIVE only if not seekable (i.e., truly live)
-                      <span className="bg-red-600 text-white text-xs px-3 py-1 rounded font-semibold tracking-wide select-none">
-                        LIVE
-                      </span>
-                    )}
                     <button
                       onClick={handleFullscreen}
                       className="text-white hover:text-gray-300 cursor-pointer"
