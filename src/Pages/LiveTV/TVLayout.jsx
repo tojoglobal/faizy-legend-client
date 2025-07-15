@@ -23,10 +23,10 @@ const TVLayout = () => {
             >
               Home
             </Link>
-            <button className="border px-3 py-1 rounded hover:bg-white hover:text-black transition">
+            <button className="border px-3 py-1 cursor-pointer rounded hover:bg-white hover:text-black transition">
               Contact Us
             </button>
-            <button className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 transition">
+            <button className="bg-blue-600 cursor-pointer px-3 py-1 rounded hover:bg-blue-700 transition">
               Subscribe Now
             </button>
           </nav>

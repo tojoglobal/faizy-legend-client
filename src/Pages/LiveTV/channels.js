@@ -30,16 +30,15 @@ const channels = [
     type: "live",
   },
   {
-    name: "Tears of Steel (Recorded Demo)",
+    name: "Tears of Steel (Demo)",
     stream:
       "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
     backup: "",
     type: "recorded",
   },
   {
-    name: "Apple BipBop Test Video",
-    stream:
-      "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8",
+    name: "Big Buck Bunny (Recorded)",
+    stream: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
     backup: "",
     type: "recorded",
   },
