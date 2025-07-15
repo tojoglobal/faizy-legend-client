@@ -56,6 +56,34 @@ const channels = [
     type: "recorded",
     category: "Animated Short Film",
   },
+  {
+    name: "PBS Space Time (YouTube)",
+    stream: "https://www.youtube.com/embed/7uiv6tKtoKg",
+    type: "recorded",
+    category: "Science",
+    isYoutube: true,
+  },
+  {
+    name: "TED-Ed Animations (YouTube)",
+    stream: "https://www.youtube.com/embed/rBpaUICxEhk",
+    type: "recorded",
+    category: "Education",
+    isYoutube: true,
+  },
+  {
+    name: "National Geographic Shorts (YouTube)",
+    stream: "https://www.youtube.com/embed/6lt2JfJdGSY",
+    type: "recorded",
+    category: "Documentary",
+    isYoutube: true,
+  },
+  {
+    name: "Lofi Hip Hop Radio",
+    stream: "https://www.youtube.com/embed/jfKfPfyJRdk",
+    type: "live",
+    category: "Music",
+    isYoutube: true,
+  },
 ];
 
 export default channels;
