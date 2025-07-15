@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import ReactPlayer from "react-player";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import channels from "./channels";
 
 const schedule = [
@@ -25,6 +25,10 @@ const ChannelPlayer = () => {
   const [streamError, setStreamError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [played, setPlayed] = useState(0); // For the progress bar (0 to 1)
+  const [seeking, setSeeking] = useState(false); // To prevent re-rendering during seek
+  const [duration, setDuration] = useState(0); // Total duration of the stream
+  const [isSeekable, setIsSeekable] = useState(false); // New state to control seek bar visibility
   const maxRetries = 3;
 
   const playerRef = useRef(null);
@@ -33,48 +37,34 @@ const ChannelPlayer = () => {
   const controlsTimeout = useRef(null);
   const updateTimeout = useRef(null);
 
-  useEffect(() => {
-    const channel = channels.find((ch) => ch.name === decodedName);
+  // Find the current channel from the channels array
+  const currentChannel = channels.find((ch) => ch.name === decodedName);
 
-    if (!channel) {
+  useEffect(() => {
+    if (!currentChannel) {
       setStreamError(true);
       setIsLoading(false);
       return;
     }
 
+    // Determine if the stream is seekable (recorded or YouTube)
+    setIsSeekable(
+      currentChannel.type === "recorded" || currentChannel.isYoutube
+    );
+
     setIsLoading(true);
     setStreamError(false);
+    setPlayed(0); // Reset played progress on new stream
+    setDuration(0); // Reset duration on new stream
 
     clearTimeout(updateTimeout.current);
     updateTimeout.current = setTimeout(() => {
-      setCurrentStream(channel.stream);
+      setCurrentStream(currentChannel.stream);
       setRetryCount(0);
     }, 300);
 
     return () => clearTimeout(updateTimeout.current);
-  }, [decodedName]);
-
-  // Debounce stream changes to smooth UX
-  useEffect(() => {
-    const channel = channels.find((ch) => ch.name === decodedName);
-
-    if (!channel) {
-      setStreamError(true);
-      setIsLoading(false);
-      return;
-    }
-
-    setIsLoading(true);
-    setStreamError(false);
-
-    clearTimeout(updateTimeout.current);
-    updateTimeout.current = setTimeout(() => {
-      setCurrentStream(channel.stream);
-      setRetryCount(0);
-    }, 300);
-
-    return () => clearTimeout(updateTimeout.current);
-  }, [decodedName]);
+  }, [decodedName, currentChannel]); // Add currentChannel to dependency array
 
   // Handle fullscreen change events
   useEffect(() => {
@@ -91,10 +81,9 @@ const ChannelPlayer = () => {
   // Retry and backup stream logic
   const handleError = () => {
     setIsLoading(false);
-    const channel = channels.find((ch) => ch.name === decodedName);
 
-    if (channel?.backup && currentStream !== channel.backup) {
-      setCurrentStream(channel.backup);
+    if (currentChannel?.backup && currentStream !== currentChannel.backup) {
+      setCurrentStream(currentChannel.backup);
       setIsLoading(true);
       setStreamError(false);
       setRetryCount(0);
@@ -116,6 +105,10 @@ const ChannelPlayer = () => {
   const handleReady = () => {
     setIsLoading(false);
     setStreamError(false);
+    if (playerRef.current && isSeekable) {
+      // Only set duration if seekable
+      setDuration(playerRef.current.getDuration());
+    }
   };
 
   // Controls visibility timeout
@@ -162,6 +155,45 @@ const ChannelPlayer = () => {
     }
   };
 
+  // New: Progress bar handlers
+  const handleProgress = useCallback(
+    (state) => {
+      if (!seeking && isSeekable) {
+        // Only update played if seekable
+        setPlayed(state.played);
+      }
+    },
+    [seeking, isSeekable]
+  );
+
+  const handleSeekChange = (e) => {
+    setPlayed(parseFloat(e.target.value));
+  };
+
+  const handleSeekMouseDown = () => {
+    setSeeking(true);
+  };
+
+  const handleSeekMouseUp = (e) => {
+    setSeeking(false);
+    if (playerRef.current && isSeekable) {
+      // Only seek if seekable
+      playerRef.current.seekTo(parseFloat(e.target.value));
+    }
+  };
+
+  const formatTime = (seconds) => {
+    if (isNaN(seconds) || seconds === Infinity) return "00:00"; // Handle non-finite durations
+    const date = new Date(seconds * 1000);
+    const hh = date.getUTCHours();
+    const mm = date.getUTCMinutes();
+    const ss = String(date.getUTCSeconds()).padStart(2, "0");
+    if (hh) {
+      return `${hh}:${String(mm).padStart(2, "0")}:${ss}`;
+    }
+    return `${mm}:${ss}`;
+  };
+
   return (
     <div className="min-h-screen p-4">
       <div className="flex flex-col md:flex-row gap-6 mt-2">
@@ -198,10 +230,8 @@ const ChannelPlayer = () => {
                     setRetryCount(0);
                     setStreamError(false);
                     setIsLoading(true);
-                    const channel = channels.find(
-                      (ch) => ch.name === decodedName
-                    );
-                    setCurrentStream(channel?.stream || null);
+                    // Ensure we get the channel again here if needed, or rely on currentChannel
+                    setCurrentStream(currentChannel?.stream || null);
                   }}
                   className="px-6 py-2 cursor-pointer bg-blue-600 rounded hover:bg-blue-700 transition"
                 >
@@ -220,6 +250,8 @@ const ChannelPlayer = () => {
                 controls={false}
                 onError={handleError}
                 onReady={handleReady}
+                onProgress={handleProgress}
+                onDuration={setDuration}
                 config={{
                   file: {
                     forceHLS: true,
@@ -240,48 +272,84 @@ const ChannelPlayer = () => {
             {/* Controls */}
             {currentStream && !isLoading && !streamError && (
               <div
-                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 flex justify-between items-center transition-opacity duration-300 ${
+                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 flex flex-col transition-opacity duration-300 ${
                   showControls ? "opacity-100" : "opacity-0"
                 }`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex items-center space-x-5">
-                  <button
-                    onClick={handlePlayPause}
-                    className="text-white cursor-pointer hover:text-gray-300"
-                    aria-label={playing ? "Pause" : "Play"}
-                  >
-                    {playing ? "⏸" : "▶️"}
-                  </button>
-                  <button
-                    onClick={toggleMute}
-                    className="text-white cursor-pointer hover:text-gray-300"
-                    aria-label={muted ? "Unmute" : "Mute"}
-                  >
-                    {muted || volume === 0 ? "🔇" : "🔊"}
-                  </button>
+                {/* Seek Bar - Conditionally Rendered */}
+                {isSeekable && (
                   <input
                     type="range"
                     min="0"
                     max="1"
-                    step="0.01"
-                    value={muted ? 0 : volume}
-                    onChange={handleVolumeChange}
-                    className="w-28 accent-white cursor-pointer"
-                    aria-label="Volume control"
+                    step="any"
+                    value={played}
+                    onMouseDown={handleSeekMouseDown}
+                    onChange={handleSeekChange}
+                    onMouseUp={handleSeekMouseUp}
+                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer mb-2 accent-red-600"
+                    style={{
+                      background: `linear-gradient(to right, #dc2626 0%, #dc2626 ${
+                        played * 100
+                      }%, #4b5563 ${played * 100}%, #4b5563 100%)`,
+                    }}
                   />
-                </div>
-                <div className="flex items-center space-x-4">
-                  <span className="bg-red-600 text-white text-xs px-3 py-1 rounded font-semibold tracking-wide select-none">
-                    LIVE
-                  </span>
-                  <button
-                    onClick={handleFullscreen}
-                    className="text-white hover:text-gray-300 cursor-pointer"
-                    aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-                  >
-                    {isFullscreen ? "⛶" : "⛶"}
-                  </button>
+                )}
+
+                <div className="flex justify-between items-center w-full">
+                  <div className="flex items-center space-x-5">
+                    <button
+                      onClick={handlePlayPause}
+                      className="text-white cursor-pointer hover:text-gray-300"
+                      aria-label={playing ? "Pause" : "Play"}
+                    >
+                      {playing ? "⏸" : "▶️"}
+                    </button>
+                    <button
+                      onClick={toggleMute}
+                      className="text-white cursor-pointer hover:text-gray-300"
+                      aria-label={muted ? "Unmute" : "Mute"}
+                    >
+                      {muted || volume === 0 ? "🔇" : "🔊"}
+                    </button>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={muted ? 0 : volume}
+                      onChange={handleVolumeChange}
+                      className="w-28 accent-white cursor-pointer"
+                      aria-label="Volume control"
+                    />
+                    {/* Time Display - Conditionally Rendered */}
+                    {isSeekable ? (
+                      <span className="text-white text-sm font-mono">
+                        {formatTime(played * duration)} / {formatTime(duration)}
+                      </span>
+                    ) : (
+                      <span className="bg-red-600 text-white text-xs px-3 py-1 rounded font-semibold tracking-wide select-none">
+                        LIVE
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    {!isSeekable && ( // Show LIVE only if not seekable (i.e., truly live)
+                      <span className="bg-red-600 text-white text-xs px-3 py-1 rounded font-semibold tracking-wide select-none">
+                        LIVE
+                      </span>
+                    )}
+                    <button
+                      onClick={handleFullscreen}
+                      className="text-white hover:text-gray-300 cursor-pointer"
+                      aria-label={
+                        isFullscreen ? "Exit fullscreen" : "Fullscreen"
+                      }
+                    >
+                      {isFullscreen ? "⛶" : "⛶"}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
