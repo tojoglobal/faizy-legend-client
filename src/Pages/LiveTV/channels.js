@@ -32,7 +32,7 @@ const channels = [
     name: "Cooking with MasterChef",
     stream:
       "https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8",
-    type: "recorded",
+    type: "Live",
     category: "Food",
   },
   {
