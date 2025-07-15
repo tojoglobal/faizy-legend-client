@@ -29,6 +29,13 @@ const channels = [
     type: "live",
   },
   {
+    name: "Classic Movies",
+    stream:
+      "https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8",
+    type: "live",
+    category: "Movies",
+  },
+  {
     name: "Cooking with MasterChef",
     stream:
       "https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8",
@@ -50,6 +57,20 @@ const channels = [
     type: "recorded",
   },
   {
+    name: "Veritasium",
+    stream: "https://www.youtube.com/embed/BLOUFrncG7E",
+    type: "recorded",
+    category: "Science",
+    isYoutube: true,
+  },
+  {
+    name: "3Blue1Brown",
+    stream: "https://www.youtube.com/embed/WUvTyaaNkzM",
+    type: "recorded",
+    category: "Math",
+    isYoutube: true,
+  },
+  {
     name: "Big Buck Bunny (Blender Foundation)",
     stream: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
     backup: "",
@@ -64,21 +85,21 @@ const channels = [
     category: "Animated Short Film",
   },
   {
-    name: "TED-Ed Animations (YouTube)",
+    name: "TED-Ed Animations",
     stream: "https://www.youtube.com/embed/rBpaUICxEhk",
     type: "recorded",
     category: "Education",
     isYoutube: true,
   },
   {
-    name: "National Geographic Shorts (YouTube)",
+    name: "National Geographic Shorts",
     stream: "https://www.youtube.com/embed/6lt2JfJdGSY",
     type: "recorded",
     category: "Documentary",
     isYoutube: true,
   },
   {
-    name: "PBS Space Time (YouTube)",
+    name: "PBS Space Time",
     stream: "https://www.youtube.com/embed/7uiv6tKtoKg",
     type: "recorded",
     category: "Science",
