@@ -29,6 +29,13 @@ const channels = [
     type: "live",
   },
   {
+    name: "Cooking with MasterChef",
+    stream:
+      "https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8",
+    type: "recorded",
+    category: "Food",
+  },
+  {
     name: "Tears of Steel",
     stream:
       "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
