@@ -3,14 +3,47 @@ import ReactPlayer from "react-player";
 import { useState, useRef, useEffect, useCallback } from "react";
 import channels from "./channels";
 
-const schedule = [
-  "12:04 PM: City Confidential - Midnight Pain in Georgia",
-  "1:05 PM: The First 48 - Dangerous Company",
-  "2:02 PM: Paid Program",
-  "2:32 PM: NUWAVE FOREVER, AIR PURIFIER WITH NEVER REPLACE FILTERS",
-  "3:02 PM: Freedom to Leave the House! Inogen Portable Oxygen",
-  "3:31 PM: Paid Program",
-];
+// Function to generate a more generic and professional-looking schedule
+const generateDynamicSchedule = () => {
+  const now = new Date();
+  const scheduleItems = [];
+  const genericProgramTitles = [
+    "Channel Programming",
+    "Scheduled Broadcast",
+    "Featured Content",
+    "Special Presentation",
+    "Informational Segment",
+    "Entertainment Block",
+    "Current Affairs Analysis",
+    "Thematic Discussions",
+    "Discovery Hour",
+    "Cultural Showcase",
+    "Lifestyle Program",
+    "Music Selection",
+    "Science & Technology Focus",
+    "Health & Wellness",
+    "Documentary Feature",
+    "Classic Replay",
+  ];
+
+  // Start the schedule from the current hour, showing 4 upcoming slots
+  for (let i = 0; i < 4; i++) {
+    // Generate fewer, more focused items
+    const programStartTime = new Date(now.getTime());
+    programStartTime.setMinutes(now.getMinutes() + i * 35); // Approx 35-minute intervals
+    const timeString = programStartTime.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    const title =
+      genericProgramTitles[
+        Math.floor(Math.random() * genericProgramTitles.length)
+      ];
+    scheduleItems.push(`${timeString} - ${title}`); // Simplified format
+  }
+  return scheduleItems;
+};
 
 const ChannelPlayer = () => {
   const { name } = useParams();
@@ -25,10 +58,10 @@ const ChannelPlayer = () => {
   const [streamError, setStreamError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [played, setPlayed] = useState(0); // For the progress bar (0 to 1)
-  const [seeking, setSeeking] = useState(false); // To prevent re-rendering during seek
-  const [duration, setDuration] = useState(0); // Total duration of the stream
-  const [isSeekable, setIsSeekable] = useState(false); // New state to control seek bar visibility
+  const [played, setPlayed] = useState(0);
+  const [seeking, setSeeking] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [isSeekable, setIsSeekable] = useState(false);
   const maxRetries = 3;
 
   const playerRef = useRef(null);
@@ -37,25 +70,40 @@ const ChannelPlayer = () => {
   const controlsTimeout = useRef(null);
   const updateTimeout = useRef(null);
 
-  // Find the current channel from the channels array
   const currentChannel = channels.find((ch) => ch.name === decodedName);
 
+  const [currentDate, setCurrentDate] = useState("");
+  const [dynamicSchedule, setDynamicSchedule] = useState([]);
+
   useEffect(() => {
+    // Set current date (localized for Bangladesh)
+    const today = new Date();
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "Asia/Dhaka", // Specify time zone for Bangladesh
+    };
+    setCurrentDate(today.toLocaleDateString("en-US", options));
+
+    // Generate dynamic schedule
+    setDynamicSchedule(generateDynamicSchedule());
+
     if (!currentChannel) {
       setStreamError(true);
       setIsLoading(false);
       return;
     }
 
-    // Determine if the stream is seekable (recorded or YouTube)
     setIsSeekable(
       currentChannel.type === "recorded" || currentChannel.isYoutube
     );
 
     setIsLoading(true);
     setStreamError(false);
-    setPlayed(0); // Reset played progress on new stream
-    setDuration(0); // Reset duration on new stream
+    setPlayed(0);
+    setDuration(0);
 
     clearTimeout(updateTimeout.current);
     updateTimeout.current = setTimeout(() => {
@@ -64,9 +112,8 @@ const ChannelPlayer = () => {
     }, 300);
 
     return () => clearTimeout(updateTimeout.current);
-  }, [decodedName, currentChannel]); // Add currentChannel to dependency array
+  }, [decodedName, currentChannel]);
 
-  // Handle fullscreen change events
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -78,7 +125,6 @@ const ChannelPlayer = () => {
     };
   }, []);
 
-  // Retry and backup stream logic
   const handleError = () => {
     setIsLoading(false);
 
@@ -106,12 +152,10 @@ const ChannelPlayer = () => {
     setIsLoading(false);
     setStreamError(false);
     if (playerRef.current && isSeekable) {
-      // Only set duration if seekable
       setDuration(playerRef.current.getDuration());
     }
   };
 
-  // Controls visibility timeout
   useEffect(() => {
     const handleMouseMove = () => {
       setShowControls(true);
@@ -132,7 +176,6 @@ const ChannelPlayer = () => {
     };
   }, []);
 
-  // Control handlers
   const handlePlayPause = () => setPlaying(!playing);
   const toggleMute = () => setMuted(!muted);
   const handleVolumeChange = (e) => {
@@ -155,11 +198,9 @@ const ChannelPlayer = () => {
     }
   };
 
-  // New: Progress bar handlers
   const handleProgress = useCallback(
     (state) => {
       if (!seeking && isSeekable) {
-        // Only update played if seekable
         setPlayed(state.played);
       }
     },
@@ -177,13 +218,12 @@ const ChannelPlayer = () => {
   const handleSeekMouseUp = (e) => {
     setSeeking(false);
     if (playerRef.current && isSeekable) {
-      // Only seek if seekable
       playerRef.current.seekTo(parseFloat(e.target.value));
     }
   };
 
   const formatTime = (seconds) => {
-    if (isNaN(seconds) || seconds === Infinity) return "00:00"; // Handle non-finite durations
+    if (isNaN(seconds) || seconds === Infinity) return "00:00";
     const date = new Date(seconds * 1000);
     const hh = date.getUTCHours();
     const mm = date.getUTCMinutes();
@@ -230,7 +270,6 @@ const ChannelPlayer = () => {
                     setRetryCount(0);
                     setStreamError(false);
                     setIsLoading(true);
-                    // Ensure we get the channel again here if needed, or rely on currentChannel
                     setCurrentStream(currentChannel?.stream || null);
                   }}
                   className="px-6 py-2 cursor-pointer bg-blue-600 rounded hover:bg-blue-700 transition"
@@ -367,12 +406,15 @@ const ChannelPlayer = () => {
 
         {/* Sidebar Section */}
         <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-lg">
-          <p className="text-sm text-gray-500 mb-5">Saturday, July 12, 2025</p>
+          {/* Dynamically display current date */}
+          <p className="text-sm text-gray-500 mb-5">{currentDate}</p>
           <h3 className="font-semibold text-gray-700 mb-3 text-lg">
-            TV Schedule
-          </h3>
+            Upcoming Programs
+          </h3>{" "}
+          {/* Changed heading to be more general */}
           <ul className="text-gray-600 space-y-1 text-sm mb-8">
-            {schedule.map((item, idx) => (
+            {/* Render dynamic schedule */}
+            {dynamicSchedule.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
