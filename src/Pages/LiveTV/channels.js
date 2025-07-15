@@ -32,8 +32,15 @@ const channels = [
     name: "Cooking with MasterChef",
     stream:
       "https://dai.google.com/linear/hls/event/Sid4xiTQTkCT1SLu6rjUSQ/master.m3u8",
-    type: "Live",
+    type: "live",
     category: "Food",
+  },
+  {
+    name: "Lofi Hip Hop Radio",
+    stream: "https://www.youtube.com/embed/jfKfPfyJRdk",
+    type: "live",
+    category: "Music",
+    isYoutube: true,
   },
   {
     name: "Tears of Steel",
@@ -57,13 +64,6 @@ const channels = [
     category: "Animated Short Film",
   },
   {
-    name: "PBS Space Time (YouTube)",
-    stream: "https://www.youtube.com/embed/7uiv6tKtoKg",
-    type: "recorded",
-    category: "Science",
-    isYoutube: true,
-  },
-  {
     name: "TED-Ed Animations (YouTube)",
     stream: "https://www.youtube.com/embed/rBpaUICxEhk",
     type: "recorded",
@@ -78,10 +78,10 @@ const channels = [
     isYoutube: true,
   },
   {
-    name: "Lofi Hip Hop Radio",
-    stream: "https://www.youtube.com/embed/jfKfPfyJRdk",
-    type: "live",
-    category: "Music",
+    name: "PBS Space Time (YouTube)",
+    stream: "https://www.youtube.com/embed/7uiv6tKtoKg",
+    type: "recorded",
+    category: "Science",
     isYoutube: true,
   },
 ];

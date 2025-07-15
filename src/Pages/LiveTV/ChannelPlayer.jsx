@@ -33,6 +33,27 @@ const ChannelPlayer = () => {
   const controlsTimeout = useRef(null);
   const updateTimeout = useRef(null);
 
+  useEffect(() => {
+    const channel = channels.find((ch) => ch.name === decodedName);
+
+    if (!channel) {
+      setStreamError(true);
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setStreamError(false);
+
+    clearTimeout(updateTimeout.current);
+    updateTimeout.current = setTimeout(() => {
+      setCurrentStream(channel.stream);
+      setRetryCount(0);
+    }, 300);
+
+    return () => clearTimeout(updateTimeout.current);
+  }, [decodedName]);
+
   // Debounce stream changes to smooth UX
   useEffect(() => {
     const channel = channels.find((ch) => ch.name === decodedName);
@@ -188,7 +209,6 @@ const ChannelPlayer = () => {
                 </button>
               </div>
             )}
-
             {currentStream && (
               <ReactPlayer
                 ref={playerRef}
@@ -207,10 +227,16 @@ const ChannelPlayer = () => {
                       xhrSetup: (xhr) => (xhr.withCredentials = false),
                     },
                   },
+                  youtube: {
+                    playerVars: {
+                      modestbranding: 1,
+                      rel: 0,
+                      showinfo: 0,
+                    },
+                  },
                 }}
               />
             )}
-
             {/* Controls */}
             {currentStream && !isLoading && !streamError && (
               <div
