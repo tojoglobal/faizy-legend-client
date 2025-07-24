@@ -221,7 +221,7 @@ const InstaComics = () => {
           </div>
         </div>
       )}
-      <footer className="text-center text-sm text-gray-300">
+      <footer className="text-center text-xs text-gray-300">
         <span className="opacity-80">Provided by </span>
         <a
           href="https://www.tojoglobal.com"
