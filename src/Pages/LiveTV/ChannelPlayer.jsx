@@ -400,19 +400,32 @@ const ChannelPlayer = () => {
         </div>
 
         {/* Sidebar Section */}
-        <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-lg">
+        <div className="w-full md:w-1/3 bg-white p-6 rounded-lg flex flex-col shadow-lg">
           {/* Dynamically display current date */}
-          <p className="text-sm text-gray-500 mb-5">{currentDate}</p>
-          <h3 className="font-semibold text-gray-700 mb-3 text-lg">
-            Upcoming Programs
-          </h3>{" "}
-          {/* Changed heading to be more general */}
-          <ul className="text-gray-600 space-y-1 text-sm mb-8">
-            {/* Render dynamic schedule */}
-            {dynamicSchedule.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
+          <div className="flex-grow">
+            <p className="text-sm text-gray-500 mb-5">{currentDate}</p>
+            <h3 className="font-semibold text-gray-700 mb-3 text-lg">
+              Upcoming Programs
+            </h3>
+            {/* Changed heading to be more general */}
+            <ul className="text-gray-600 space-y-1 text-sm mb-8">
+              {/* Render dynamic schedule */}
+              {dynamicSchedule.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <footer className="text-xs text-gray-400">
+            Developed by{" "}
+            <a
+              href="https://www.tojoglobal.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-indigo-500 hover:text-indigo-600 font-semibold transition-colors"
+            >
+              TOJO Global
+            </a>
+          </footer>
         </div>
       </div>
     </div>

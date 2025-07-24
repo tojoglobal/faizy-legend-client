@@ -80,7 +80,7 @@ const InstaComics = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-between px-4 py-1 md:py-4">
+    <div className="px-4 py-1 md:py-5">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {instagramPosts.map((post) => (
           <div
@@ -221,17 +221,6 @@ const InstaComics = () => {
           </div>
         </div>
       )}
-      <footer className="text-center text-sm text-gray-300">
-        <span className="opacity-80">Provided by </span>
-        <a
-          href="https://www.tojoglobal.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors duration-200"
-        >
-          TOJO Global
-        </a>
-      </footer>
     </div>
   );
 };

@@ -157,499 +157,515 @@ const Fanart = () => {
   }, [items, normalizedQuery, sortBy]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-2 lg:p-4 py-10">
-      <div className="max-w-5xl mx-auto lg:mt-5">
-        <div className="flex w-full sm:w-auto justify-center">
-          <Link
-            to="/add-fanart"
-            className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-pink-500 hover:from-indigo-700 hover:to-pink-600 text-white px-4 py-1.5 rounded-lg font-semibold text-lg transition-all duration-200"
-          >
-            <Plus className="w-5 h-5" />
-            Upload Your Work
-          </Link>
-        </div>
-        {/* Search + Sort */}
-        <div className="flex flex-col mt-4 sm:flex-row sm:items-center gap-4 w-full max-w-xl mx-auto mb-5">
-          <div className="relative flex-1">
-            <input
-              type="text"
-              placeholder="Search name"
-              className="w-full py-2.5 px-5 pl-12 rounded-xl shadow-lg border border-gray-200 bg-white text-gray-800 text-lg outline-none"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-gray-400" />
-          </div>
-          <div>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="py-2 px-4 rounded-xl border focus:outline-none border-gray-200 bg-white text-gray-700 shadow cursor-pointer text-base"
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-[#f6f7fb] via-[#f2f2f7] to-[#f9fafb] p-2 lg:p-4 py-10">
+      <main className="flex-grow">
+        <div className="max-w-5xl mx-auto lg:mt-5">
+          <div className="flex w-full sm:w-auto justify-center">
+            <Link
+              to="/add-fanart"
+              className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-pink-500 hover:from-indigo-700 hover:to-pink-600 text-white px-4 py-1.5 rounded-lg font-semibold text-lg transition-all duration-200"
             >
-              {SORT_OPTIONS.map((opt) => (
-                <option value={opt.value} key={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+              <Plus className="w-5 h-5" />
+              Upload Your Work
+            </Link>
           </div>
-        </div>
-        {/* Tabs for asset type */}
-        <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>
-          <Tab.List className="flex space-x-2 justify-center mb-7">
-            {FANART_TABS.map((tab) => (
-              <Tab
-                key={tab.name}
-                className={({ selected }) =>
-                  classNames(
-                    "px-5 py-1.5 rounded-xl transition-all text-lg font-semibold focus:outline-none cursor-pointer",
-                    selected
-                      ? "bg-gradient-to-r from-indigo-600 to-pink-500 text-white shadow-lg"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  )
-                }
+          {/* Search + Sort */}
+          <div className="flex flex-col mt-4 sm:flex-row sm:items-center gap-4 w-full max-w-xl mx-auto mb-5">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                placeholder="Search name"
+                className="w-full py-2.5 px-5 pl-12 rounded-xl shadow-lg border border-gray-200 bg-white text-gray-800 text-lg outline-none"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xl text-gray-400" />
+            </div>
+            <div>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="py-2 px-4 rounded-xl border focus:outline-none border-gray-200 bg-white text-gray-700 shadow cursor-pointer text-base"
               >
-                {tab.name}
-              </Tab>
-            ))}
-          </Tab.List>
-          <Tab.Panels>
-            {/* Fan Art */}
-            <Tab.Panel>
-              {isLoading ? (
-                <div className="text-center py-20 text-xl text-gray-400">
-                  Loading...
-                </div>
-              ) : error ? (
-                <div className="text-center py-20 text-xl text-red-400">
-                  Error loading fan art.
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-                  {filteredPhotos.length === 0 && (
-                    <div className="col-span-full text-center text-gray-400 py-16 text-xl">
-                      No fan art found.
-                    </div>
-                  )}
-                  {filteredPhotos.map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
-                    >
+                {SORT_OPTIONS.map((opt) => (
+                  <option value={opt.value} key={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {/* Tabs for asset type */}
+          <Tab.Group selectedIndex={selectedTab} onChange={setSelectedTab}>
+            <Tab.List className="flex space-x-2 justify-center mb-7">
+              {FANART_TABS.map((tab) => (
+                <Tab
+                  key={tab.name}
+                  className={({ selected }) =>
+                    classNames(
+                      "px-5 py-1.5 rounded-xl transition-all text-lg font-semibold focus:outline-none cursor-pointer",
+                      selected
+                        ? "bg-gradient-to-r from-indigo-600 to-pink-500 text-white shadow-lg"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    )
+                  }
+                >
+                  {tab.name}
+                </Tab>
+              ))}
+            </Tab.List>
+            <Tab.Panels>
+              {/* Fan Art */}
+              <Tab.Panel>
+                {isLoading ? (
+                  <div className="text-center py-20 text-xl text-gray-400">
+                    Loading...
+                  </div>
+                ) : error ? (
+                  <div className="text-center py-20 text-xl text-red-400">
+                    Error loading fan art.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
+                    {filteredPhotos.length === 0 && (
+                      <div className="col-span-full text-center text-gray-400 py-16 text-xl">
+                        No fan art found.
+                      </div>
+                    )}
+                    {filteredPhotos.map((item) => (
                       <div
-                        className="relative cursor-pointer"
-                        onClick={() =>
-                          setModalItem({ ...item, index: 0, mode: "photo" })
-                        }
+                        key={item.id}
+                        className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
                       >
-                        <img
-                          src={item.images[0]}
-                          alt={item.title}
-                          className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
-                          <button
-                            className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalItem({
-                                ...item,
-                                index: 0,
-                                mode: "photo",
-                              });
-                            }}
-                            aria-label="View large"
-                          >
-                            <FiMaximize2 className="text-xl text-indigo-600" />
-                          </button>
-                          <a
-                            href={item.images[0]}
-                            download
-                            className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label="Download"
-                          >
-                            <FiDownload className="text-xl text-pink-500" />
-                          </a>
+                        <div
+                          className="relative cursor-pointer"
+                          onClick={() =>
+                            setModalItem({ ...item, index: 0, mode: "photo" })
+                          }
+                        >
+                          <img
+                            src={item.images[0]}
+                            alt={item.title}
+                            className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
+                            <button
+                              className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalItem({
+                                  ...item,
+                                  index: 0,
+                                  mode: "photo",
+                                });
+                              }}
+                              aria-label="View large"
+                            >
+                              <FiMaximize2 className="text-xl text-indigo-600" />
+                            </button>
+                            <a
+                              href={item.images[0]}
+                              download
+                              className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label="Download"
+                            >
+                              <FiDownload className="text-xl text-pink-500" />
+                            </a>
+                          </div>
+                          {item.images.length > 1 && (
+                            <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
+                              +{item.images.length} images
+                            </span>
+                          )}
                         </div>
-                        {item.images.length > 1 && (
-                          <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
-                            +{item.images.length} images
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-col flex-1 p-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-lg text-gray-700">
-                            {item.user}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Tab.Panel>
-            {/* Dance (Videos) */}
-            <Tab.Panel>
-              {isLoading ? (
-                <div className="text-center py-20 text-xl text-gray-400">
-                  Loading...
-                </div>
-              ) : error ? (
-                <div className="text-center py-20 text-xl text-red-400">
-                  Error loading dance videos.
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-                  {filteredVideos.length === 0 && (
-                    <div className="col-span-full text-center text-gray-400 py-16 text-xl">
-                      No dance videos found matching your search.
-                    </div>
-                  )}
-                  {filteredVideos.map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
-                    >
-                      <div className="relative cursor-pointer">
-                        <video
-                          src={item.videos[0]}
-                          className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
-                          controls
-                          preload="metadata"
-                          poster=""
-                          style={{ background: "#000" }}
-                        />
-                        <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
-                          <button
-                            className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalItem({
-                                ...item,
-                                index: 0,
-                                mode: "video",
-                              });
-                            }}
-                            aria-label="View large"
-                          >
-                            <FiMaximize2 className="text-xl text-indigo-600" />
-                          </button>
-                          <a
-                            href={item.videos[0]}
-                            download
-                            className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label="Download"
-                          >
-                            <FiDownload className="text-xl text-pink-500" />
-                          </a>
-                        </div>
-                        {item.videos.length > 1 && (
-                          <span className="absolute bottom-0 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
-                            +{item.videos.length} videos
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-col flex-1 p-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-lg text-gray-700">
-                            {item.user}
-                          </span>
+                        <div className="flex flex-col flex-1 p-4">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-bold text-lg text-gray-700">
+                              {item.user}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Tab.Panel>
-            {/* Face */}
-            <Tab.Panel>
-              {isLoading ? (
-                <div className="text-center py-20 text-xl text-gray-400">
-                  Loading...
-                </div>
-              ) : error ? (
-                <div className="text-center py-20 text-xl text-red-400">
-                  Error loading faces.
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-                  {filteredFaces.length === 0 && (
-                    <div className="col-span-full text-center text-gray-400 py-16 text-xl">
-                      No faces found matching your search.
-                    </div>
-                  )}
-                  {filteredFaces.map((item) => (
-                    <div
-                      key={item.id}
-                      className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
-                    >
+                    ))}
+                  </div>
+                )}
+              </Tab.Panel>
+              {/* Dance (Videos) */}
+              <Tab.Panel>
+                {isLoading ? (
+                  <div className="text-center py-20 text-xl text-gray-400">
+                    Loading...
+                  </div>
+                ) : error ? (
+                  <div className="text-center py-20 text-xl text-red-400">
+                    Error loading dance videos.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
+                    {filteredVideos.length === 0 && (
+                      <div className="col-span-full text-center text-gray-400 py-16 text-xl">
+                        No dance videos found.
+                      </div>
+                    )}
+                    {filteredVideos.map((item) => (
                       <div
-                        className="relative cursor-pointer"
-                        onClick={() =>
-                          setModalItem({ ...item, index: 0, mode: "face" })
-                        }
+                        key={item.id}
+                        className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
                       >
-                        <img
-                          src={item.vitiligoFace[0]}
-                          alt={item.user}
-                          className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
-                          <button
-                            className="bg-white/80 rounded-full cursor-pointer p-2 hover:bg-indigo-100 shadow"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setModalItem({
-                                ...item,
-                                index: 0,
-                                mode: "face",
-                              });
-                            }}
-                            aria-label="View large"
-                          >
-                            <FiMaximize2 className="text-xl text-indigo-600" />
-                          </button>
-                          <a
-                            href={item.vitiligoFace[0]}
-                            download
-                            className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label="Download"
-                          >
-                            <FiDownload className="text-xl text-pink-500" />
-                          </a>
+                        <div className="relative cursor-pointer">
+                          <video
+                            src={item.videos[0]}
+                            className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
+                            controls
+                            preload="metadata"
+                            poster=""
+                            style={{ background: "#000" }}
+                          />
+                          <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
+                            <button
+                              className="bg-white/80 cursor-pointer rounded-full p-2 hover:bg-indigo-100 shadow"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalItem({
+                                  ...item,
+                                  index: 0,
+                                  mode: "video",
+                                });
+                              }}
+                              aria-label="View large"
+                            >
+                              <FiMaximize2 className="text-xl text-indigo-600" />
+                            </button>
+                            <a
+                              href={item.videos[0]}
+                              download
+                              className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label="Download"
+                            >
+                              <FiDownload className="text-xl text-pink-500" />
+                            </a>
+                          </div>
+                          {item.videos.length > 1 && (
+                            <span className="absolute bottom-0 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
+                              +{item.videos.length} videos
+                            </span>
+                          )}
                         </div>
-                        {item.vitiligoFace.length > 1 && (
-                          <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
-                            +{item.vitiligoFace.length} images
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-col flex-1 p-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-lg text-gray-700">
-                            {item.user}
-                          </span>
+                        <div className="flex flex-col flex-1 p-4">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-bold text-lg text-gray-700">
+                              {item.user}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Tab.Panel>
-          </Tab.Panels>
-        </Tab.Group>
-      </div>
+                    ))}
+                  </div>
+                )}
+              </Tab.Panel>
+              {/* Face */}
+              <Tab.Panel>
+                {isLoading ? (
+                  <div className="text-center py-20 text-xl text-gray-400">
+                    Loading...
+                  </div>
+                ) : error ? (
+                  <div className="text-center py-20 text-xl text-red-400">
+                    Error loading faces.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
+                    {filteredFaces.length === 0 && (
+                      <div className="col-span-full text-center text-gray-400 py-16 text-xl">
+                        No faces found.
+                      </div>
+                    )}
+                    {filteredFaces.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white rounded-3xl overflow-hidden drop-shadow-xl flex flex-col group transition-transform hover:-translate-y-1 hover:shadow-2xl"
+                      >
+                        <div
+                          className="relative cursor-pointer"
+                          onClick={() =>
+                            setModalItem({ ...item, index: 0, mode: "face" })
+                          }
+                        >
+                          <img
+                            src={item.vitiligoFace[0]}
+                            alt={item.user}
+                            className="w-full h-56 object-cover transition-all duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition">
+                            <button
+                              className="bg-white/80 rounded-full cursor-pointer p-2 hover:bg-indigo-100 shadow"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setModalItem({
+                                  ...item,
+                                  index: 0,
+                                  mode: "face",
+                                });
+                              }}
+                              aria-label="View large"
+                            >
+                              <FiMaximize2 className="text-xl text-indigo-600" />
+                            </button>
+                            <a
+                              href={item.vitiligoFace[0]}
+                              download
+                              className="bg-white/80 rounded-full p-2 hover:bg-pink-100 shadow"
+                              onClick={(e) => e.stopPropagation()}
+                              aria-label="Download"
+                            >
+                              <FiDownload className="text-xl text-pink-500" />
+                            </a>
+                          </div>
+                          {item.vitiligoFace.length > 1 && (
+                            <span className="absolute bottom-2 left-2 bg-white/80 text-xs text-indigo-700 rounded-full px-3 py-1 font-semibold shadow">
+                              +{item.vitiligoFace.length} images
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex flex-col flex-1 p-4">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-bold text-lg text-gray-700">
+                              {item.user}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
+        </div>
 
-      {/* Modal for large image(s) or video(s) with Swiper */}
-      {modalItem && (
-        <div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
-          onClick={() => setModalItem(null)}
-        >
+        {/* Modal for large image(s) or video(s) with Swiper */}
+        {modalItem && (
           <div
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-3xl w-full relative"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center"
+            onClick={() => setModalItem(null)}
           >
-            <style>{`
+            <div
+              className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-3xl w-full relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <style>{`
               @media (max-width: 740px) {
                 .fanart-modal-media { height: 60vh !important; max-height: 60vh !important; }
               }
             `}</style>
-            {modalItem.mode === "photo" && modalItem.images.length > 1 ? (
-              <Swiper
-                modules={[Navigation, Pagination]}
-                navigation
-                pagination={{ clickable: true }}
-                initialSlide={modalItem.index || 0}
-                className="w-full"
-              >
-                {modalItem.images.map((imgUrl) => (
-                  <SwiperSlide key={imgUrl}>
-                    <div
-                      className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
-                    >
-                      <img
-                        src={imgUrl}
-                        alt={modalItem.user}
-                        className="object-contain max-h-full max-w-full mx-auto"
-                      />
-                      <div className="absolute top-4 right-4 flex gap-2 z-10">
-                        <a
-                          href={imgUrl}
-                          download
-                          className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                        >
-                          <FiDownload className="inline mr-2 -mt-1" /> Download
-                        </a>
-                        <button
-                          className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                          onClick={() => setModalItem(null)}
-                        >
-                          Close
-                        </button>
+              {modalItem.mode === "photo" && modalItem.images.length > 1 ? (
+                <Swiper
+                  modules={[Navigation, Pagination]}
+                  navigation
+                  pagination={{ clickable: true }}
+                  initialSlide={modalItem.index || 0}
+                  className="w-full"
+                >
+                  {modalItem.images.map((imgUrl) => (
+                    <SwiperSlide key={imgUrl}>
+                      <div
+                        className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                      >
+                        <img
+                          src={imgUrl}
+                          alt={modalItem.user}
+                          className="object-contain max-h-full max-w-full mx-auto"
+                        />
+                        <div className="absolute top-4 right-4 flex gap-2 z-10">
+                          <a
+                            href={imgUrl}
+                            download
+                            className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                          >
+                            <FiDownload className="inline mr-2 -mt-1" />{" "}
+                            Download
+                          </a>
+                          <button
+                            className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                            onClick={() => setModalItem(null)}
+                          >
+                            Close
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            ) : modalItem.mode === "photo" ? (
-              <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
-                <img
-                  src={modalItem.images[0]}
-                  alt={modalItem.user}
-                  className="object-contain max-h-full max-w-full mx-auto"
-                />
-                <div className="absolute top-4 right-4 flex gap-2 z-10">
-                  <a
-                    href={modalItem.images[0]}
-                    download
-                    className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                  >
-                    <FiDownload className="inline mr-2 -mt-1" /> Download
-                  </a>
-                  <button
-                    className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                    onClick={() => setModalItem(null)}
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            ) : modalItem.mode === "video" && modalItem.videos.length > 1 ? (
-              <Swiper
-                modules={[Navigation, Pagination]}
-                navigation
-                pagination={{ clickable: true }}
-                initialSlide={modalItem.index || 0}
-                className="w-full"
-              >
-                {modalItem.videos.map((vidUrl) => (
-                  <SwiperSlide key={vidUrl}>
-                    <div
-                      className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : modalItem.mode === "photo" ? (
+                <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
+                  <img
+                    src={modalItem.images[0]}
+                    alt={modalItem.user}
+                    className="object-contain max-h-full max-w-full mx-auto"
+                  />
+                  <div className="absolute top-4 right-4 flex gap-2 z-10">
+                    <a
+                      href={modalItem.images[0]}
+                      download
+                      className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
                     >
-                      <video
-                        src={vidUrl}
-                        className="object-contain max-h-full max-w-full mx-auto"
-                        controls
-                        preload="metadata"
-                        style={{ background: "#000" }}
-                      />
-                      <div className="absolute top-4 right-4 flex gap-2 z-10">
-                        <a
-                          href={vidUrl}
-                          download
-                          className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                        >
-                          <FiDownload className="inline mr-2 -mt-1" /> Download
-                        </a>
-                        <button
-                          className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                          onClick={() => setModalItem(null)}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            ) : modalItem.mode === "face" &&
-              modalItem.vitiligoFace.length > 1 ? (
-              <Swiper
-                modules={[Navigation, Pagination]}
-                navigation
-                pagination={{ clickable: true }}
-                initialSlide={modalItem.index || 0}
-                className="w-full"
-              >
-                {modalItem.vitiligoFace.map((imgUrl) => (
-                  <SwiperSlide key={imgUrl}>
-                    <div
-                      className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                      <FiDownload className="inline mr-2 -mt-1" /> Download
+                    </a>
+                    <button
+                      className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                      onClick={() => setModalItem(null)}
                     >
-                      <img
-                        src={imgUrl}
-                        alt={modalItem.user}
-                        className="object-contain max-h-full max-w-full mx-auto"
-                      />
-                      <div className="absolute top-4 right-4 flex gap-2 z-10">
-                        <a
-                          href={imgUrl}
-                          download
-                          className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                        >
-                          <FiDownload className="inline mr-2 -mt-1" /> Download
-                        </a>
-                        <button
-                          className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                          onClick={() => setModalItem(null)}
-                        >
-                          Close
-                        </button>
+                      Close
+                    </button>
+                  </div>
+                </div>
+              ) : modalItem.mode === "video" && modalItem.videos.length > 1 ? (
+                <Swiper
+                  modules={[Navigation, Pagination]}
+                  navigation
+                  pagination={{ clickable: true }}
+                  initialSlide={modalItem.index || 0}
+                  className="w-full"
+                >
+                  {modalItem.videos.map((vidUrl) => (
+                    <SwiperSlide key={vidUrl}>
+                      <div
+                        className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                      >
+                        <video
+                          src={vidUrl}
+                          className="object-contain max-h-full max-w-full mx-auto"
+                          controls
+                          preload="metadata"
+                          style={{ background: "#000" }}
+                        />
+                        <div className="absolute top-4 right-4 flex gap-2 z-10">
+                          <a
+                            href={vidUrl}
+                            download
+                            className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                          >
+                            <FiDownload className="inline mr-2 -mt-1" />{" "}
+                            Download
+                          </a>
+                          <button
+                            className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                            onClick={() => setModalItem(null)}
+                          >
+                            Close
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            ) : modalItem.mode === "face" ? (
-              <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
-                <img
-                  src={modalItem.vitiligoFace[0]}
-                  alt={modalItem.user}
-                  className="object-contain max-h-full max-w-full mx-auto"
-                />
-                <div className="absolute top-4 right-4 flex gap-2 z-10">
-                  <a
-                    href={modalItem.vitiligoFace[0]}
-                    download
-                    className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow cursor-pointer flex items-center"
-                  >
-                    <FiDownload className="inline mr-2 -mt-1" /> Download
-                  </a>
-                  <button
-                    className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                    onClick={() => setModalItem(null)}
-                  >
-                    Close
-                  </button>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : modalItem.mode === "face" &&
+                modalItem.vitiligoFace.length > 1 ? (
+                <Swiper
+                  modules={[Navigation, Pagination]}
+                  navigation
+                  pagination={{ clickable: true }}
+                  initialSlide={modalItem.index || 0}
+                  className="w-full"
+                >
+                  {modalItem.vitiligoFace.map((imgUrl) => (
+                    <SwiperSlide key={imgUrl}>
+                      <div
+                        className={`relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]`}
+                      >
+                        <img
+                          src={imgUrl}
+                          alt={modalItem.user}
+                          className="object-contain max-h-full max-w-full mx-auto"
+                        />
+                        <div className="absolute top-4 right-4 flex gap-2 z-10">
+                          <a
+                            href={imgUrl}
+                            download
+                            className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                          >
+                            <FiDownload className="inline mr-2 -mt-1" />{" "}
+                            Download
+                          </a>
+                          <button
+                            className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                            onClick={() => setModalItem(null)}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : modalItem.mode === "face" ? (
+                <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
+                  <img
+                    src={modalItem.vitiligoFace[0]}
+                    alt={modalItem.user}
+                    className="object-contain max-h-full max-w-full mx-auto"
+                  />
+                  <div className="absolute top-4 right-4 flex gap-2 z-10">
+                    <a
+                      href={modalItem.vitiligoFace[0]}
+                      download
+                      className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow cursor-pointer flex items-center"
+                    >
+                      <FiDownload className="inline mr-2 -mt-1" /> Download
+                    </a>
+                    <button
+                      className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                      onClick={() => setModalItem(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
-                <video
-                  src={modalItem.videos[0]}
-                  className="object-contain max-h-full max-w-full mx-auto"
-                  controls
-                  preload="metadata"
-                  style={{ background: "#000" }}
-                />
-                <div className="absolute top-4 right-4 flex gap-2 z-10">
-                  <a
-                    href={modalItem.videos[0]}
-                    download
-                    className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                  >
-                    <FiDownload className="inline mr-2 -mt-1" /> Download
-                  </a>
-                  <button
-                    className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
-                    onClick={() => setModalItem(null)}
-                  >
-                    Close
-                  </button>
+              ) : (
+                <div className="relative flex items-center justify-center bg-white fanart-modal-media h-[80vh] max-h-[80vh]">
+                  <video
+                    src={modalItem.videos[0]}
+                    className="object-contain max-h-full max-w-full mx-auto"
+                    controls
+                    preload="metadata"
+                    style={{ background: "#000" }}
+                  />
+                  <div className="absolute top-4 right-4 flex gap-2 z-10">
+                    <a
+                      href={modalItem.videos[0]}
+                      download
+                      className="bg-pink-600 hover:bg-pink-700 text-white rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                    >
+                      <FiDownload className="inline mr-2 -mt-1" /> Download
+                    </a>
+                    <button
+                      className="bg-gray-100 cursor-pointer hover:bg-gray-200 text-gray-900 rounded-full px-4 py-2 font-semibold shadow flex items-center"
+                      onClick={() => setModalItem(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </main>
+      <footer className="text-center text-xs text-gray-500 mt-12">
+        Provided by{" "}
+        <a
+          href="https://www.tojoglobal.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-indigo-600 hover:underline font-semibold"
+        >
+          TOJO Global
+        </a>
+      </footer>
     </div>
   );
 };
